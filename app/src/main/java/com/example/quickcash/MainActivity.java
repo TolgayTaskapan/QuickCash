@@ -3,6 +3,7 @@ package com.example.quickcash;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,7 +11,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toast.makeText(MainActivity.this,"Firebase connection success",Toast.LENGTH_LONG).show();
     }
+
+
+
 }
 
 // this is a test to ensure pulling from remote repo works properly
