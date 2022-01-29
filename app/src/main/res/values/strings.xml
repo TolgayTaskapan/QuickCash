@@ -4,4 +4,5 @@
     <string name="INVALID_PASSWORD">The password must be between 8 and 16 digits long and must contain at least three types of the following: uppercase, lowercase, numbers and special symbols</string>
     <string name="INVALID_USERNAME">The length of the username needs to be between 6 and 16 bits and cannot contain special characters.</string>
     <string name="EMPTY_STRING"></string>
+    <string name="DATABASE_URL">https://quick-cash-ca106-default-rtdb.firebaseio.com</string>
 </resources>

@@ -47,7 +47,7 @@ public class RegistrationPageActivity extends AppCompatActivity implements View.
     }
     /** connect to the firebase realtime database **/
     public void initializeDatabase(){
-        database = FirebaseDatabase.getInstance().getReference().child("account");
+        database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("account");
     }
     /** save user's username and password to the database **/
     public void writeDatabase(String username, String password){
