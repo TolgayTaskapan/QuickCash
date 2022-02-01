@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:orientation="vertical"
+            android:layout_marginBottom="200dp"
             tools:ignore="MissingConstraints"
             android:layout_gravity="center">
 
