@@ -2,28 +2,29 @@ package com.example.quickcash;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
 
-import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -34,17 +35,21 @@ import static org.junit.Assert.*;
 public class RegistrationEspresso {
 
     @Rule
-    public ActivityScenarioRule<HomePageActivity> myRule = new ActivityScenarioRule<>(HomePageActivity.class);
     public IntentsTestRule<HomePageActivity> myIntentRule = new IntentsTestRule<>(HomePageActivity.class);
 
     @BeforeClass
     public static void setup() {
-        Intents.init();
     }
 
     @AfterClass
     public static void tearDown() {
+        clearDatabase();
         System.gc();
+    }
+
+    public static void clearDatabase(){
+        DatabaseReference database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("account");
+        database.removeValue();
     }
 
     @Test
@@ -103,5 +108,20 @@ public class RegistrationEspresso {
         onView(withId(R.id.password)).perform(typeText("Asd123456!"));
         onView(withId(R.id.registerButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_STRING)));
+    }
+
+    @Test
+    public void checkIfAccountExists() {
+        onView(withId(R.id.signUpButton)).perform(click());
+        onView(withId(R.id.username)).perform(typeText("Tylerj"));
+        onView(withId(R.id.password)).perform(typeText("Asd123456!"));
+        onView(withId(R.id.registerButton)).perform(click());
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_STRING)));
+
+        //attempt to create the same user
+        onView(withId(R.id.username)).perform(replaceText("Tylerj"));
+        onView(withId(R.id.password)).perform(replaceText("Asd123456!"));
+        onView(withId(R.id.registerButton)).perform(click());
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.USER_ALREADY_EXISTS)));
     }
 }

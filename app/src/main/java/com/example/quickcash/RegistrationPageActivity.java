@@ -1,31 +1,19 @@
 package com.example.quickcash;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.Task;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Document;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RegistrationPageActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -159,9 +147,9 @@ public class RegistrationPageActivity extends AppCompatActivity implements View.
         } else {
             error = getResources().getString(R.string.EMPTY_STRING).trim();
             setStatusMessage(error);
+            /** check if user exists, if they do not then create user **/
+            checkIfAccountExists(username, password);
         }
 
-            /** check if user exists **/
-           checkIfAccountExists(username, password);
     }
 }
