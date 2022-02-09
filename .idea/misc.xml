@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/guest1/Desktop/team-12-quick-cash/app/src/main/res/layout/activity_home_page.xml" value="0.2907608695652174" />
+        <entry key="..\:/Users/guest1/Desktop/team-12-quick-cash/app/src/main/res/layout/activity_job_search_page.xml" value="0.2907608695652174" />
+        <entry key="..\:/Users/guest1/Desktop/team-12-quick-cash/app/src/main/res/layout/activity_registration_page.xml" value="0.2907608695652174" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>

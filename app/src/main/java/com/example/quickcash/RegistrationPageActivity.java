@@ -55,6 +55,7 @@ public class RegistrationPageActivity extends AppCompatActivity implements View.
         final DatabaseReference account = database.push();
         account.child("username").setValue(username);
         account.child("password").setValue(password);
+
     }
 
     /** record error status for easy testing **/
