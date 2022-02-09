@@ -1,6 +1,7 @@
 package com.example.quickcash;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,19 +13,42 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener  {
+public class LoginActivity extends AppCompatActivity {
 
+    private UserLoginValidator loginValidator;
     DatabaseReference database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration_page);
+        setContentView(R.layout.activity_login_page);
 
         initializeDatabase();
 
-//        Button registerButton = findViewById(R.id.registerButton);
-//        registerButton.setOnClickListener(this);
+        // Setup user login validator class.
+        Context context = this.getApplicationContext();
+        loginValidator = new UserLoginValidator(context, database);
+
+        Button employerLoginBtn = findViewById(R.id.employerLoginButton);
+        Button employeeLoginBtn = findViewById(R.id.employeeLoginButton);
+
+        employerLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = getUsername();
+                String password = getPassword();
+
+                //boolean validUser = userRegistrationValidator.validateUserDetails(username, password) && !userRegistrationValidator.userExists;
+
+            }
+        });
+
+        employeeLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 
@@ -61,19 +85,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         statusLabel.setText(message.trim());
     }
 
-
-
-
-
-    @Override
-    public void onClick(View view) {
-        String username = getUsername();
-        String password = getPassword();
-        String error = "";
-
-        setStatusMessage(error);
-
-        //if login successful, open post a job activity
-
+    protected void jumpToJobSearchActivity() {
+        Intent intent = new Intent();
+        intent.setClass(LoginActivity.this, JobSearchActivity.class);
+        startActivity(intent);
     }
 }

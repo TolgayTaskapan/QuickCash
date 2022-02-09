@@ -44,7 +44,7 @@ public class UserLoginValidator {
     }
 
     /**checking entered credentials **/
-    public boolean checkUserCredentials(String userName, String password) {
+    public boolean checkIfCredentialsAreValid(String userName, String password) {
         database.orderByChild("username").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
