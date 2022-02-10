@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -17,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private UserLoginValidator loginValidator;
     DatabaseReference database;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,17 @@ public class LoginActivity extends AppCompatActivity {
     public void setStatusMessage(String message) {
         TextView statusLabel = findViewById(R.id.statusLabel);
         statusLabel.setText(message.trim());
+    }
+
+    private void initializeAuthentication(){ auth = FirebaseAuth.getInstance(); }
+
+
+
+    private void login(){
+        auth.signOut();
+        SharedPresferenceUtil.setLoginStatus(JobSearchActivity.this, false);
+        finish();
+        System.exit(0);
     }
 
     protected void jumpToJobSearchActivity() {

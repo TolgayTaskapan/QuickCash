@@ -52,7 +52,7 @@ public class UserLoginValidator {
                     for (DataSnapshot user : snapshot.getChildren()) {
 
 
-
+//
 //                        if (usersBean.password.equals(txvPassword.getText().toString().trim())) {
 //                            Intent intent = new Intent(context, MainActivity.class);
 //                            startActivity(intent);
