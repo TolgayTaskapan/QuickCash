@@ -34,7 +34,7 @@ public class HomePageActivity extends AppCompatActivity {
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getBaseContext(), "NOT YET!", Toast.LENGTH_LONG).show();
+                jumpToJobSearchPage();
             }
         });
     }
@@ -42,6 +42,12 @@ public class HomePageActivity extends AppCompatActivity {
     protected void jumpToRegistrationPage() {
         Intent intent = new Intent();
         intent.setClass(HomePageActivity.this, RegistrationPageActivity.class);
+        startActivity(intent);
+    }
+
+    protected void jumpToJobSearchPage() {
+        Intent intent = new Intent();
+        intent.setClass(HomePageActivity.this, JobSearchActivity.class);
         startActivity(intent);
     }
 }
