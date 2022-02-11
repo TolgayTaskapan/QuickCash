@@ -1,6 +1,7 @@
 package com.example.quickcash;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ public class RegistrationPageActivity extends AppCompatActivity implements View.
     //variables
     private UserRegistrationValidator userRegistrationValidator;
     DatabaseReference database;
+    DatabaseReference account;
     Context context;
 
 
@@ -52,21 +54,28 @@ public class RegistrationPageActivity extends AppCompatActivity implements View.
     /** connect to the firebase realtime database **/
     public void initializeDatabase(){
         database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("account");
+        account = database.push();
     }
 
 
     /** save user's username and password to the database **/
     public void registerUser(String username, String password){
-        final DatabaseReference account = database.push();
         account.child("username").setValue(username);
         account.child("password").setValue(password);
-
+        account.child("loginStatus").setValue("0");
+        account.child("userType").setValue("null");
     }
 
     /** record error status for easy testing **/
     public void setStatusMessage(String message) {
         TextView statusLabel = findViewById(R.id.statusLabel);
         statusLabel.setText(message.trim());
+    }
+
+    public void backToHome(){
+        Intent intent = new Intent();
+        intent.setClass(RegistrationPageActivity.this, HomePageActivity.class);
+        startActivity(intent);
     }
 
     /** binding click events to registration buttons **/
@@ -87,6 +96,7 @@ public class RegistrationPageActivity extends AppCompatActivity implements View.
                     setStatusMessage(context.getResources().getString(R.string.USER_ALREADY_EXISTS).trim());
                 } else{
                     if (validUser) registerUser(username, password);
+                    backToHome();
                 }
             }
 
