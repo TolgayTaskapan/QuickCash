@@ -93,6 +93,49 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                String username = getUsername();
+                String password = getPassword();
+
+                boolean validDetails = loginValidator.authenticateUserCredentials(username, password);
+
+                /**
+                 * This code is here due to the nature of asynchronous code. The implementation would not work properly
+                 * if code is put into a function.
+                 **/
+
+                if (validDetails) {
+                    database.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                for (DataSnapshot user : snapshot.getChildren()) {
+                                    if (password.equals(user.child("password").getValue())) {
+                                        login();
+
+                                        if (SharedPresferenceUtil.isLoggedIn(LoginActivity.this)) {
+                                            jumpToJobSearchActivity();
+                                        }
+                                    } else {
+                                        setStatusMessage(context.getResources().getString(R.string.INCORRECT_PASSWORD).trim());
+                                    }
+                                }
+
+                            } else {
+                                setStatusMessage(context.getResources().getString(R.string.USER_DOES_NOT_EXIST).trim());
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            System.out.println("Error is connecting to database");
+                        }
+
+                    });
+                } else {
+                    setStatusMessage(context.getResources().getString(R.string.EMPTY_USERNAME_OR_PASSWORD).trim());
+                }
+
             }
         });
 

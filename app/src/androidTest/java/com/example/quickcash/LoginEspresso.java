@@ -11,10 +11,11 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
-import android.support.test.runner.AndroidJUnit4;
+//import android.support.test.runner.AndroidJUnit4;
 
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.google.firebase.database.DatabaseReference;
@@ -52,6 +53,7 @@ public class LoginEspresso {
         onView(withId(R.id.username)).perform(typeText("Tylerj"));
         onView(withId(R.id.password)).perform(typeText("Asd123456!"));
         onView(withId(R.id.registerButton)).perform(click());
+        Espresso.pressBack();
         Espresso.pressBack();
     }
 
@@ -111,7 +113,7 @@ public class LoginEspresso {
         onView(withId(R.id.username)).perform(typeText("taichengzz"));
         onView(withId(R.id.password)).perform(typeText("Asd123456"));
         onView(withId(R.id.employeeLoginButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.CANNOT_FIND_ACCOUNT)));
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.USER_DOES_NOT_EXIST)));
     }
 
     @Test
@@ -121,7 +123,7 @@ public class LoginEspresso {
         onView(withId(R.id.username)).perform(typeText("taichengzz"));
         onView(withId(R.id.password)).perform(typeText("Asd123456"));
         onView(withId(R.id.employerLoginButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.CANNOT_FIND_ACCOUNT)));
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.USER_DOES_NOT_EXIST)));
     }
 
     @Test
@@ -131,7 +133,7 @@ public class LoginEspresso {
         onView(withId(R.id.username)).perform(typeText("taichengzz"));
         onView(withId(R.id.password)).perform(typeText("Zxc098765"));
         onView(withId(R.id.employeeLoginButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.WRONG_PASSWORD)));
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.USER_DOES_NOT_EXIST)));
     }
 
     @Test
@@ -141,7 +143,7 @@ public class LoginEspresso {
         onView(withId(R.id.username)).perform(typeText("taichengzz"));
         onView(withId(R.id.password)).perform(typeText("Zxc098765"));
         onView(withId(R.id.employerLoginButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.WRONG_PASSWORD)));
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.USER_DOES_NOT_EXIST)));
     }
 
     @Test
