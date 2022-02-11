@@ -1,41 +1,18 @@
 package com.example.quickcash;
 
 import android.content.Context;
-import android.content.Intent;
-import android.provider.ContactsContract;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 public class UserLoginValidator {
 
     private final Context context;
     private String errorMsg = "";
     DatabaseReference database;
-    public boolean INVALID_USER = true;
 
     public UserLoginValidator(Context context, DatabaseReference database) {
         this.context = context.getApplicationContext();
         this.database = database;
-    }
-
-    /**
-     * get invalid user variable
-     **/
-    public boolean getINVALID_USER() {
-        return this.INVALID_USER;
-    }
-
-    /**
-     * set if user is valid or not
-     **/
-    public void setINVALID_USER(boolean INVALID_USER) {
-        this.INVALID_USER = INVALID_USER;
     }
 
     /**
@@ -65,7 +42,6 @@ public class UserLoginValidator {
     public static boolean isEmptyPassword(String password) {
         return password.isEmpty();
     }
-
 
 
     public boolean authenticateUserCredentials(String username, String password){
