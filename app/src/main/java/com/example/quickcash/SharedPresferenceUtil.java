@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 public class SharedPresferenceUtil {
     public static final String LOGIN_ATTRIBUTE = "logged_in";
 
+
     static SharedPreferences getSharedPreferences(Context ctx){
         return PreferenceManager.getDefaultSharedPreferences(ctx);
     }

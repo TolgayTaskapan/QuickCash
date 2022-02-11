@@ -7,16 +7,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RegistrationPageActivity extends AppCompatActivity implements View.OnClickListener {
 
     //variables
     private UserRegistrationValidator userRegistrationValidator;
     DatabaseReference database;
+    Context context;
 
 
     @Override
@@ -27,7 +32,7 @@ public class RegistrationPageActivity extends AppCompatActivity implements View.
         initializeDatabase();
 
         // Setup user registration validator class.
-        Context context = this.getApplicationContext();
+        context = this.getApplicationContext();
         userRegistrationValidator = new UserRegistrationValidator(context, database);
 
         Button registerButton = findViewById(R.id.registerButton);
@@ -70,12 +75,27 @@ public class RegistrationPageActivity extends AppCompatActivity implements View.
         String username = getUsername();
         String password = getPassword();
 
-        boolean validUser = userRegistrationValidator.validateUserDetails(username, password) && !userRegistrationValidator.userExists;
+        boolean validUser = userRegistrationValidator.validateUserDetails(username, password);
         String error = userRegistrationValidator.getErrorMsg();
 
         setStatusMessage(error);
 
-        if (validUser) registerUser(username, password);
+        database.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    setStatusMessage(context.getResources().getString(R.string.USER_ALREADY_EXISTS).trim());
+                } else{
+                    if (validUser) registerUser(username, password);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("Error is connecting to database");
+            }
+
+        });
 
     }
 }

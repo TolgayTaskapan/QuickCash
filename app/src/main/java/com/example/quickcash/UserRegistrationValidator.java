@@ -2,18 +2,12 @@ package com.example.quickcash;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 
 public class UserRegistrationValidator {
 
     private final Context context;
-    public boolean userExists = false;
     private String errorMsg = "";
     DatabaseReference database;
 
@@ -25,11 +19,6 @@ public class UserRegistrationValidator {
     /** get error message **/
     public String getErrorMsg(){
         return this.errorMsg;
-    }
-
-    /** set if user exists **/
-    public void setUserExists(boolean userExists) {
-        this.userExists = userExists;
     }
 
     /** check if the user has entered a username **/
@@ -82,25 +71,6 @@ public class UserRegistrationValidator {
 
     }
 
-    /**check if user account already exists **/
-    public boolean checkIfAccountExists(String userName) {
-        database.orderByChild("username").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    setUserExists(true);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("Error is connecting to database");
-            }
-
-        });
-        return userExists;
-    }
-
     public boolean validateUserDetails(String username, String password) {
 
         boolean validUser = false;
@@ -111,8 +81,6 @@ public class UserRegistrationValidator {
             errorMsg = this.context.getResources().getString(R.string.INVALID_USERNAME).trim();
         } else if (!isValidPassword(password)) {
             errorMsg = this.context.getResources().getString(R.string.INVALID_PASSWORD).trim();
-        } else if ( checkIfAccountExists(username)) {
-            errorMsg = this.context.getResources().getString(R.string.USER_ALREADY_EXISTS).trim();
         } else {
             validUser = true;
             errorMsg = context.getResources().getString(R.string.EMPTY_STRING).trim();
