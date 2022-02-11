@@ -2,6 +2,7 @@ package com.example.quickcash;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,60 +17,70 @@ public class UserLoginValidator {
     private final Context context;
     private String errorMsg = "";
     DatabaseReference database;
-    public boolean VALID_USER = false;
+    public boolean INVALID_USER = true;
 
-    public UserLoginValidator(Context context, DatabaseReference database){
+    public UserLoginValidator(Context context, DatabaseReference database) {
         this.context = context.getApplicationContext();
         this.database = database;
     }
 
-    /** set if user exists **/
-    public void setVALID_USER(boolean VALID_USER) {
-        this.VALID_USER = VALID_USER;
+    /**
+     * get invalid user variable
+     **/
+    public boolean getINVALID_USER() {
+        return this.INVALID_USER;
     }
 
-    /** get error message **/
-    public String getErrorMsg(){
+    /**
+     * set if user is valid or not
+     **/
+    public void setINVALID_USER(boolean INVALID_USER) {
+        this.INVALID_USER = INVALID_USER;
+    }
+
+    /**
+     * get error message
+     **/
+    public String getErrorMsg() {
         return this.errorMsg;
     }
 
-    /** check if the user has entered a username **/
-    public static boolean isEmptyUsername(String username){
+    /**
+     * set error message
+     **/
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    /**
+     * check if the user has entered a username
+     **/
+    public static boolean isEmptyUsername(String username) {
         return username.isEmpty();
     }
 
-    /** check if the user has entered a password **/
-    public static boolean isEmptyPassword(String password){
+    /**
+     * check if the user has entered a password
+     **/
+    public static boolean isEmptyPassword(String password) {
         return password.isEmpty();
     }
 
-    /**checking entered credentials **/
-    public boolean checkIfCredentialsAreValid(String userName, String password) {
-        database.orderByChild("username").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot user : snapshot.getChildren()) {
 
 
-//
-//                        if (usersBean.password.equals(txvPassword.getText().toString().trim())) {
-//                            Intent intent = new Intent(context, MainActivity.class);
-//                            startActivity(intent);
-//                        } else {
-//                            Toast.makeText(context, "Password is wrong", Toast.LENGTH_LONG).show();
-//                        }
+    public boolean authenticateUserCredentials(String username, String password){
 
-                    }
-                }
-            }
+        boolean validDetails = false;
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("Error is connecting to database");
-            }
+        if (isEmptyUsername(username) || isEmptyPassword(password)) {
+            setErrorMsg(this.context.getResources().getString(R.string.EMPTY_USERNAME_OR_PASSWORD).trim());
+        } else {
+            validDetails = true;
+            setErrorMsg(context.getResources().getString(R.string.EMPTY_STRING).trim());
+        }
 
-        });
-        return VALID_USER;
+
+        return validDetails;
     }
+
 }
