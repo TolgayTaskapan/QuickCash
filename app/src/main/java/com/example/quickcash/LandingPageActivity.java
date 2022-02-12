@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class HomePageActivity extends AppCompatActivity {
+public class LandingPageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +40,19 @@ public class HomePageActivity extends AppCompatActivity {
 
     protected void jumpToRegistrationPage() {
         Intent intent = new Intent();
-        intent.setClass(HomePageActivity.this, SignupActivity.class);
+        intent.setClass(LandingPageActivity.this, SignupActivity.class);
         startActivity(intent);
     }
 
     protected void jumpToLoginPage() {
         Intent intent = new Intent();
-        intent.setClass(HomePageActivity.this, LoginActivity.class);
+        intent.setClass(LandingPageActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 
     protected void jumpToJobSearchPage() {
         Intent intent = new Intent();
-        intent.setClass(HomePageActivity.this, JobSearchActivity.class);
+        intent.setClass(LandingPageActivity.this, JobSearchActivity.class);
         startActivity(intent);
     }
 }

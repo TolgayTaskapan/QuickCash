@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.quickcash.identity.Employer;
+import com.example.quickcash.identity.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,11 +20,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LoginActivity extends AppCompatActivity {
 
+    //variables
     private UserLoginValidator loginValidator;
     DatabaseReference database;
+    DatabaseReference dbUser;
+    DatabaseReference dbEmployee;
+    DatabaseReference dbEmployer;
     DatabaseReference account;
+
+    // User info attributes
+    private User user;
+    private User employer;
+    private User employee;
+    private String username;
+    private String password;
+    private String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_page);
 
         initializeDatabase();
+
 
         // Setup user login validator class.
         Context context = this.getApplicationContext();
@@ -46,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String username = getUsername();
                 String password = getPassword();
+                userType = "Employer";
 
                 boolean validDetails = loginValidator.authenticateUserCredentials(username, password);
 
@@ -55,17 +74,15 @@ public class LoginActivity extends AppCompatActivity {
                   **/
 
                 if (validDetails) {
-                    database.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+                    dbUser = database.child(userType);
+                    dbUser.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
                                 for (DataSnapshot user : snapshot.getChildren()) {
                                     if (password.equals(user.child("password").getValue())) {
-                                        account.child("loginStatus").setValue("1");
-                                        loginAsEmployer();
-                                        if (SharedPresferenceUtil.isLoggedIn(LoginActivity.this)) {
-                                            jumpToJobSearchActivity();
-                                        }
+                                        dbUser = user.getRef();
+                                        loginAsEmployer(dbUser);
                                     } else {
                                         setStatusMessage(context.getResources().getString(R.string.INCORRECT_PASSWORD).trim());
                                     }
@@ -96,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 String username = getUsername();
                 String password = getPassword();
+                userType = "Employee";
 
                 boolean validDetails = loginValidator.authenticateUserCredentials(username, password);
 
@@ -105,16 +123,15 @@ public class LoginActivity extends AppCompatActivity {
                  **/
 
                 if (validDetails) {
-                    database.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+                    dbUser = database.child(userType);
+                    dbUser.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
                                 for (DataSnapshot user : snapshot.getChildren()) {
                                     if (password.equals(user.child("password").getValue())) {
-                                        loginAsEmployee();
-                                        if (SharedPresferenceUtil.isLoggedIn(LoginActivity.this)) {
-                                            jumpToJobSearchActivity();
-                                        }
+                                        dbUser = user.getRef();
+                                        loginAsEmployee(dbUser);
                                     } else {
                                         setStatusMessage(context.getResources().getString(R.string.INCORRECT_PASSWORD).trim());
                                     }
@@ -144,7 +161,6 @@ public class LoginActivity extends AppCompatActivity {
     /** connect to the firebase realtime database **/
     public void initializeDatabase(){
         database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("Account");
-        //account = database.push();
     }
 
     /** get username **/
@@ -166,18 +182,29 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void loginAsEmployer(){
-        SharedPresferenceUtil.setLoginStatus(LoginActivity.this, true);
+    public void loginAsEmployer(DatabaseReference dbUser){
+        Map<String, Object> userLoginUpdate = new HashMap<>();
+        userLoginUpdate.put("logged", "true");
+        dbUser.updateChildren(userLoginUpdate);
+        System.out.println(dbUser.toString());
+
+        jumpToJobSearchActivity(dbUser);
+
     }
 
-    public void loginAsEmployee(){
-        SharedPresferenceUtil.setLoginStatus(LoginActivity.this, true);
+    public void loginAsEmployee(DatabaseReference dbUser){
+        Map<String, Object> userLoginUpdate = new HashMap<>();
+        userLoginUpdate.put("logged", "true");
+        dbUser.updateChildren(userLoginUpdate);
+
+        jumpToJobSearchActivity(dbUser);
     }
 
 
-    protected void jumpToJobSearchActivity() {
+    protected void jumpToJobSearchActivity( DatabaseReference dbUser) {
         Intent intent = new Intent();
         intent.setClass(LoginActivity.this, JobSearchActivity.class);
+        intent.putExtra("userRef", String.valueOf(dbUser));
         startActivity(intent);
     }
 }
