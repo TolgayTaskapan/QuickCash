@@ -96,10 +96,10 @@ public class SignupActivity extends AppCompatActivity
      **/
     public void registerUser(String username, String password) {
         if (userType.equals("Employee")) {
-            user = new Employee(username, password, true);
+            user = new Employee(username, password, false);
             dbEmployee.setValue(user);
         } else {
-            user = new Employer(username, password, true);
+            user = new Employer(username, password, false);
             dbEmployer.setValue(user);
         }
     }
