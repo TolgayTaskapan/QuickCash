@@ -1,17 +1,18 @@
 package com.example.quickcash.identity;
 
 public abstract class User {
+    public static final int IDENTITY_EMPLOYEE = 1;
+    public static final int IDENTITY_EMPLOYER = 2;
+
     private String username;
     private String password;
     private boolean status;
-    private String userType;
 
     public User(){}
 
-    public User(String username, String password, String type, boolean status){
+    public User(String username, String password, boolean status){
         this.username = username;
         this.password = password;
-        this.userType = type;
         this.status = status;
     }
 
@@ -29,14 +30,6 @@ public abstract class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
     }
 
     public void setLogged(boolean logged) {

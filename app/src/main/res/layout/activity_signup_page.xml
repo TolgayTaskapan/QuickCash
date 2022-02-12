@@ -48,12 +48,23 @@
             android:minHeight="48dp"
             android:textSize="16dp" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Select a Role:"
+            android:textSize="16sp" />
+
         <Spinner
             android:id="@+id/identitySpinner"
+            style="@style/Widget.AppCompat.Spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:minHeight="40dp"
+            android:outlineProvider="none"
+            android:soundEffectsEnabled="true"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <Button

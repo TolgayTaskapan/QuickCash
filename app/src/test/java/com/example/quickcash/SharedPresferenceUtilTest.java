@@ -10,7 +10,7 @@ import org.junit.Test;
 public class SharedPresferenceUtilTest extends TestCase {
     @Test
     public void checkIfLoginStatusUpdated() {
-        assertTrue(UserRegistrationValidator.isEmptyUsername(""));
-        assertFalse(UserRegistrationValidator.isEmptyUsername("abcdef"));
+        assertTrue(SignupValidator.isEmptyUsername(""));
+        assertFalse(SignupValidator.isEmptyUsername("abcdef"));
     }
 }
