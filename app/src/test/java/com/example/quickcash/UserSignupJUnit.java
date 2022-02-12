@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class UserRegistrationJUnit {
+public class UserSignupJUnit {
 
     @Test
     public void checkIfUsernameIsEmpty() {

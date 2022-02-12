@@ -6,7 +6,7 @@ import org.junit.Test;
 public class SharedPreferenceUtilTest {
     @Test
     public void checkIfLoginStatusUpdated() {
-        Assert.assertTrue(UserRegistrationValidator.isEmptyUsername(""));
-        Assert.assertFalse(UserRegistrationValidator.isEmptyUsername("abcdef"));
+        Assert.assertTrue(SignupValidator.isEmptyUsername(""));
+        Assert.assertFalse(SignupValidator.isEmptyUsername("abcdef"));
     }
 }
