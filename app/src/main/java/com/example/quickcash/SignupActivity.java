@@ -30,6 +30,7 @@ public class SignupActivity extends AppCompatActivity
     //variables
     private SignupValidator signupValidator;
     DatabaseReference database;
+    DatabaseReference dbUser;
     DatabaseReference dbEmployee;
     DatabaseReference dbEmployer;
     Context context;
@@ -103,7 +104,7 @@ public class SignupActivity extends AppCompatActivity
      **/
     public void registerUser(String username, String password) {
         if (userType.equals("Employee")) {
-            user = new Employee(username, password, true);
+            user = new Employee(username, password, false);
             dbEmployee.setValue(user);
         } else {
             user = new Employer(username, password, false);
@@ -127,9 +128,9 @@ public class SignupActivity extends AppCompatActivity
         String error = signupValidator.getErrorMsg();
 
         if (validUser) {
-            registerUser(username, password);
+            dbUser = database.child(userType);
 
-            database.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            dbUser.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {

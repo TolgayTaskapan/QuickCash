@@ -143,8 +143,8 @@ public class LoginActivity extends AppCompatActivity {
 
     /** connect to the firebase realtime database **/
     public void initializeDatabase(){
-        database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("account");
-        account = database.push();
+        database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("Account");
+        //account = database.push();
     }
 
     /** get username **/
@@ -165,7 +165,6 @@ public class LoginActivity extends AppCompatActivity {
         statusLabel.setText(message.trim());
     }
 
-    //private void initializeAuthentication(){ auth = FirebaseAuth.getInstance(); }
 
     public void loginAsEmployer(){
         SharedPresferenceUtil.setLoginStatus(LoginActivity.this, true);
