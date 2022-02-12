@@ -9,28 +9,28 @@ public class UserRegistrationJUnit {
 
     @Test
     public void checkIfUsernameIsEmpty() {
-        assertTrue(UserRegistrationValidator.isEmptyUsername(""));
-        assertFalse(UserRegistrationValidator.isEmptyUsername("abcdef"));
+        assertTrue(SignupValidator.isEmptyUsername(""));
+        assertFalse(SignupValidator.isEmptyUsername("abcdef"));
     }
 
     @Test
     public void checkIfPasswordIsEmpty() {
-        assertTrue(UserRegistrationValidator.isEmptyPassword(""));
-        assertFalse(UserRegistrationValidator.isEmptyPassword("A_aaaaaaa"));
+        assertTrue(SignupValidator.isEmptyPassword(""));
+        assertFalse(SignupValidator.isEmptyPassword("A_aaaaaaa"));
     }
 
     @Test
     public void checkIfPasswordIsValid(){
-        assertTrue(UserRegistrationValidator.isValidPassword("Aa_1234567"));
-        assertFalse(UserRegistrationValidator.isValidPassword("aA_"));
-        assertFalse(UserRegistrationValidator.isValidPassword("12345678A"));
+        assertTrue(SignupValidator.isValidPassword("Aa_1234567"));
+        assertFalse(SignupValidator.isValidPassword("aA_"));
+        assertFalse(SignupValidator.isValidPassword("12345678A"));
     }
 
     @Test
     public void checkIfUsernameIsValid(){
-        assertTrue(UserRegistrationValidator.isValidUsername("asd123456"));
-        assertFalse(UserRegistrationValidator.isValidUsername("!asd123465"));
-        assertFalse(UserRegistrationValidator.isValidUsername("as"));
+        assertTrue(SignupValidator.isValidUsername("asd123456"));
+        assertFalse(SignupValidator.isValidUsername("!asd123465"));
+        assertFalse(SignupValidator.isValidUsername("as"));
     }
 }
 

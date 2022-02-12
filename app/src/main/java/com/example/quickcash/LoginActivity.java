@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private UserLoginValidator loginValidator;
     DatabaseReference database;
+    DatabaseReference account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +61,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (snapshot.exists()) {
                                 for (DataSnapshot user : snapshot.getChildren()) {
                                     if (password.equals(user.child("password").getValue())) {
-                                        login();
-
+                                        account.child("loginStatus").setValue("1");
+                                        loginAsEmployer();
                                         if (SharedPresferenceUtil.isLoggedIn(LoginActivity.this)) {
                                             jumpToJobSearchActivity();
                                         }
@@ -110,8 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (snapshot.exists()) {
                                 for (DataSnapshot user : snapshot.getChildren()) {
                                     if (password.equals(user.child("password").getValue())) {
-                                        login();
-
+                                        loginAsEmployee();
                                         if (SharedPresferenceUtil.isLoggedIn(LoginActivity.this)) {
                                             jumpToJobSearchActivity();
                                         }
@@ -144,6 +144,7 @@ public class LoginActivity extends AppCompatActivity {
     /** connect to the firebase realtime database **/
     public void initializeDatabase(){
         database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("account");
+        account = database.push();
     }
 
     /** get username **/
@@ -166,7 +167,11 @@ public class LoginActivity extends AppCompatActivity {
 
     //private void initializeAuthentication(){ auth = FirebaseAuth.getInstance(); }
 
-    public void login(){
+    public void loginAsEmployer(){
+        SharedPresferenceUtil.setLoginStatus(LoginActivity.this, true);
+    }
+
+    public void loginAsEmployee(){
         SharedPresferenceUtil.setLoginStatus(LoginActivity.this, true);
     }
 
