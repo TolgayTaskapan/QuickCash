@@ -1,21 +1,19 @@
-package com.example.quickcash;
+package com.example.quickcash.identity;
 
-public class Users {
-    public static final String TAG = "User";
+public abstract class User {
     private String username;
     private String password;
-    private boolean isLogged;
+    private boolean status;
     private String userType;
 
-    public Users(){}
+    public User(){}
 
-    public Users(String username, String password, String type, boolean status){
+    public User(String username, String password, String type, boolean status){
         this.username = username;
         this.password = password;
         this.userType = type;
-        this.isLogged = status;
+        this.status = status;
     }
-
 
     public String getUsername() {
         return username;
@@ -42,10 +40,10 @@ public class Users {
     }
 
     public void setLogged(boolean logged) {
-        this.isLogged = logged;
+        this.status = logged;
     }
 
     public boolean isLogged() {
-        return isLogged;
+        return status;
     }
 }
