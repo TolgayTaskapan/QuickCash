@@ -1,7 +1,8 @@
-package com.example.quickcash;
+package com.example.quickcash.account;
 
 import android.content.Context;
 
+import com.example.quickcash.R;
 import com.google.firebase.database.DatabaseReference;
 
 

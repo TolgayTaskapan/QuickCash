@@ -1,16 +1,17 @@
-package com.example.quickcash;
+package com.example.quickcash.account;
 
 import android.content.Context;
 
+import com.example.quickcash.R;
 import com.google.firebase.database.DatabaseReference;
 
-public class UserLoginValidator {
+public class LoginValidator {
 
     private final Context context;
     private String errorMsg = "";
     DatabaseReference database;
 
-    public UserLoginValidator(Context context, DatabaseReference database) {
+    public LoginValidator(Context context, DatabaseReference database) {
         this.context = context.getApplicationContext();
         this.database = database;
     }

@@ -14,7 +14,6 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -23,9 +22,11 @@ import static org.hamcrest.Matchers.not;
 import android.content.Context;
 
 import androidx.test.espresso.intent.rule.IntentsTestRule;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.example.quickcash.account.SignupActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -44,6 +45,7 @@ import org.junit.runner.RunWith;
 public class SignupEspresso {
 
     @Rule
+    public ActivityScenarioRule<SignupActivity> myActivityRule = new ActivityScenarioRule<>(SignupActivity.class);
     public IntentsTestRule<LandingPageActivity> myIntentRule = new IntentsTestRule<>(LandingPageActivity.class);
 
     @BeforeClass
@@ -56,7 +58,7 @@ public class SignupEspresso {
         System.gc();
     }
 
-    public static void clearDatabase(){
+    private static void clearDatabase(){
         DatabaseReference database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("account");
         database.removeValue();
     }
@@ -67,6 +69,7 @@ public class SignupEspresso {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.quickcash", appContext.getPackageName());
     }
+
     /** Separate tests can pass **/
     @Test
     public void checkIfRegistrationPageExist(){

@@ -1,5 +1,7 @@
 package com.example.quickcash;
 
+import com.example.quickcash.account.SignupValidator;
+
 import org.junit.Assert;
 import org.junit.Test;
 
