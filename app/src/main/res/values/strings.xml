@@ -17,6 +17,8 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profile">Profile</string>
     <string name="title_jobs">Jobs</string>
+    <string name="logout_button">Logout</string>
+    <string name="landing_page_welcome">Welcome to Quick Cash</string>
     <string-array name="identity_labels">
         <item>Employee</item>
         <item>Employer</item>

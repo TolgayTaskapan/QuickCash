@@ -40,6 +40,7 @@ public class SignupActivity extends AppCompatActivity
     private String username;
     private String password;
     private String userType;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,9 @@ public class SignupActivity extends AppCompatActivity
     public void backToLoginPage() {
         Intent intent = new Intent();
         intent.setClass(this, LoginActivity.class);
+        intent.putExtra("userID", userID);
         startActivity(intent);
+        finish();
     }
 
     /**
@@ -98,9 +101,11 @@ public class SignupActivity extends AppCompatActivity
         if (userType.equals("Employee")) {
             user = new Employee(username, password, false);
             dbEmployee.setValue(user);
+            userID = dbEmployee.getKey();
         } else {
             user = new Employer(username, password, false);
             dbEmployer.setValue(user);
+            userID = dbEmployer.getKey();
         }
     }
 
@@ -125,7 +130,6 @@ public class SignupActivity extends AppCompatActivity
                     } else {
                         registerUser(username, password);
                         backToLoginPage();
-                        finish();
                     }
                 }
 

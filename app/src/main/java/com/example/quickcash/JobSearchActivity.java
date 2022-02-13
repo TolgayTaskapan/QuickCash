@@ -25,9 +25,6 @@ public class JobSearchActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     DatabaseReference dbUserRef;
 
-    // User info attributes
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,15 +35,15 @@ public class JobSearchActivity extends AppCompatActivity {
         String userRefURL = intent.getStringExtra("userRef");
         dbUserRef = FirebaseDatabase.getInstance().getReferenceFromUrl(userRefURL);
 
-        FloatingActionButton logoutButton = findViewById(R.id.logoutButton);
+        //FloatingActionButton logoutButton = findViewById(R.id.logoutButton);
         FloatingActionButton addButton = findViewById(R.id.addButton);
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+        /*logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 logout(dbUserRef);
             }
-        });
+        });*/
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override

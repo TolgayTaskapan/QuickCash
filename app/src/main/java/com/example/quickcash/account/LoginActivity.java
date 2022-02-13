@@ -2,11 +2,15 @@ package com.example.quickcash.account;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.quickcash.JobSearchActivity;
 import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
+import com.example.quickcash.aid.FirebaseUtil;
 import com.example.quickcash.identity.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,16 +37,9 @@ public class LoginActivity extends AppCompatActivity {
     private LoginValidator loginValidator;
     DatabaseReference database;
     DatabaseReference dbUser;
-    DatabaseReference dbEmployee;
-    DatabaseReference dbEmployer;
-    DatabaseReference account;
 
     // User info attributes
-    private User user;
-    private User employer;
-    private User employee;
-    private String username;
-    private String password;
+    private String userID;
     private String userType;
 
     @Override
@@ -49,6 +49,9 @@ public class LoginActivity extends AppCompatActivity {
 
         initializeDatabase();
 
+        // If from signup page get the userID directly
+        Intent intent = getIntent();
+        userID = intent.getStringExtra("userID");
 
         // Setup user login validator class.
         Context context = this.getApplicationContext();
@@ -83,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                                 for (DataSnapshot user : snapshot.getChildren()) {
                                     if (password.equals(user.child("password").getValue())) {
                                         dbUser = user.getRef();
+                                        userID = user.getKey();
                                         loginAsEmployer(dbUser);
                                     } else {
                                         setStatusMessage(context.getResources().getString(R.string.INCORRECT_PASSWORD).trim());
@@ -132,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                                 for (DataSnapshot user : snapshot.getChildren()) {
                                     if (password.equals(user.child("password").getValue())) {
                                         dbUser = user.getRef();
+                                        userID = user.getKey();
                                         loginAsEmployee(dbUser);
                                     } else {
                                         setStatusMessage(context.getResources().getString(R.string.INCORRECT_PASSWORD).trim());
@@ -156,7 +161,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     /** connect to the firebase realtime database **/
@@ -185,7 +189,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginAsEmployer(DatabaseReference dbUser){
         Map<String, Object> userLoginUpdate = new HashMap<>();
-        userLoginUpdate.put("logged", "true");
+        userLoginUpdate.put("logged", true);
         dbUser.updateChildren(userLoginUpdate);
         System.out.println(dbUser.toString());
 
@@ -194,17 +198,21 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginAsEmployee(DatabaseReference dbUser){
         Map<String, Object> userLoginUpdate = new HashMap<>();
-        userLoginUpdate.put("logged", "true");
+        userLoginUpdate.put("logged", true);
         dbUser.updateChildren(userLoginUpdate);
 
         jumpToJobSearchActivity(dbUser);
     }
 
-
     protected void jumpToJobSearchActivity( DatabaseReference dbUser) {
         Intent intent = new Intent();
         intent.setClass(LoginActivity.this, MainActivity.class);
-        intent.putExtra("userRef", String.valueOf(dbUser));
+
+        // Delivery the userID to MainActivity
+        intent.putExtra("userID", userID);
+        intent.putExtra("userRef", dbUser.toString());
+
         startActivity(intent);
+        finish();
     }
 }

@@ -24,8 +24,8 @@ public class JobsFragment extends Fragment {
         binding = FragmentJobsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textJobs;
-        jobsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        /*final TextView textView = binding.textJobs;
+        jobsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
         return root;
     }
 
