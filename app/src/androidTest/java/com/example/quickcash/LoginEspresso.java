@@ -178,7 +178,7 @@ public class LoginEspresso {
         onView(withId(R.id.username)).perform(typeText("Tylerj"));
         onView(withId(R.id.password)).perform(typeText("Asd123456!"));
         onView(withId(R.id.employeeLoginButton)).perform(click());
-        intended(hasComponent(JobSearchActivity.class.getName()));
+        intended(hasComponent(MainActivity.class.getName()));
     }
 
     @Test
@@ -189,6 +189,6 @@ public class LoginEspresso {
         onView(withId(R.id.username)).perform(typeText("Tylerj"));
         onView(withId(R.id.password)).perform(typeText("Asd123456!"));
         onView(withId(R.id.employerLoginButton)).perform(click());
-        intended(hasComponent(JobSearchActivity.class.getName()));
+        intended(hasComponent(MainActivity.class.getName()));
     }
 }

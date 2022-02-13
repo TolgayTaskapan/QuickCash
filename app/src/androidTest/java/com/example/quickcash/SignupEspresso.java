@@ -24,6 +24,7 @@ import android.content.Context;
 import android.os.IBinder;
 import android.view.WindowManager;
 
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.Root;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
