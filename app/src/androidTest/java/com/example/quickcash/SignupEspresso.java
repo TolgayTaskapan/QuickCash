@@ -92,7 +92,7 @@ public class SignupEspresso {
         onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
 //      onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)));
-        onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(withDecorView(not(is(getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(withDecorView(not(is(.getWindow().getDecorView())))).check(matches(isDisplayed()));
 
     }
 
