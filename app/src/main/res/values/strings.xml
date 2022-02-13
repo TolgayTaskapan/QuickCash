@@ -12,6 +12,9 @@
     <string name="EMPTY_JOBNAME_OR_DESCRIPTION">Please enter the job name and/or description</string>
     <string name="INVALID_JOBNAME">The length of Job name must be lower than 20 digits and cannot contain special characters</string>
     <string name="INVALID_DESCRIPTION">The length of description must be lower than 50 digits</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_jobs">Jobs</string>
     <string-array name="identity_labels">
         <item>Employee</item>
         <item>Employer</item>

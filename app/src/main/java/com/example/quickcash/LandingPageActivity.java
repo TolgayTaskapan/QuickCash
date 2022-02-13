@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.quickcash.account.LoginActivity;
+import com.example.quickcash.account.SignupActivity;
+
 public class LandingPageActivity extends AppCompatActivity {
 
     @Override

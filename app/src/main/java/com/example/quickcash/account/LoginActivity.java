@@ -1,4 +1,4 @@
-package com.example.quickcash;
+package com.example.quickcash.account;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.quickcash.identity.Employer;
+import com.example.quickcash.JobSearchActivity;
+import com.example.quickcash.MainActivity;
+import com.example.quickcash.R;
 import com.example.quickcash.identity.User;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +27,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     //variables
-    private UserLoginValidator loginValidator;
+    private LoginValidator loginValidator;
     DatabaseReference database;
     DatabaseReference dbUser;
     DatabaseReference dbEmployee;
@@ -51,10 +52,10 @@ public class LoginActivity extends AppCompatActivity {
 
         // Setup user login validator class.
         Context context = this.getApplicationContext();
-        loginValidator = new UserLoginValidator(context, database);
+        loginValidator = new LoginValidator(context, database);
 
         //initialize login status
-        SharedPresferenceUtil.setLoginStatus(LoginActivity.this, false);
+        SharedPreferenceUtil.setLoginStatus(LoginActivity.this, false);
 
         Button employerLoginBtn = findViewById(R.id.employerLoginButton);
         Button employeeLoginBtn = findViewById(R.id.employeeLoginButton);
@@ -189,7 +190,6 @@ public class LoginActivity extends AppCompatActivity {
         System.out.println(dbUser.toString());
 
         jumpToJobSearchActivity(dbUser);
-
     }
 
     public void loginAsEmployee(DatabaseReference dbUser){
@@ -203,7 +203,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void jumpToJobSearchActivity( DatabaseReference dbUser) {
         Intent intent = new Intent();
-        intent.setClass(LoginActivity.this, JobSearchActivity.class);
+        intent.setClass(LoginActivity.this, MainActivity.class);
         intent.putExtra("userRef", String.valueOf(dbUser));
         startActivity(intent);
     }
