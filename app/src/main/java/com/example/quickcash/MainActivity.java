@@ -1,10 +1,9 @@
 package com.example.quickcash;
 
 import android.content.Intent;
-<<<<<<< HEAD
-=======
+
 import android.net.Uri;
->>>>>>> ba6c5222d554ae6c0a17cc9fa8c86eb9e78d24b3
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,39 +22,29 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.quickcash.databinding.ActivityMainBinding;
-<<<<<<< HEAD
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-=======
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
->>>>>>> ba6c5222d554ae6c0a17cc9fa8c86eb9e78d24b3
+
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-<<<<<<< HEAD
     private DatabaseReference dbUserRef;
-=======
     private FirebaseUtil userFirebase = new FirebaseUtil();
->>>>>>> ba6c5222d554ae6c0a17cc9fa8c86eb9e78d24b3
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-<<<<<<< HEAD
-        //accessing user database reference from string passed from login
-        Intent intent = getIntent();
-        String userRefURL = intent.getStringExtra("userRef");
-        dbUserRef = FirebaseDatabase.getInstance().getReferenceFromUrl(userRefURL);
-=======
         Intent intent = getIntent();
         userFirebase.setUsrID(intent.getStringExtra("userID"));
         userFirebase.setCurrentUserRef(intent.getStringExtra("userRef"));
->>>>>>> ba6c5222d554ae6c0a17cc9fa8c86eb9e78d24b3
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
