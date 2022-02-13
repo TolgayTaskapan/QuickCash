@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quickcash.JobSearchActivity;
+import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
 import com.example.quickcash.identity.User;
 import com.google.firebase.database.DataSnapshot;
@@ -189,7 +190,6 @@ public class LoginActivity extends AppCompatActivity {
         System.out.println(dbUser.toString());
 
         jumpToJobSearchActivity(dbUser);
-
     }
 
     public void loginAsEmployee(DatabaseReference dbUser){
@@ -203,7 +203,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void jumpToJobSearchActivity( DatabaseReference dbUser) {
         Intent intent = new Intent();
-        intent.setClass(LoginActivity.this, JobSearchActivity.class);
+        intent.setClass(LoginActivity.this, MainActivity.class);
         intent.putExtra("userRef", String.valueOf(dbUser));
         startActivity(intent);
     }
