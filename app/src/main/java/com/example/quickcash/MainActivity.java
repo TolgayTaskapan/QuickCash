@@ -55,9 +55,14 @@ public class MainActivity extends AppCompatActivity {
     public void logoutAccount(View view) {
         Intent logoutIntent = new Intent(this, LoginActivity.class);
 
-        System.out.println(userFirebase.getCurrentUserRef());
         userFirebase.getCurrentUserRef().child("logged").setValue(false);
         startActivity(logoutIntent);
         finish();
+    }
+
+    public void openPostPage(View view) {
+        Intent postIntent = new Intent(this, JobPostingActivity.class);
+
+        startActivity(postIntent);
     }
 }
