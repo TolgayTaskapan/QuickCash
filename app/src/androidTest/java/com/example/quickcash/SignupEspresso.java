@@ -5,6 +5,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -22,9 +23,12 @@ import static org.hamcrest.Matchers.not;
 
 import android.content.Context;
 
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -57,7 +61,7 @@ public class SignupEspresso {
     }
 
     public static void clearDatabase(){
-        DatabaseReference database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("account");
+        DatabaseReference database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("Account");
         database.removeValue();
     }
 
@@ -79,8 +83,11 @@ public class SignupEspresso {
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.username)).perform(typeText(""));
         onView(withId(R.id.password)).perform(typeText("Aa_123456"));
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.identitySpinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)));
+        onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
     }
 
     @Test
@@ -88,11 +95,11 @@ public class SignupEspresso {
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.username)).perform(typeText("aasd"));
         onView(withId(R.id.password)).perform(typeText(""));
+        Espresso.closeSoftKeyboard();
         onView(withId(R.id.identitySpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-//      onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)));
-        onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(withDecorView(not(is(.getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
 
     }
 
@@ -101,8 +108,11 @@ public class SignupEspresso {
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.username)).perform(typeText("te"));
         onView(withId(R.id.password)).perform(typeText("Aa_123456"));
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.identitySpinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.INVALID_USERNAME)));
+        onView(withText(R.string.INVALID_USERNAME)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
     }
 
     @Test
@@ -110,8 +120,11 @@ public class SignupEspresso {
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.username)).perform(typeText("aaatest"));
         onView(withId(R.id.password)).perform(typeText("asd"));
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.identitySpinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.INVALID_PASSWORD)));
+        onView(withText(R.string.INVALID_PASSWORD)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
     }
 
     @Test
@@ -119,8 +132,11 @@ public class SignupEspresso {
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.username)).perform(typeText("aaaaaaaa"));
         onView(withId(R.id.password)).perform(typeText("Asd123456!"));
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.identitySpinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_STRING)));
+        onView(withText("Test")).inRoot(withDecorView(not(this.myIntentRule.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 
     @Test
@@ -128,14 +144,21 @@ public class SignupEspresso {
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.username)).perform(typeText("Tylerj"));
         onView(withId(R.id.password)).perform(typeText("Asd123456!"));
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.identitySpinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_STRING)));
-
+        onView(withText("Test")).inRoot(withDecorView(not(this.myIntentRule.getActivity().getWindow().getDecorView()))).check(doesNotExist());
         //attempt to create the same user
+        Espresso.pressBack();
+        onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.username)).perform(replaceText("Tylerj"));
         onView(withId(R.id.password)).perform(replaceText("Asd123456!"));
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.identitySpinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.USER_ALREADY_EXISTS)));
+        onView(withText(R.string.USER_ALREADY_EXISTS)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
     }
 
 }
