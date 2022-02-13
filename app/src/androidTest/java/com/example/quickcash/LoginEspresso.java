@@ -11,12 +11,13 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.example.quickcash.account.LoginActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -30,7 +31,7 @@ import org.junit.runner.RunWith;
 public class LoginEspresso {
 
     @Rule
-    public IntentsTestRule<HomePageActivity> myIntentRuleHome = new IntentsTestRule<>(HomePageActivity.class);
+    public IntentsTestRule<LandingPageActivity> myIntentRuleHome = new IntentsTestRule<>(LandingPageActivity.class);
 
     @BeforeClass
     public static void setup() {

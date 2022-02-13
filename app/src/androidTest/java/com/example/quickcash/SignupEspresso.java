@@ -1,5 +1,6 @@
 package com.example.quickcash;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
@@ -9,17 +10,31 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.not;
 
 import android.content.Context;
+import android.os.IBinder;
+import android.view.WindowManager;
 
+import androidx.test.espresso.Root;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.example.quickcash.account.SignupActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.hamcrest.Description;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -34,11 +49,15 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class SignupEspresso {
 
+    /* Fields used for interact with Firebase */
+    private static DatabaseReference dbRef;
+
     @Rule
-    public IntentsTestRule<HomePageActivity> myIntentRule = new IntentsTestRule<>(HomePageActivity.class);
+    public IntentsTestRule<LandingPageActivity> myIntentRule = new IntentsTestRule<>(LandingPageActivity.class);
 
     @BeforeClass
     public static void setup() {
+        dbRef = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("Account");
     }
 
     @AfterClass
@@ -47,9 +66,8 @@ public class SignupEspresso {
         System.gc();
     }
 
-    public static void clearDatabase(){
-        DatabaseReference database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("account");
-        database.removeValue();
+    private static void clearDatabase() {
+        dbRef.removeValue();
     }
 
     @Test
@@ -58,9 +76,12 @@ public class SignupEspresso {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.quickcash", appContext.getPackageName());
     }
-    /** Separate tests can pass **/
+
+    /**
+     * Separate tests can pass
+     **/
     @Test
-    public void checkIfRegistrationPageExist(){
+    public void checkIfRegistrationPageExist() {
         onView(withId(R.id.signUpButton)).perform(click());
         intended(hasComponent(SignupActivity.class.getName()));
     }
@@ -71,7 +92,8 @@ public class SignupEspresso {
         onView(withId(R.id.username)).perform(typeText(""));
         onView(withId(R.id.password)).perform(typeText("Aa_123456"));
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)));
+        /*onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(new ToastMatcher())
+                .check(matches(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)));*/
     }
 
     @Test
@@ -79,8 +101,12 @@ public class SignupEspresso {
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.username)).perform(typeText("aasd"));
         onView(withId(R.id.password)).perform(typeText(""));
+        onView(withId(R.id.identitySpinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)));
+//      onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)));
+        //onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(withDecorView(not(is(getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+
     }
 
     @Test
@@ -124,5 +150,4 @@ public class SignupEspresso {
         onView(withId(R.id.registerButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText(R.string.USER_ALREADY_EXISTS)));
     }
-
 }

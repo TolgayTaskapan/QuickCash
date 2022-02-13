@@ -1,10 +1,10 @@
-package com.example.quickcash;
+package com.example.quickcash.account;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class SharedPresferenceUtil {
+public class SharedPreferenceUtil {
     public static final String LOGIN_ATTRIBUTE = "logged_in";
 
 

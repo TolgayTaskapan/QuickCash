@@ -1,5 +1,7 @@
 package com.example.quickcash.identity;
 
+import com.google.firebase.database.DatabaseReference;
+
 public class Employer extends User{
     public Employer() {
     }

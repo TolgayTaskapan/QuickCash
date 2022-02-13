@@ -1,4 +1,4 @@
-package com.example.quickcash;
+package com.example.quickcash.account;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,12 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.quickcash.R;
 import com.example.quickcash.identity.Employee;
 import com.example.quickcash.identity.Employer;
 import com.example.quickcash.identity.User;
@@ -30,6 +30,7 @@ public class SignupActivity extends AppCompatActivity
     //variables
     private SignupValidator signupValidator;
     DatabaseReference database;
+    DatabaseReference dbUser;
     DatabaseReference dbEmployee;
     DatabaseReference dbEmployer;
     Context context;
@@ -67,14 +68,6 @@ public class SignupActivity extends AppCompatActivity
         return passwordET.getText().toString().trim();
     }
 
-    /**
-     * record error status for easy testing
-     **/
-    public void setStatusMessage(String message) {
-        TextView statusLabel = findViewById(R.id.statusLabel);
-        statusLabel.setText(message.trim());
-    }
-
     public void backToLoginPage() {
         Intent intent = new Intent();
         intent.setClass(this, LoginActivity.class);
@@ -103,17 +96,12 @@ public class SignupActivity extends AppCompatActivity
      **/
     public void registerUser(String username, String password) {
         if (userType.equals("Employee")) {
-            user = new Employee(username, password, true);
+            user = new Employee(username, password, false);
             dbEmployee.setValue(user);
         } else {
             user = new Employer(username, password, false);
             dbEmployer.setValue(user);
         }
-
-        /*account.child("username").setValue(username);
-        account.child("password").setValue(password);
-        account.child("loginStatus").setValue("0");
-        account.child("userType").setValue("null");*/
     }
 
     /**
@@ -127,9 +115,9 @@ public class SignupActivity extends AppCompatActivity
         String error = signupValidator.getErrorMsg();
 
         if (validUser) {
-            registerUser(username, password);
+            dbUser = database.child(userType);
 
-            database.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            dbUser.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {

@@ -3,6 +3,8 @@ package com.example.quickcash;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.example.quickcash.account.SignupValidator;
+
 import org.junit.Test;
 
 public class UserSignupJUnit {
