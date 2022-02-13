@@ -4,16 +4,35 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../../../layout/custom_preview.xml" value="0.18541666666666667" />
-        <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.18931159420289856" />
-        <entry key="app/src/main/res/layout/activity_job_posting.xml" value="0.18931159420289856" />
-        <entry key="app/src/main/res/layout/activity_job_search_page.xml" value="0.3061594202898551" />
+        <entry key="app/src/main/res/drawable-anydpi/ic_action_jobs_24dp.xml" value="0.149" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.149" />
+        <entry key="app/src/main/res/drawable/ic_action_jobs_black_24dp.xml" value="0.149" />
+        <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.149" />
+        <entry key="app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.149" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.149" />
+        <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.16145833333333334" />
+        <entry key="app/src/main/res/layout/activity_job_posting.xml" value="0.23278985507246377" />
+        <entry key="app/src/main/res/layout/activity_job_search_page.xml" value="0.2056192591570426" />
+        <entry key="app/src/main/res/layout/activity_landing_page.xml" value="0.25259908040364587" />
         <entry key="app/src/main/res/layout/activity_login_page.xml" value="0.3061594202898551" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.18931159420289856" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25674374044055903" />
         <entry key="app/src/main/res/layout/activity_registration_page.xml" value="0.3061594202898551" />
+<<<<<<< HEAD
         <entry key="app/src/main/res/layout/activity_signup_page.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.18931159420289856" />
         <entry key="app/src/main/res/layout/fragment_jobs.xml" value="0.18478260869565216" />
         <entry key="app/src/main/res/layout/item_jobs.xml" value="0.2703804347826087" />
+=======
+        <entry key="app/src/main/res/layout/activity_signup_page.xml" value="0.3208224504353614" />
+        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.19010416666666666" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.23278985507246377" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18958333333333333" />
+        <entry key="app/src/main/res/layout/fragment_jobs.xml" value="0.23278985507246377" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.23278985507246377" />
+        <entry key="app/src/main/res/layout/item_jobs.xml" value="0.16145833333333334" />
+        <entry key="app/src/main/res/layout/page_profile_main.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.18958333333333333" />
+>>>>>>> ba6c5222d554ae6c0a17cc9fa8c86eb9e78d24b3
       </map>
     </option>
   </component>

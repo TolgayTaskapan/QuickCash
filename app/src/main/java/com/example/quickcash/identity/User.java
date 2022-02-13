@@ -6,6 +6,7 @@ public abstract class User {
 
     private String username;
     private String password;
+    private String identity;
     private boolean status;
 
     public User(){}
@@ -24,12 +25,20 @@ public abstract class User {
         return password;
     }
 
+    public String getIdentity() {
+        return identity;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
     }
 
     public void setLogged(boolean logged) {

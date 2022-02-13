@@ -15,7 +15,7 @@ public class LandingPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_landing_page);
         Button signUpButton = findViewById(R.id.signUpButton);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,14 +31,6 @@ public class LandingPageActivity extends AppCompatActivity {
                 jumpToLoginPage();
             }
         });
-
-        Button postButton = findViewById(R.id.postButton);
-        postButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jumpToJobSearchPage();
-            }
-        });
     }
 
     protected void jumpToRegistrationPage() {
@@ -50,12 +42,6 @@ public class LandingPageActivity extends AppCompatActivity {
     protected void jumpToLoginPage() {
         Intent intent = new Intent();
         intent.setClass(LandingPageActivity.this, LoginActivity.class);
-        startActivity(intent);
-    }
-
-    protected void jumpToJobSearchPage() {
-        Intent intent = new Intent();
-        intent.setClass(LandingPageActivity.this, JobSearchActivity.class);
         startActivity(intent);
     }
 }
