@@ -1,5 +1,6 @@
 package com.example.quickcash;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -11,14 +12,22 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.quickcash.databinding.ActivityMainBinding;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private DatabaseReference dbUserRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //accessing user database reference from string passed from login
+        Intent intent = getIntent();
+        String userRefURL = intent.getStringExtra("userRef");
+        dbUserRef = FirebaseDatabase.getInstance().getReferenceFromUrl(userRefURL);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

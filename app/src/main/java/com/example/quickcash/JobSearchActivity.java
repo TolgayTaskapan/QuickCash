@@ -33,10 +33,10 @@ public class JobSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_search_page);
 
-        //accessing user database reference from string passed from login
-        Intent intent = getIntent();
-        String userRefURL = intent.getStringExtra("userRef");
-        dbUserRef = FirebaseDatabase.getInstance().getReferenceFromUrl(userRefURL);
+//        //accessing user database reference from string passed from login
+//        Intent intent = getIntent();
+//        String userRefURL = intent.getStringExtra("userRef");
+//        dbUserRef = FirebaseDatabase.getInstance().getReferenceFromUrl(userRefURL);
 
         FloatingActionButton logoutButton = findViewById(R.id.logoutButton);
         FloatingActionButton addButton = findViewById(R.id.addButton);
