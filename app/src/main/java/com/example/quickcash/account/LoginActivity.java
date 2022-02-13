@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.quickcash.JobSearchActivity;
 import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
 import com.example.quickcash.aid.FirebaseUtil;
@@ -193,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
         dbUser.updateChildren(userLoginUpdate);
         System.out.println(dbUser.toString());
 
-        jumpToJobSearchActivity(dbUser);
+        jumpToMainActivity(dbUser);
     }
 
     public void loginAsEmployee(DatabaseReference dbUser){
@@ -201,7 +200,7 @@ public class LoginActivity extends AppCompatActivity {
         userLoginUpdate.put("logged", true);
         dbUser.updateChildren(userLoginUpdate);
 
-        jumpToJobSearchActivity(dbUser);
+        jumpToMainActivity(dbUser);
     }
 
     protected void jumpToJobSearchActivity( DatabaseReference dbUser) {
