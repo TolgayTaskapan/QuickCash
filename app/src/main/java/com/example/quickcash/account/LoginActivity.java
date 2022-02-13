@@ -192,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
         dbUser.updateChildren(userLoginUpdate);
         System.out.println(dbUser.toString());
 
-        jumpToMainActivity(dbUser);
+        jumpToJobSearchActivity(dbUser);
     }
 
     public void loginAsEmployee(DatabaseReference dbUser){
@@ -200,7 +200,7 @@ public class LoginActivity extends AppCompatActivity {
         userLoginUpdate.put("logged", true);
         dbUser.updateChildren(userLoginUpdate);
 
-        jumpToMainActivity(dbUser);
+        jumpToJobSearchActivity(dbUser);
     }
 
     protected void jumpToJobSearchActivity( DatabaseReference dbUser) {
