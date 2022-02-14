@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuickCash">
         <activity
+            android:name=".JobPostActivity"
+            android:exported="false" />
+        <activity
             android:name=".JobSearchActivity"
             android:exported="false" />
         <activity

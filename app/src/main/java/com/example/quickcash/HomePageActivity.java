@@ -2,6 +2,7 @@ package com.example.quickcash;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -34,7 +35,7 @@ public class HomePageActivity extends AppCompatActivity {
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                jumpToJobSearchPage();
+                jumpToJobPostPage();
             }
         });
     }
@@ -54,6 +55,12 @@ public class HomePageActivity extends AppCompatActivity {
     protected void jumpToJobSearchPage() {
         Intent intent = new Intent();
         intent.setClass(HomePageActivity.this, JobSearchActivity.class);
+        startActivity(intent);
+    }
+
+    protected void jumpToJobPostPage() {
+        Intent intent = new Intent();
+        intent.setClass(HomePageActivity.this, JobPostActivity.class);
         startActivity(intent);
     }
 }
