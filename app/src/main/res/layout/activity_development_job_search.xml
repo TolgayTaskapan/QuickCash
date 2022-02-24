@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="Job Type"
-        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintBottom_toTopOf="@+id/job_type_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.161"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +91,7 @@
         app:layout_constraintVertical_bias="0.049" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/job_type_list"
         android:layout_width="296dp"
         android:layout_height="24dp"
         app:layout_constraintBottom_toBottomOf="parent"

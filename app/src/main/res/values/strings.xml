@@ -21,4 +21,9 @@
         <item>Employee</item>
         <item>Employer</item>
     </string-array>
+    <string-array name="job_type_entries">
+        <item>Full-Time or Part-Time</item>
+        <item>Full-Time</item>
+        <item>Part-Time</item>
+    </string-array>
 </resources>
