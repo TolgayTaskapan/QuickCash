@@ -42,6 +42,6 @@ public class developmentJobSearchActivity extends AppCompatActivity {
 
         distance_spinner.setAdapter(distance_adapter);
 
-        
+
     }
 }
