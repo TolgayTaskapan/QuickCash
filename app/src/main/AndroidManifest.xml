@@ -19,6 +19,9 @@
             android:name=".account.LoginActivity"
             android:exported="false" />
         <activity
+            android:name=".jobSearchUS2.developmentJobSearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true" />
         <activity
