@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Job Length"
-        app:layout_constraintBottom_toTopOf="@+id/spinner4"
+        app:layout_constraintBottom_toTopOf="@+id/job_length_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.167"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.957" />
 
     <Spinner
-        android:id="@+id/spinner4"
+        android:id="@+id/job_length_list"
         android:layout_width="296dp"
         android:layout_height="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,7 +30,7 @@
         app:layout_constraintVertical_bias="0.653" />
 
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/distance_list"
         android:layout_width="296dp"
         android:layout_height="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hourly Wage"
-        app:layout_constraintBottom_toTopOf="@+id/spinner2"
+        app:layout_constraintBottom_toTopOf="@+id/hourly_wages_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.172"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
         app:layout_constraintVertical_bias="0.94" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/hourly_wages_list"
         android:layout_width="296dp"
         android:layout_height="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -106,7 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Distance"
-        app:layout_constraintBottom_toTopOf="@+id/spinner3"
+        app:layout_constraintBottom_toTopOf="@+id/distance_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.161"
         app:layout_constraintStart_toStartOf="parent"
@@ -122,6 +122,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner4"
+        app:layout_constraintTop_toBottomOf="@+id/job_length_list"
         app:layout_constraintVertical_bias="0.321" />
 </androidx.constraintlayout.widget.ConstraintLayout>

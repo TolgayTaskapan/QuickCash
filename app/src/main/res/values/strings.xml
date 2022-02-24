@@ -26,4 +26,19 @@
         <item>Full-Time</item>
         <item>Part-Time</item>
     </string-array>
+
+    <string-array name="hourly_wages_entries">
+        <item>$12.95 and up</item>
+        <item>$15.00 and up</item>
+        <item>$17.00 and up</item>
+        <item>$20.00 and up</item>
+        <item>$25.00 and up</item>
+        <item>$30.00 and up</item>
+    </string-array>
+    <string-array name="distance_entries">
+        <item>1 KM</item>
+        <item>3 KM</item>
+        <item>5 KM</item>
+        <item>10 KM and above</item>
+    </string-array>
 </resources>
