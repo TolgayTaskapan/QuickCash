@@ -7,14 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-public class HomePageActivity extends AppCompatActivity {
+import com.example.quickcash.account.LoginActivity;
+import com.example.quickcash.account.SignupActivity;
+
+public class LandingPageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_landing_page);
         Button signUpButton = findViewById(R.id.signUpButton);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,31 +32,17 @@ public class HomePageActivity extends AppCompatActivity {
                 jumpToLoginPage();
             }
         });
-
-        Button postButton = findViewById(R.id.postButton);
-        postButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jumpToJobPostPage();
-            }
-        });
     }
 
     protected void jumpToRegistrationPage() {
         Intent intent = new Intent();
-        intent.setClass(HomePageActivity.this, RegistrationPageActivity.class);
+        intent.setClass(LandingPageActivity.this, SignupActivity.class);
         startActivity(intent);
     }
 
     protected void jumpToLoginPage() {
         Intent intent = new Intent();
-        intent.setClass(HomePageActivity.this, LoginActivity.class);
-        startActivity(intent);
-    }
-
-    protected void jumpToJobSearchPage() {
-        Intent intent = new Intent();
-        intent.setClass(HomePageActivity.this, JobSearchActivity.class);
+        intent.setClass(LandingPageActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 

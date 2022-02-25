@@ -1,17 +1,18 @@
-package com.example.quickcash;
+package com.example.quickcash.account;
 
 import android.content.Context;
 
+import com.example.quickcash.R;
 import com.google.firebase.database.DatabaseReference;
 
 
-public class UserRegistrationValidator {
+public class SignupValidator {
 
     private final Context context;
     private String errorMsg = "";
-    DatabaseReference database;
+    private DatabaseReference database;
 
-    public UserRegistrationValidator(Context context, DatabaseReference database){
+    public SignupValidator(Context context, DatabaseReference database){
         this.context = context.getApplicationContext();
         this.database = database;
     }
@@ -63,12 +64,7 @@ public class UserRegistrationValidator {
         if (password.matches(lowercase)) i++;
         if (password.matches(symbol)) i++;
 
-        if (i >= 3 ){
-            return true;
-        } else {
-            return false;
-        }
-
+        return i >= 3;
     }
 
     public boolean validateUserDetails(String username, String password) {

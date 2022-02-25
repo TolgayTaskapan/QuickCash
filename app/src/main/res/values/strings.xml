@@ -8,6 +8,37 @@
     <string name="INCORRECT_PASSWORD">Incorrect password. Please try again.</string>
     <string name="EMPTY_STRING"></string>
     <string name="DATABASE_URL">https://quick-cash-ca106-default-rtdb.firebaseio.com</string>
-    <string name="CANNOT_FIND_ACCOUNT">Non-existent accounts</string>
-    <string name="WRONG_PASSWORD">Password and username do not match</string>
+    <string name="JOB_NAME_REPEATED">Name is repeated.</string>
+    <string name="EMPTY_JOBNAME_OR_DESCRIPTION">Please enter the job name and/or description</string>
+    <string name="INVALID_JOBNAME">The length of Job name must be lower than 20 digits and cannot contain special characters</string>
+    <string name="INVALID_DESCRIPTION">The length of description must be lower than 50 digits</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_jobs">Jobs</string>
+    <string name="logout_button">Logout</string>
+    <string name="landing_page_welcome">Welcome to Quick Cash</string>
+    <string-array name="identity_labels">
+        <item>Employee</item>
+        <item>Employer</item>
+    </string-array>
+    <string-array name="job_type_entries">
+        <item>Full-Time or Part-Time</item>
+        <item>Full-Time</item>
+        <item>Part-Time</item>
+    </string-array>
+
+    <string-array name="hourly_wages_entries">
+        <item>$12.95 and up</item>
+        <item>$15.00 and up</item>
+        <item>$17.00 and up</item>
+        <item>$20.00 and up</item>
+        <item>$25.00 and up</item>
+        <item>$30.00 and up</item>
+    </string-array>
+    <string-array name="distance_entries">
+        <item>1 KM</item>
+        <item>3 KM</item>
+        <item>5 KM</item>
+        <item>10 KM and above</item>
+    </string-array>
 </resources>

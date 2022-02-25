@@ -10,16 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuickCash">
         <activity
-            android:name=".JobPostActivity"
+            android:name=".JobPostingActivity"
             android:exported="false" />
         <activity
             android:name=".JobSearchActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".account.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".HomePageActivity"
+            android:name=".jobSearchUS2.developmentJobSearchActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LandingPageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistrationPageActivity" />
+        <activity android:name=".account.SignupActivity" />
     </application>
 
 </manifest>
