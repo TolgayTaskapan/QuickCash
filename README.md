@@ -13,7 +13,7 @@
 | Yilong Su                   | B00837331 | yl480546@dal.ca     |
 | Taicheng Zhu                | B00797906 | tc512621@dal.ca     |
 | Carmahn McCalla             | right baz | cmccalla@dal.ca     |
-| Md Asef Jawad               | right baz | as706574@dal.ca     |
+| Md Asef Jawad               | B00856362 | as706574@dal.ca     |
 | Deonte Diggs                | right baz | dn566375@dal.ca     |
 
 Quick Cash for Course Project
@@ -23,3 +23,4 @@ This is a test to ensure pulling from remote repo is good
 Tylers test
 Yilong test
 Taicheng test
+Asef test
