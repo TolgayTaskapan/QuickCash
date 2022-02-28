@@ -9,12 +9,12 @@
 
 |            Name             | BannerID  |        Email        |
 | --------------------------- |:----------| ------------------- |
-| Tyler Johnson (Team Leader) | right fo  | TylerJohnson@dal.ca |
+| Tyler Johnson (Team Leader) | B00905914 | TylerJohnson@dal.ca |
 | Yilong Su                   | B00837331 | yl480546@dal.ca     |
 | Taicheng Zhu                | B00797906 | tc512621@dal.ca     |
-| Carmahn McCalla             | right baz | cmccalla@dal.ca     |
+| Tolgay Taskapan             | right baz | tl852782@dal.ca     |
 | Md Asef Jawad               | B00856362 | as706574@dal.ca     |
-| Deonte Diggs                | right baz | dn566375@dal.ca     |
+| Shawn Matheson              | right baz | sh785058@dal.ca     |
 
 Quick Cash for Course Project
 
