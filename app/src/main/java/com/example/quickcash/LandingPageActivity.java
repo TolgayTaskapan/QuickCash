@@ -48,7 +48,7 @@ public class LandingPageActivity extends AppCompatActivity {
 
     protected void jumpToJobPostPage() {
         Intent intent = new Intent();
-        intent.setClass(HomePageActivity.this, JobPostActivity.class);
+        intent.setClass(LandingPageActivity.this, JobPostingActivity.class);
         startActivity(intent);
     }
 }

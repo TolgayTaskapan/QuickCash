@@ -40,7 +40,7 @@ public class JobPostingValidator {
         return description.length() <= 50;
     }
 
-    public boolean validateJobDetails(String Jobname, String description) {
+    public boolean validateJobDetails(String title, String salary, String startDate,  String location, String duration, String description){
 
         boolean validJob = false;
         if (isEmptyJobname(Jobname) || isEmptyDescription(description)) {

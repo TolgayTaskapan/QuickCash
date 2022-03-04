@@ -1,4 +1,4 @@
-package com.example.quickcash.account;
+package com.example.quickcash.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,13 +12,13 @@ public class SharedPreferenceUtil {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
     }
 
-    static void setLoginStatus(Context ctx, Boolean isLoggedIn){
+    public static void setLoginStatus(Context ctx, Boolean isLoggedIn){
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putBoolean(LOGIN_ATTRIBUTE, isLoggedIn);
         editor.apply();
     }
 
-    static boolean isLoggedIn(Context ctx){
+    public static boolean isLoggedIn(Context ctx){
         return getSharedPreferences(ctx).getBoolean(LOGIN_ATTRIBUTE, false);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.quickcash.aid;
+package com.example.quickcash.util;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
