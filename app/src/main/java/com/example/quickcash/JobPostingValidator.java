@@ -23,8 +23,8 @@ public class JobPostingValidator {
         return Jobname.isEmpty();
     }
 
-    public static boolean isEmptyDescription(String description){
-        return description.isEmpty();
+    public static boolean isEmptyJobtype(String Jobtype){
+        return Jobtype.isEmpty();
     }
 
     public static boolean isValidJobname(String Jobname){
@@ -36,18 +36,18 @@ public class JobPostingValidator {
         return !Jobname.matches(symbol);
     }
 
-    public static boolean isValidDescription(String description){
-        return description.length() <= 50;
+    public static boolean isValidJobtype(String Jobtype){
+        return Jobtype.length() <= 20;
     }
 
-    public boolean validateJobDetails(String title, String salary, String startDate,  String location, String duration, String description){
+    public boolean validateJobDetails(String title, String type){
 
         boolean validJob = false;
-        if (isEmptyJobname(Jobname) || isEmptyDescription(description)) {
+        if (isEmptyJobname(title) || isEmptyJobtype(type)) {
             errorMsg = this.context.getResources().getString(R.string.EMPTY_JOBNAME_OR_DESCRIPTION).trim();
-        } else if (!isValidJobname(Jobname)) {
+        } else if (!isValidJobname(title)) {
             errorMsg = this.context.getResources().getString(R.string.INVALID_JOBNAME).trim();
-        } else if (!isValidDescription(description)) {
+        } else if (!isValidJobtype(type)) {
             errorMsg = this.context.getResources().getString(R.string.INVALID_DESCRIPTION).trim();
         } else {
             validJob = true;

@@ -2,7 +2,6 @@ package com.example.quickcash;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -51,6 +50,7 @@ public class LandingPageActivity extends AppCompatActivity {
         intent.setClass(LandingPageActivity.this, JobPostingActivity.class);
         startActivity(intent);
     }
+
 }
 
 // this is a test to ensure pulling from remote repo works properly

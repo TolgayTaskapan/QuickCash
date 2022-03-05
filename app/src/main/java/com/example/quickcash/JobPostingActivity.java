@@ -4,18 +4,28 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.quickcash.identity.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class JobPostingActivity extends AppCompatActivity {
 
@@ -37,16 +47,29 @@ public class JobPostingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String title = getJobTitle();
-                String salary = getSalaryRange();
-                String startDate = getStartDate();
-                boolean partTime = isPartTime();
-                boolean fullTime = isFullTime();
+                String type = getJobType();
+                double wage = getHourlyWage();
+                try {
+                    Date startDate = getStartDate();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 String location = getLocation();
-                String duration = getDuration();
-                String description = getJobDescription();
+                try {
+                    Long duration = getDuration();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
+                String employer = getEmployer();
+                try {
+                    Date start_date = getStartDate();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
-                boolean validJob = jobPostingValidator.validateJobDetails(title, salary, startDate, location, duration, description);
+                boolean validJob = jobPostingValidator.validateJobDetails(title, type);
                 String error = jobPostingValidator.getErrorMsg();
 
                 setStatusMessage(error);
@@ -57,7 +80,8 @@ public class JobPostingActivity extends AppCompatActivity {
                         if (snapshot.exists()) {
                             setStatusMessage(context.getResources().getString(R.string.JOB_NAME_REPEATED).trim());
                         } else{
-                            if (validJob) saveJob(title, salary, startDate, fullTime, partTime, location, duration, description);
+                            if (validJob)
+                                saveJob(title, wage, type, employer, location, , getUrgency());
                         }
                     }
 
@@ -77,55 +101,58 @@ public class JobPostingActivity extends AppCompatActivity {
         return jobTitleET.getText().toString().trim();
     }
 
-    public String getSalaryRange() {
-        EditText salaryRangedET = findViewById(R.id.salaryRange);
-        return salaryRangedET.getText().toString().trim();
+    public String getJobType() {
+        EditText jobTypeET = findViewById(R.id.jobType2);
+        return jobTypeET.getText().toString().trim();
     }
 
-    public String getStartDate() {
-        EditText startDateET = findViewById(R.id.startDate);
-        return startDateET.getText().toString().trim();
+    public double getHourlyWage() {
+        EditText hourlyWage = findViewById(R.id.hourlyWage2);
+        return Double.parseDouble(hourlyWage.getText().toString().trim());
     }
 
-    public boolean isFullTime(){
-        CheckBox fulltime = findViewById(R.id.fullTime);
-        return fulltime.isChecked();
+    public int getUrgency() {
+        EditText urgency = findViewById(R.id.urgency);
+        return Integer.parseInt(urgency.getText().toString().trim());
     }
 
-    public boolean isPartTime(){
-        CheckBox parttime = findViewById(R.id.partTime);
-        return parttime.isChecked();
+    public Date getStartDate() throws ParseException {
+        EditText startDateET =  findViewById(R.id.startDate2);
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        return df.parse(startDateET.getText().toString().trim());
+    }
+
+    public String getEmployer() {
+        EditText employerET = findViewById(R.id.employer2);
+        return employerET.getText().toString().trim();
     }
 
     public String getLocation() {
-        EditText locationET = findViewById(R.id.location);
+        EditText locationET = findViewById(R.id.location2);
         return locationET.getText().toString().trim();
     }
 
-    public String getDuration() {
+    public Long getDuration() throws ParseException {
         EditText durationET = findViewById(R.id.duration);
-        return durationET.getText().toString().trim();
+        DateFormat df = new SimpleDateFormat("hh:mm:ss", Locale.ENGLISH);
+        return df.parse(durationET.getText().toString().trim()).getTime();
     }
 
-    public String getJobDescription() {
-        EditText jobDescriptionET = findViewById(R.id.jobDescription);
-        return jobDescriptionET.getText().toString().trim();
-    }
     public void initializeDatabase(){
         database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("job");
     }
 
 
-    public void saveJob(String title, String salary, String startDate, boolean fulltime, boolean parttime, String location, String duration, String description){
+    public void saveJob(String title, double hourlyWage, String jobType, User employer, Date startDate, Location location, String duration,  int urgency){
         final DatabaseReference job = database.push();
         job.child("title").setValue(title);
-        job.child("salary").setValue(salary);
+        job.child("jobType").setValue(jobType);
         job.child("startDate").setValue(startDate);
-        job.child("fulltime").setValue(fulltime);
-        job.child("parttime").setValue(parttime);
         job.child("location").setValue(location);
         job.child("duration").setValue(duration);
-        job.child("description").setValue(description);
+        job.child("wage").setValue(hourlyWage);
+        job.child("urgency").setValue(urgency);
+        job.child("employer").setValue(employer);
 
     }
 
