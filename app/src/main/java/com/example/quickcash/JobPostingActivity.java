@@ -56,6 +56,7 @@ public class JobPostingActivity extends AppCompatActivity {
                 }
 
                 String location = getLocation();
+
                 try {
                     Long duration = getDuration();
                 } catch (ParseException e) {
@@ -81,7 +82,7 @@ public class JobPostingActivity extends AppCompatActivity {
                             setStatusMessage(context.getResources().getString(R.string.JOB_NAME_REPEATED).trim());
                         } else{
                             if (validJob)
-                                saveJob(title, wage, type, employer, location, , getUrgency());
+                                saveJob(title, wage, type, employer, location,duration , getUrgency());
                         }
                     }
 
