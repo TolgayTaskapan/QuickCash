@@ -42,30 +42,18 @@ public class JobPostingActivity extends AppCompatActivity {
         context = this.getApplicationContext();
         jobPostingValidator = new JobPostingValidator(context, database);
 
-        Button PostBTN = findViewById(R.id.postJobButton);
+        Button PostBTN = findViewById(R.id.button);
         PostBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String title = getJobTitle();
                 String type = getJobType();
                 double wage = getHourlyWage();
-                try {
-                    Date startDate = getStartDate();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
 
                 String location = getLocation();
 
                 try {
                     Long duration = getDuration();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                String employer = getEmployer();
-                try {
-                    Date start_date = getStartDate();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -81,8 +69,9 @@ public class JobPostingActivity extends AppCompatActivity {
                         if (snapshot.exists()) {
                             setStatusMessage(context.getResources().getString(R.string.JOB_NAME_REPEATED).trim());
                         } else{
-                            if (validJob)
-                                saveJob(title, wage, type, employer, location,duration , getUrgency());
+                            if (validJob) {
+                                //saveJob(title, wage, type, employer, location,duration , getUrgency());
+                            }
                         }
                     }
 
@@ -117,16 +106,6 @@ public class JobPostingActivity extends AppCompatActivity {
         return Integer.parseInt(urgency.getText().toString().trim());
     }
 
-    public Date getStartDate() throws ParseException {
-        EditText startDateET =  findViewById(R.id.startDate2);
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-        return df.parse(startDateET.getText().toString().trim());
-    }
-
-    public String getEmployer() {
-        EditText employerET = findViewById(R.id.employer2);
-        return employerET.getText().toString().trim();
-    }
 
     public String getLocation() {
         EditText locationET = findViewById(R.id.location2);

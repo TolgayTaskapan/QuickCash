@@ -60,12 +60,26 @@
             app:layout_constraintTop_toBottomOf="@+id/jobTitle"
             app:layout_constraintVertical_bias="0.0" />
 
+        <TextView
+            android:id="@+id/job_type_label3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="Type/Category"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/job_type_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.179"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/job_type_list"
+            app:layout_constraintVertical_bias="0.945" />
+
         <Spinner
             android:id="@+id/job_type_list"
-            android:layout_width="296dp"
+            android:layout_width="match_parent"
             android:layout_height="24dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:ems="10"
             app:layout_constraintBottom_toBottomOf="@+id/hourlyWage"
@@ -89,7 +103,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></EditText>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <EditText
             android:id="@+id/hourlyWage2"
@@ -104,39 +118,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/jobTitle"></EditText>
-
-        <EditText
-            android:id="@+id/startDate2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:ems="10"
-            android:hint="Start Date"
-            android:inputType="date"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTime"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hourlyWage" />
-
-        <EditText
-            android:id="@+id/employer2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:ems="10"
-            android:hint="Employer"
-            android:inputType="textPersonName"
-            android:textColorHint="#717171"
-            app:layout_constraintBottom_toTopOf="@+id/postJobButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTime" />
+            app:layout_constraintTop_toBottomOf="@+id/jobTitle"/>
 
         <EditText
             android:id="@+id/duration"

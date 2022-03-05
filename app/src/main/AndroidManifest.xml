@@ -13,7 +13,7 @@
             android:name=".JobPostingActivity"
             android:exported="false" />
         <activity
-            android:name=".JobSearchActivity"
+            android:name=".JobPostDashboardActivity"
             android:exported="false" />
         <activity
             android:name=".account.LoginActivity"
