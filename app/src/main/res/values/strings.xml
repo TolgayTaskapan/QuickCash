@@ -22,9 +22,11 @@
         <item>Employer</item>
     </string-array>
     <string-array name="job_type_entries">
-        <item>Full-Time or Part-Time</item>
-        <item>Full-Time</item>
-        <item>Part-Time</item>
+        <item>Labour</item>
+        <item>Babysitting</item>
+        <item>Pet Care</item>
+        <item>Delivery</item>
+        <item>Tech Help</item>
     </string-array>
 
     <string-array name="hourly_wages_entries">

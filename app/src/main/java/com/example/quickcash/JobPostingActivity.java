@@ -8,10 +8,12 @@ import android.location.Location;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.quickcash.identity.User;
@@ -33,6 +35,8 @@ public class JobPostingActivity extends AppCompatActivity {
     DatabaseReference database;
     Context context;
 
+    private Spinner job_type_spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,16 @@ public class JobPostingActivity extends AppCompatActivity {
 
         context = this.getApplicationContext();
         jobPostingValidator = new JobPostingValidator(context, database);
+
+        //fill spinners with values
+        job_type_spinner = findViewById(R.id.job_type_list);
+
+        ArrayAdapter<CharSequence> job_type_adapter = ArrayAdapter.createFromResource(this, R.array.job_type_entries,
+                android.R.layout.simple_spinner_item);
+
+        job_type_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        job_type_spinner.setAdapter(job_type_adapter);
 
         Button PostBTN = findViewById(R.id.button);
         PostBTN.setOnClickListener(new View.OnClickListener() {
