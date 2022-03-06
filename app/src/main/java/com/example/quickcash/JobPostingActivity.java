@@ -7,6 +7,7 @@ import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.quickcash.identity.User;
 import com.google.firebase.database.DataSnapshot;
@@ -67,31 +69,18 @@ public class JobPostingActivity extends AppCompatActivity {
                 int duration = getDuration();
                 String location = getLocation();
                 double latitude = getLatFromLocation(location);
-                double longitude = 0;
+                double longitude = getLongFromLocation(location);
 
-                boolean validJob = jobPostingValidator.validateJobDetails(title, type);
+                boolean validJob = jobPostingValidator.validateJobDetails(title, type, wage, location, latitude, longitude);
                 String error = jobPostingValidator.getErrorMsg();
 
-                setStatusMessage(error);
+                displayToast(error);
 
-                database.orderByChild("jobname").equalTo(title).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            setStatusMessage(context.getResources().getString(R.string.JOB_NAME_REPEATED).trim());
-                        } else{
-                            if (validJob)
-                                saveJob(title, wage, type, duration, urgency, latitude, longitude);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        System.out.println("Error is connecting to database");
-                    }
-
-                });
+                if (validJob) {
+                    saveJob(title, wage, type, duration, urgency, latitude, longitude);
+                }
             }
+
         });
 
     }
@@ -107,7 +96,7 @@ public class JobPostingActivity extends AppCompatActivity {
     }
 
     public double getHourlyWage() {
-        EditText hourlyWage = findViewById(R.id.hourlyWage2);
+        EditText hourlyWage = findViewById(R.id.hourlyWage);
         return Double.parseDouble(hourlyWage.getText().toString().trim());
     }
 
@@ -118,7 +107,7 @@ public class JobPostingActivity extends AppCompatActivity {
 
 
     public String getLocation() {
-        EditText locationET = findViewById(R.id.location2);
+        EditText locationET = findViewById(R.id.location);
         return locationET.getText().toString().trim();
     }
 
@@ -133,6 +122,11 @@ public class JobPostingActivity extends AppCompatActivity {
          return locationAddress.getLongOrLat(location, getApplicationContext(), "latitude");
     }
 
+    private double getLongFromLocation(String location){
+        GeoCodeLocation locationAddress = new GeoCodeLocation();
+        return locationAddress.getLongOrLat(location, getApplicationContext(), "longitude");
+    }
+
     public void initializeDatabase(){
         database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("job");
     }
@@ -140,8 +134,10 @@ public class JobPostingActivity extends AppCompatActivity {
 
     public void saveJob(String title, double hourlyWage, String jobType, int duration,  String urgency, double latitude, double longitude){
         final DatabaseReference job = database.push();
-        System.out.println(latitude);
-        System.out.println(longitude);
+
+        String results = latitude + " " + longitude;
+        displayToast(results);
+        Log.i("results:", results);
 //        job.child("title").setValue(title);
 //        job.child("jobType").setValue(jobType);
 //        job.child("duration").setValue(duration);
@@ -152,9 +148,13 @@ public class JobPostingActivity extends AppCompatActivity {
 
     }
 
-    public void setStatusMessage(String message) {
-        TextView statusLabel = findViewById(R.id.statusLabel);
-        statusLabel.setText(message.trim());
+//    public void setStatusMessage(String message) {
+//        TextView statusLabel = findViewById(R.id.statusLabel);
+//        statusLabel.setText(message.trim());
+//    }
+
+    public void displayToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
 }
