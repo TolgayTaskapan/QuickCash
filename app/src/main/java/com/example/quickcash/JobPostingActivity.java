@@ -144,6 +144,8 @@ public class JobPostingActivity extends AppCompatActivity {
     public void saveJob(String title, double hourlyWage, String jobType, int duration,  String urgency, double latitude, double longitude){
         final DatabaseReference job = database.push();
 
+        JobPost jobPost = new JobPost(title, jobType, hourlyWage, duration, latitude, longitude);
+
         job.child("title").setValue(title);
         job.child("jobType").setValue(jobType);
         job.child("duration").setValue(duration);
