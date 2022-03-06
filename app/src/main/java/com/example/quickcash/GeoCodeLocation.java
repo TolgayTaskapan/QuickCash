@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 class GeoCodeLocation {
     private static final String TAG = "GeoCodeLocation";
+
     public static void getAddressFromLocation(final String locationAddress, final Context context, final Handler handler) {
         Thread thread = new Thread() {
             @Override
@@ -53,4 +54,25 @@ class GeoCodeLocation {
         };
         thread.start();
     }
+
+    public double getLongOrLat(final String locationAddress, final Context context, String latOrLong) {
+        Geocoder geocoder = new Geocoder(context,
+                Locale.getDefault());
+        double result = 0;
+        try {
+            List addressList = geocoder.getFromLocationName(locationAddress, 1);
+            if (addressList != null && addressList.size() > 0) {
+                Address address = (Address) addressList.get(0);
+                if (latOrLong.equals("latitude")){
+                   result  = address.getLatitude();
+                } else {
+                    result = address.getLongitude();
+                }
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Unable to connect to Geocoder", e);
+        }
+        return result;
+    }
+
 }

@@ -28,7 +28,7 @@
             android:textColor="#673AB7" />
 
         <EditText
-            android:id="@+id/jobTitle2"
+            android:id="@+id/jobTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

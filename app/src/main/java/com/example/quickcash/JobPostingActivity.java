@@ -65,7 +65,8 @@ public class JobPostingActivity extends AppCompatActivity {
                 double wage = getHourlyWage();
                 String urgency = getUrgency();
                 int duration = getDuration();
-                double latitude = 0;
+                String location = getLocation();
+                double latitude = getLatFromLocation(location);
                 double longitude = 0;
 
                 boolean validJob = jobPostingValidator.validateJobDetails(title, type);
@@ -92,6 +93,7 @@ public class JobPostingActivity extends AppCompatActivity {
                 });
             }
         });
+
     }
 
 
@@ -126,6 +128,11 @@ public class JobPostingActivity extends AppCompatActivity {
         return Integer.parseInt(durationString);
     }
 
+    private double getLatFromLocation(String location){
+        GeoCodeLocation locationAddress = new GeoCodeLocation();
+         return locationAddress.getLongOrLat(location, getApplicationContext(), "latitude");
+    }
+
     public void initializeDatabase(){
         database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("job");
     }
@@ -133,13 +140,15 @@ public class JobPostingActivity extends AppCompatActivity {
 
     public void saveJob(String title, double hourlyWage, String jobType, int duration,  String urgency, double latitude, double longitude){
         final DatabaseReference job = database.push();
-        job.child("title").setValue(title);
-        job.child("jobType").setValue(jobType);
-        job.child("duration").setValue(duration);
-        job.child("wage").setValue(hourlyWage);
-        job.child("urgency").setValue(urgency);
-        job.child("latitude").setValue(latitude);
-        job.child("longitude").setValue(longitude);
+        System.out.println(latitude);
+        System.out.println(longitude);
+//        job.child("title").setValue(title);
+//        job.child("jobType").setValue(jobType);
+//        job.child("duration").setValue(duration);
+//        job.child("wage").setValue(hourlyWage);
+//        job.child("urgency").setValue(urgency);
+//        job.child("latitude").setValue(latitude);
+//        job.child("longitude").setValue(longitude);
 
     }
 
