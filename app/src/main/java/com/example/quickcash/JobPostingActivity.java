@@ -64,19 +64,24 @@ public class JobPostingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String title = getJobTitle();
                 String type = getJobType();
-                double wage = getHourlyWage();
+
+                String strWage = getHourlyWage();
+                double wage = 0.00;
+
                 String urgency = getUrgency();
                 int duration = getDuration();
+
                 String location = getLocation();
                 double latitude = getLatFromLocation(location);
                 double longitude = getLongFromLocation(location);
 
-                boolean validJob = jobPostingValidator.validateJobDetails(title, type, wage, location, latitude, longitude);
+                boolean validJob = jobPostingValidator.validateJobDetails(title, type, strWage, location, latitude, longitude);
                 String error = jobPostingValidator.getErrorMsg();
 
                 displayToast(error);
 
                 if (validJob) {
+                    wage = convertWageToDouble(strWage);
                     saveJob(title, wage, type, duration, urgency, latitude, longitude);
                 }
             }
@@ -95,9 +100,13 @@ public class JobPostingActivity extends AppCompatActivity {
         return job_type_spinner.getSelectedItem().toString();
     }
 
-    public double getHourlyWage() {
+    public String getHourlyWage() {
         EditText hourlyWage = findViewById(R.id.hourlyWage);
-        return Double.parseDouble(hourlyWage.getText().toString().trim());
+        return hourlyWage.getText().toString().trim();
+    }
+
+    public double convertWageToDouble(String wage) {
+        return Double.parseDouble(wage);
     }
 
     public String getUrgency() {
