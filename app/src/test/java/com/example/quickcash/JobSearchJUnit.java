@@ -5,17 +5,17 @@ import org.junit.Test;
 public class JobSearchJUnit {
 
     @Test
-    public void checkQueryWithUserSelections {
+    public void checkQueryWithUserSelections() {
 
     }
 
     @Test
-    public void findUserDistance {
+    public void findUserDistance() {
 
     }
 
     @Test
-    public void checkQueryNoSelections {
+    public void checkQueryNoSelections() {
 
     }
 }
