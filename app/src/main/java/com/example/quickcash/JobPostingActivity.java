@@ -78,7 +78,11 @@ public class JobPostingActivity extends AppCompatActivity {
                 boolean validJob = jobPostingValidator.validateJobDetails(title, type, strWage, location, latitude, longitude);
                 String error = jobPostingValidator.getErrorMsg();
 
-                displayToast(error);
+                if (!error.equals("")) {
+                    displayToast(error);
+                } else {
+                    displayToast(context.getResources().getString(R.string.JOB_POST_SUCCESS).trim());
+                }
 
                 if (validJob) {
                     wage = convertWageToDouble(strWage);

@@ -44,12 +44,8 @@ public class JobPostingValidator {
         return !Jobname.matches(symbol);
     }
 
-    public static boolean isValidJobtype(String Jobtype){
-        return Jobtype.length() <= 20;
-    }
-
     public static boolean isValidWage(double wage){
-        return wage >= 0.00;
+        return wage > 0.00;
     }
 
     public static boolean isValidCoordinates(double latitude, double longitude){
@@ -58,30 +54,33 @@ public class JobPostingValidator {
 
     public boolean validateJobDetails(String title, String type, String wage, String location, double latitude, double longitude){
 
-        boolean validJob = false;
+        double dWage = 0.00;
+        errorMsg = context.getResources().getString(R.string.EMPTY_STRING).trim();
         if (isEmptyJobname(title) || isEmptyJobtype(type)) {
             errorMsg = this.context.getResources().getString(R.string.EMPTY_JOBNAME_OR_DESCRIPTION).trim();
-        } else if (!isEmptyWage(wage)){
+            return false;
+        } else if (isEmptyWage(wage)){
             errorMsg = this.context.getResources().getString(R.string.EMPTY_WAGE).trim();
-        } else if (!isEmptyLocation(location)){
+            return false;
+        } else if (isEmptyLocation(location)){
             errorMsg = this.context.getResources().getString(R.string.EMPTY_LOCATION).trim();
+            return false;
         } else if (!isValidJobname(title)) {
             errorMsg = this.context.getResources().getString(R.string.INVALID_JOBNAME).trim();
+            return false;
+        } else {
+            dWage = Double.parseDouble(wage);
         }
 
-        double dWage = Double.parseDouble(wage);
-
-        if (!isValidJobtype(type)) {
-            errorMsg = this.context.getResources().getString(R.string.INVALID_DESCRIPTION).trim();
-        } else if (!isValidWage(dWage)) {
+        if (!isValidWage(dWage)) {
             errorMsg = this.context.getResources().getString(R.string.INVALID_WAGE).trim();
+            return false;
         } else if (!isValidCoordinates(latitude, longitude)){
             errorMsg = this.context.getResources().getString(R.string.INVALID_LOCATION).trim();
+            return false;
         } else {
-            validJob = true;
-            errorMsg = context.getResources().getString(R.string.EMPTY_STRING).trim();
+            return true;
         }
 
-        return validJob;
     }
 }
