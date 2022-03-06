@@ -21,7 +21,7 @@ public class JobPostDashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_job_search_page);
+        setContentView(R.layout.activity_job_dashboard);
 
 //        //accessing user database reference from string passed from login
 //        Intent intent = getIntent();

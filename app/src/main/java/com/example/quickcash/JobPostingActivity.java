@@ -63,14 +63,10 @@ public class JobPostingActivity extends AppCompatActivity {
                 String title = getJobTitle();
                 String type = getJobType();
                 double wage = getHourlyWage();
-
-                String location = getLocation();
-
-                try {
-                    Long duration = getDuration();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                String urgency = getUrgency();
+                int duration = getDuration();
+                double latitude = 0;
+                double longitude = 0;
 
                 boolean validJob = jobPostingValidator.validateJobDetails(title, type);
                 String error = jobPostingValidator.getErrorMsg();
@@ -83,9 +79,8 @@ public class JobPostingActivity extends AppCompatActivity {
                         if (snapshot.exists()) {
                             setStatusMessage(context.getResources().getString(R.string.JOB_NAME_REPEATED).trim());
                         } else{
-                            if (validJob) {
-                                //saveJob(title, wage, type, employer, location,duration , getUrgency());
-                            }
+                            if (validJob)
+                                saveJob(title, wage, type, duration, urgency, latitude, longitude);
                         }
                     }
 
@@ -105,9 +100,8 @@ public class JobPostingActivity extends AppCompatActivity {
         return jobTitleET.getText().toString().trim();
     }
 
-    public String getJobType() {
-        EditText jobTypeET = findViewById(R.id.jobType2);
-        return jobTypeET.getText().toString().trim();
+    public String getJobType(){
+        return job_type_spinner.getSelectedItem().toString();
     }
 
     public double getHourlyWage() {
@@ -115,9 +109,9 @@ public class JobPostingActivity extends AppCompatActivity {
         return Double.parseDouble(hourlyWage.getText().toString().trim());
     }
 
-    public int getUrgency() {
+    public String getUrgency() {
         EditText urgency = findViewById(R.id.urgency);
-        return Integer.parseInt(urgency.getText().toString().trim());
+        return urgency.getText().toString().trim();
     }
 
 
@@ -126,10 +120,10 @@ public class JobPostingActivity extends AppCompatActivity {
         return locationET.getText().toString().trim();
     }
 
-    public Long getDuration() throws ParseException {
+    public int getDuration() {
         EditText durationET = findViewById(R.id.duration);
-        DateFormat df = new SimpleDateFormat("hh:mm:ss", Locale.ENGLISH);
-        return df.parse(durationET.getText().toString().trim()).getTime();
+        String durationString = durationET.getText().toString().trim();
+        return Integer.parseInt(durationString);
     }
 
     public void initializeDatabase(){
@@ -137,16 +131,15 @@ public class JobPostingActivity extends AppCompatActivity {
     }
 
 
-    public void saveJob(String title, double hourlyWage, String jobType, User employer, Date startDate, Location location, String duration,  int urgency){
+    public void saveJob(String title, double hourlyWage, String jobType, int duration,  String urgency, double latitude, double longitude){
         final DatabaseReference job = database.push();
         job.child("title").setValue(title);
         job.child("jobType").setValue(jobType);
-        job.child("startDate").setValue(startDate);
-        job.child("location").setValue(location);
         job.child("duration").setValue(duration);
         job.child("wage").setValue(hourlyWage);
         job.child("urgency").setValue(urgency);
-        job.child("employer").setValue(employer);
+        job.child("latitude").setValue(latitude);
+        job.child("longitude").setValue(longitude);
 
     }
 

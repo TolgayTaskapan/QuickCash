@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.jobs.JobsFragment">
 
-   <include layout="@layout/activity_job_search_page" />
+   <include layout="@layout/activity_job_dashboard" />
 
    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
        android:id="@+id/add_job_btn"
