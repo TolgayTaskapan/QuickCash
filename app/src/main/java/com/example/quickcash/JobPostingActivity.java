@@ -145,21 +145,9 @@ public class JobPostingActivity extends AppCompatActivity {
         final DatabaseReference job = database.push();
 
         JobPost jobPost = new JobPost(title, jobType, hourlyWage, duration, latitude, longitude);
-
-        job.child("title").setValue(title);
-        job.child("jobType").setValue(jobType);
-        job.child("duration").setValue(duration);
-        job.child("wage").setValue(hourlyWage);
-        job.child("urgency").setValue(urgency);
-        job.child("latitude").setValue(latitude);
-        job.child("longitude").setValue(longitude);
+        job.setValue(jobPost);
 
     }
-
-//    public void setStatusMessage(String message) {
-//        TextView statusLabel = findViewById(R.id.statusLabel);
-//        statusLabel.setText(message.trim());
-//    }
 
     public void displayToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
