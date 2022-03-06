@@ -1,0 +1,15 @@
+
+s
+java:S1450$"VRemove the "binding" field and declare it as a local variable in the relevant methods.(¶ÃÊ8ˆŸìÎğ/
+X
+java:S18544";Remove this useless assignment to local variable "navView".(‹Å´Í8•ŸìÎğ/
+I
+java:S14814",Remove this unused "navView" local variable.(‹Å´Í8 ŸìÎğ/
+H
+java:S1172?"+Remove this unused method parameter "view".(‰Ì†ä8¬ŸìÎğ/
+H
+java:S1172G"+Remove this unused method parameter "view".(ß†ö8·ŸìÎğ/
+:
+java:S1128"Remove this duplicated import.(ÉÓ¹8»ŸìÎğ/
+I
+java:S1068%"-Remove this unused "dbUserRef" private field.(µ®İm8»ŸìÎğ/
