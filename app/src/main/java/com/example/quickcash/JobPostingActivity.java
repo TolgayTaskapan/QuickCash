@@ -144,16 +144,13 @@ public class JobPostingActivity extends AppCompatActivity {
     public void saveJob(String title, double hourlyWage, String jobType, int duration,  String urgency, double latitude, double longitude){
         final DatabaseReference job = database.push();
 
-        String results = latitude + " " + longitude;
-        displayToast(results);
-        Log.i("results:", results);
-//        job.child("title").setValue(title);
-//        job.child("jobType").setValue(jobType);
-//        job.child("duration").setValue(duration);
-//        job.child("wage").setValue(hourlyWage);
-//        job.child("urgency").setValue(urgency);
-//        job.child("latitude").setValue(latitude);
-//        job.child("longitude").setValue(longitude);
+        job.child("title").setValue(title);
+        job.child("jobType").setValue(jobType);
+        job.child("duration").setValue(duration);
+        job.child("wage").setValue(hourlyWage);
+        job.child("urgency").setValue(urgency);
+        job.child("latitude").setValue(latitude);
+        job.child("longitude").setValue(longitude);
 
     }
 

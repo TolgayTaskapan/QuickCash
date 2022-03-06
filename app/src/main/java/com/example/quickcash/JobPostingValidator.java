@@ -52,6 +52,10 @@ public class JobPostingValidator {
         return wage >= 0.00;
     }
 
+    public static boolean isValidCoordinates(double latitude, double longitude){
+        return latitude != 0.00 || longitude != 0.00;
+    }
+
     public boolean validateJobDetails(String title, String type, String wage, String location, double latitude, double longitude){
 
         boolean validJob = false;
@@ -59,10 +63,20 @@ public class JobPostingValidator {
             errorMsg = this.context.getResources().getString(R.string.EMPTY_JOBNAME_OR_DESCRIPTION).trim();
         } else if (!isEmptyWage(wage)){
             errorMsg = this.context.getResources().getString(R.string.EMPTY_WAGE).trim();
+        } else if (!isEmptyLocation(location)){
+            errorMsg = this.context.getResources().getString(R.string.EMPTY_LOCATION).trim();
         } else if (!isValidJobname(title)) {
             errorMsg = this.context.getResources().getString(R.string.INVALID_JOBNAME).trim();
-        } else if (!isValidJobtype(type)) {
+        }
+
+        double dWage = Double.parseDouble(wage);
+
+        if (!isValidJobtype(type)) {
             errorMsg = this.context.getResources().getString(R.string.INVALID_DESCRIPTION).trim();
+        } else if (!isValidWage(dWage)) {
+            errorMsg = this.context.getResources().getString(R.string.INVALID_WAGE).trim();
+        } else if (!isValidCoordinates(latitude, longitude)){
+            errorMsg = this.context.getResources().getString(R.string.INVALID_LOCATION).trim();
         } else {
             validJob = true;
             errorMsg = context.getResources().getString(R.string.EMPTY_STRING).trim();
