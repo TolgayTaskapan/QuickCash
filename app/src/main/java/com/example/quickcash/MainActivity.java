@@ -23,8 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private DatabaseReference dbUserRef;
-    private FirebaseUtil userFirebase = new FirebaseUtil();
-
+    public static FirebaseUtil userFirebase = new FirebaseUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
