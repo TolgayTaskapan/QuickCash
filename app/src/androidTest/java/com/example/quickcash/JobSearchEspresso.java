@@ -52,7 +52,7 @@ public class JobSearchEspresso{
 
     @BeforeClass
     public static void setup() {
-        dbRef = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("Job");
+        dbRef = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("job");
 
     }
 

@@ -10,6 +10,7 @@ public class FirebaseUtil implements Serializable {
     public static final String FIREBASE_URL = "https://quick-cash-ca106-default-rtdb.firebaseio.com/";
     public static final String EMPLOYEE_COLLECTION = "Employee";
     public static final String EMPLOYER_COLLECTION = "Employer";
+    public static final String JOB_COLLECTION = "job";
 
     private DatabaseReference db;
     private DatabaseReference currentUserRef;

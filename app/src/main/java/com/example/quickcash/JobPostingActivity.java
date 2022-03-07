@@ -1,35 +1,19 @@
 package com.example.quickcash;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.location.Location;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.Time;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.quickcash.identity.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class JobPostingActivity extends AppCompatActivity {
 
@@ -44,6 +28,8 @@ public class JobPostingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_posting);
         initializeDatabase();
+
+        System.out.println(MainActivity.userFirebase.getUsrID());
 
         context = this.getApplicationContext();
         jobPostingValidator = new JobPostingValidator(context, database);
@@ -144,9 +130,8 @@ public class JobPostingActivity extends AppCompatActivity {
     public void saveJob(String title, double hourlyWage, String jobType, int duration,  String urgency, double latitude, double longitude){
         final DatabaseReference job = database.push();
 
-        JobPost jobPost = new JobPost(title, jobType, hourlyWage, duration, latitude, longitude);
+        JobPost jobPost = new JobPost(title, jobType, hourlyWage, duration, latitude, longitude, MainActivity.userFirebase.getUsrID());
         job.setValue(jobPost);
-
     }
 
     public void displayToast(String message) {

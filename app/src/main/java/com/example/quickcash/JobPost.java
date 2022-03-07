@@ -20,11 +20,7 @@ public class JobPost {
     private double latitude;
     private double longitude;
 
-    private String employer_id;
-
-    public JobPost(){
-
-    }
+    private String userID;
 
     public JobPost(String jobTitle, String jobType, double hourlyWage, int duration, double latitude, double longitude) {
         this.jobTitle = jobTitle;
@@ -35,14 +31,14 @@ public class JobPost {
         this.longitude = longitude;
     }
 
-    public JobPost(String jobTitle, String jobType, double hourlyWage, int duration, double latitude, double longitude, String employer_id) {
+    public JobPost(String jobTitle, String jobType, double hourlyWage, int duration, double latitude, double longitude, String usrID){
         this.jobTitle = jobTitle;
         this.jobType = jobType;
         this.hourlyWage = hourlyWage;
         this.duration = duration;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.employer_id = employer_id;
+        this.userID = usrID;
     }
 
     public String getJobTitle() {
@@ -85,10 +81,6 @@ public class JobPost {
         this.duration = duration;
     }
 
-    public String getEmployer_id() {
-        return employer_id;
-    }
-
     public double getLatitude() {
         return latitude;
     }
@@ -105,8 +97,11 @@ public class JobPost {
         this.longitude = longitude;
     }
 
-    public void setEmployer_id(String employer_id) {
-        this.employer_id = employer_id;
+    public String getUserID() {
+        return userID;
     }
 
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 }
