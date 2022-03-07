@@ -38,7 +38,7 @@ public class JobAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_job,parent,false);
+        convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item,parent,false);
         TextView txt_jobTitle = (TextView) convertView.findViewById(R.id.item_job_title);
         TextView txt_jobCategory = (TextView) convertView.findViewById(R.id.item_job_category);
         TextView txt_jobWage = (TextView) convertView.findViewById(R.id.item_job_wage);
