@@ -48,7 +48,10 @@ public class JobsFragment extends Fragment {
         binding = FragmentJobsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        setupCategorySpinner();
+        if ( !setupCategorySpinner() ) {
+            System.out.println("Job Fragment: Fail to set up category spinner");
+        }
+
         retrieveJobsFormFirebase();
 
         return root;
@@ -60,7 +63,9 @@ public class JobsFragment extends Fragment {
         binding = null;
     }
 
-    private void setupCategorySpinner() {
+    private boolean setupCategorySpinner() {
+        boolean setUp = false;
+
         // Create the spinner.
         Spinner spinner = binding.categorySpinner;
         if (spinner != null) {
@@ -75,6 +80,8 @@ public class JobsFragment extends Fragment {
                     selectedCategory = adapterView.getSelectedItem().toString();
                 }
             });
+        } else {
+            return setUp;
         }
 
         // Create ArrayAdapter using the string array and default spinner layout.
@@ -87,7 +94,10 @@ public class JobsFragment extends Fragment {
         // Apply the adapter to the spinner.
         if (spinner != null) {
             spinner.setAdapter(adapter);
+            setUp = true;
         }
+
+        return setUp;
     }
 
     private void showUpJobList() {
