@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +27,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -73,11 +72,13 @@ public class JobsFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     selectedCategory = adapterView.getItemAtPosition(i).toString();
+                    filterTheJobList(selectedCategory);
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
-                    selectedCategory = adapterView.getSelectedItem().toString();
+                    selectedCategory = "Category - All";
+                    System.out.println(selectedCategory);
                 }
             });
         } else {
@@ -100,11 +101,41 @@ public class JobsFragment extends Fragment {
         return setUp;
     }
 
-    private void showUpJobList() {
+    private void filterTheJobList(String category) {
+        LinkedList<JobPost> filteredList = new LinkedList<JobPost>();
+
+        // If null, set to default category, which is all
+        if (category == null || category.equals("Category - All")) {
+            category = "Category - All";
+            showUpJobList(this.mJobs);
+            return;
+        }
+
+        // Go through the jobs to filter out the desired category
+        for (int i = 0; i < mJobs.size(); i++) {
+            JobPost job = mJobs.get(i);
+            if (job.getJobType().equals(category)) {
+                filteredList.add(job);
+            }
+        }
+
+        if (filteredList.size() == 0) {
+            showToastMessage("There is no job under this category");
+        }
+
+        showUpJobList(filteredList);
+        return;
+    }
+
+    private void showToastMessage(String message) {
+        Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    private void showUpJobList(LinkedList<JobPost> inCategory) {
         Context mContext = this.getContext();
         ListView jobListView = (ListView) binding.listJobs;
 
-        jobAdapter = new JobAdapter(mJobs, mContext);
+        jobAdapter = new JobAdapter(inCategory, mContext);
         jobListView.setAdapter(jobAdapter);
     }
 
@@ -125,15 +156,14 @@ public class JobsFragment extends Fragment {
                     String type = iterator.next().getValue(String.class);
                     Double latitude = iterator.next().getValue(Double.class);
                     Double longitude = iterator.next().getValue(Double.class);
-                    iterator.next();
-                    System.out.println(userID);
-                    System.out.println(wage);
-                    System.out.println(title);
-                    System.out.println(type);
+                    iterator.next();    // Skip the userID in Firebase
                     mJobs.add(new JobPost(title,type,wage,duration,latitude,longitude,userID));
                 }
 
-                showUpJobList();
+                Spinner spinner = binding.categorySpinner;
+                spinner.setSelection(0);
+
+                showUpJobList(mJobs);
             }
 
             @Override
