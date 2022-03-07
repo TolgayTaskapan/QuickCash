@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,16 +27,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 public class JobsFragment extends Fragment {
 
     private FragmentJobsBinding binding;
 
     private LinkedList<JobPost> mJobs;
-    private JobAdapter mAdapter;
+    private JobAdapter jobAdapter;
+
+    private String selectedCategory = "Category - All";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +47,10 @@ public class JobsFragment extends Fragment {
 
         binding = FragmentJobsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        if ( !setupCategorySpinner() ) {
+            System.out.println("Job Fragment: Fail to set up category spinner");
+        }
 
         retrieveJobsFormFirebase();
 
@@ -54,12 +63,49 @@ public class JobsFragment extends Fragment {
         binding = null;
     }
 
+    private boolean setupCategorySpinner() {
+        boolean setUp = false;
+
+        // Create the spinner.
+        Spinner spinner = binding.categorySpinner;
+        if (spinner != null) {
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    selectedCategory = adapterView.getItemAtPosition(i).toString();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    selectedCategory = adapterView.getSelectedItem().toString();
+                }
+            });
+        } else {
+            return setUp;
+        }
+
+        // Create ArrayAdapter using the string array and default spinner layout.
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
+                R.array.category_names, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears.
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner.
+        if (spinner != null) {
+            spinner.setAdapter(adapter);
+            setUp = true;
+        }
+
+        return setUp;
+    }
+
     private void showUpJobList() {
         Context mContext = this.getContext();
         ListView jobListView = (ListView) binding.listJobs;
 
-        mAdapter = new JobAdapter(mJobs, mContext);
-        jobListView.setAdapter(mAdapter);
+        jobAdapter = new JobAdapter(mJobs, mContext);
+        jobListView.setAdapter(jobAdapter);
     }
 
     private void retrieveJobsFormFirebase() {
@@ -111,4 +157,6 @@ public class JobsFragment extends Fragment {
             }
         });
     }
+
+
 }

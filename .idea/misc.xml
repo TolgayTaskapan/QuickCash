@@ -22,9 +22,11 @@
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.19010416666666666" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.23278985507246377" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18958333333333333" />
-        <entry key="app/src/main/res/layout/fragment_jobs.xml" value="0.23278985507246377" />
+        <entry key="app/src/main/res/layout/fragment_jobs.xml" value="0.1415651846623075" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.23278985507246377" />
         <entry key="app/src/main/res/layout/item_jobs.xml" value="0.26072285970052084" />
+        <entry key="app/src/main/res/layout/list_category_item.xml" value="0.3542856852213542" />
+        <entry key="app/src/main/res/layout/list_item_category.xml" value="0.30995737711588545" />
         <entry key="app/src/main/res/layout/list_item_job.xml" value="0.2666147867838542" />
         <entry key="app/src/main/res/layout/page_profile_main.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.18958333333333333" />
