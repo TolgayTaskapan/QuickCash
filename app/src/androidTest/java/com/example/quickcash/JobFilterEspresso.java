@@ -10,11 +10,13 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 
 import android.view.View;
@@ -41,25 +43,6 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class JobFilterEspresso {
 
-    private static DatabaseReference db;
-
-    @BeforeClass
-    public static void setup() {
-        db = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child("job");
-        EmployeeAccountLogin();
-        postJobs();
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        clearDatabase();
-        System.gc();
-    }
-
-    private static void clearDatabase() {
-        db.removeValue();
-    }
-
     private static void EmployeeAccountLogin(){
         onView(withId(R.id.loginButton)).perform(click());
         onView(withId(R.id.username)).perform(typeText("Adminmin"));
@@ -67,35 +50,54 @@ public class JobFilterEspresso {
         onView(withId(R.id.employeeLoginButton)).perform(click());
     }
 
-    private static void postJobs(){
-        onView(withId(R.id.addButton)).perform(click());
-        intended(hasComponent(JobPostingActivity.class.getName()));
-
-        onView(withId(R.id.jobTitle)).perform(typeText("Clean"));
-        Espresso.closeSoftKeyboard();
-        onView(withId(R.id.job_type_list)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("Labour"))).perform(click());
-        onView(withId(R.id.location)).perform(typeText("5633 Fenwick St, Halifax, NS B3H 4M2"));
-        onView(withId(R.id.hourlyWage)).perform(typeText("02.00"));
-        onView(withId(R.id.duration)).perform(typeText("1"));
-        Espresso.closeSoftKeyboard();
-        onView(withId(R.id.button)).perform(click());
-    }
-
     @Rule
-    public ActivityTestRule<LandingPageActivity> activityTestRule = new ActivityTestRule<>(LandingPageActivity.class);
+    public IntentsTestRule<LandingPageActivity> myIntentRuleHome = new IntentsTestRule<>(LandingPageActivity.class);
 
     @Test
-    public void listHasJob(){
+    public void selectAllCategory(){
+        EmployeeAccountLogin();
+        onView(withId(R.id.categorySpinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Category - All"))).perform(click());
+        onView(withId(R.id.categorySpinner)).check(matches(withSpinnerText(containsString("Category - All"))));
+    }
+
+    @Test
+    public void selectLabour(){
+        EmployeeAccountLogin();
         onView(withId(R.id.categorySpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("Labour"))).perform(click());
-        onView(withText(R.string.EMPTY_LIST)).inRoot(withDecorView(not(is(this.activityTestRule.getActivity().getWindow().getDecorView())))).check(matches(not(isDisplayed())));
+        onView(withId(R.id.categorySpinner)).check(matches(withSpinnerText(containsString("Labour"))));
     }
 
     @Test
-    public void listHasNoJob(){
+    public void selectBabysitting(){
+        EmployeeAccountLogin();
         onView(withId(R.id.categorySpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("Babysitting"))).perform(click());
-        onView(withText(R.string.EMPTY_LIST)).inRoot(withDecorView(not(is(this.activityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withId(R.id.categorySpinner)).check(matches(withSpinnerText(containsString("Babysitting"))));
+    }
+
+    @Test
+    public void selectPetCare(){
+        EmployeeAccountLogin();
+        onView(withId(R.id.categorySpinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Pet Care"))).perform(click());
+        onView(withId(R.id.categorySpinner)).check(matches(withSpinnerText(containsString("Pet Care"))));
+    }
+
+    @Test
+    public void selectDelivery(){
+        EmployeeAccountLogin();
+        onView(withId(R.id.categorySpinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Delivery"))).perform(click());
+        onView(withId(R.id.categorySpinner)).check(matches(withSpinnerText(containsString("Delivery"))));
+    }
+
+    @Test
+    public void selectTechHelp(){
+        EmployeeAccountLogin();
+        onView(withId(R.id.categorySpinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Tech Help"))).perform(click());
+        onView(withId(R.id.categorySpinner)).check(matches(withSpinnerText(containsString("Tech Help"))));
     }
 }
