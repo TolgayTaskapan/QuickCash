@@ -1,7 +1,10 @@
 package com.example.quickcash.jobSearchUS2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
@@ -9,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quickcash.R;
 
-public class developmentJobSearchActivity extends AppCompatActivity {
+public class JobSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,34 @@ public class developmentJobSearchActivity extends AppCompatActivity {
         distance_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
         distance_spinner.setAdapter(distance_adapter);
+
+        ArrayAdapter<CharSequence> duration_adapter = ArrayAdapter.createFromResource(this, R.array.job_duration_entries,
+                android.R.layout.simple_spinner_item);
+
+        duration_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        job_length_spinner.setAdapter(duration_adapter);
+
+
+        Button job_search = findViewById(R.id.job_search_button);
+
+        job_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String job_type = job_type_spinner.getSelectedItem().toString();
+                String hourly_wages = hourly_wages_spinner.getSelectedItem().toString();
+                String distance = distance_spinner.getSelectedItem().toString();
+                String job_length = job_length_spinner.getSelectedItem().toString();
+
+                Intent intent = new Intent(JobSearchActivity.this, JobSearchResultsActivity.class);
+                intent.putExtra("job_type_key", job_type);
+                intent.putExtra("hourly_wages_key", hourly_wages);
+                intent.putExtra("distance_key", distance);
+                intent.putExtra("job_length_key", job_length);
+
+                startActivity(intent);
+            }
+        });
 
 
     }
