@@ -16,7 +16,7 @@
             android:name=".account.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".jobSearchUS2.JobSearchActivity"
+            android:name=".jobsearch.JobSearchActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
@@ -32,7 +32,7 @@
         </activity>
         <activity android:name=".account.SignupActivity" />
 
-        <activity android:name=".jobSearchUS2.JobSearchResultsActivity"
+        <activity android:name=".jobsearch.JobSearchResultsActivity"
             android:exported="true" />
 
     </application>

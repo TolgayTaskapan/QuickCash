@@ -1,4 +1,4 @@
-package com.example.quickcash.jobSearchUS2;
+package com.example.quickcash.jobsearch;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -72,6 +72,10 @@ public class JobSearchActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+
 
 
     }

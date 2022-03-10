@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.quickcash.account.LoginActivity;
+import com.example.quickcash.jobsearch.JobSearchActivity;
 import com.example.quickcash.util.FirebaseUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -60,4 +61,12 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(postIntent);
     }
+
+    public void openSearchPage(View view) {
+        Intent postIntent = new Intent(this, JobSearchActivity.class);
+
+        startActivity(postIntent);
+    }
+
+
 }
