@@ -13,6 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.quickcash.R;
 
 public class JobSearchActivity extends AppCompatActivity {
+
+    int min_job_length;
+    int max_job_length;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,20 +67,62 @@ public class JobSearchActivity extends AppCompatActivity {
                 String distance = distance_spinner.getSelectedItem().toString();
                 String job_length = job_length_spinner.getSelectedItem().toString();
 
+                double min_wage;
+
+
+                min_wage = assignMinWage(hourly_wages);
+
+                assignMinMaxJobLength(job_length);
+
+
                 Intent intent = new Intent(JobSearchActivity.this, JobSearchResultsActivity.class);
                 intent.putExtra("job_type_key", job_type);
-                intent.putExtra("hourly_wages_key", hourly_wages);
+                intent.putExtra("hourly_wages_key", min_wage);
                 intent.putExtra("distance_key", distance);
-                intent.putExtra("job_length_key", job_length);
+                intent.putExtra("min_job_length_key", min_job_length);
+                intent.putExtra("max_job_length_key", max_job_length);
 
                 startActivity(intent);
             }
         });
 
 
+    }
 
+    public double assignMinWage(String userChoice) {
+        if(userChoice.equals("$12.95 and up")) {
+            return 12.95;
+        }
+        if(userChoice.equals("$15.00 and up")) {
+            return 15.00;
+        }
+        if(userChoice.equals("$17.00 and up")) {
+            return 17.00;
+        }
+        if(userChoice.equals("$20.00 and up")) {
+            return 20.00;
+        }
+        if(userChoice.equals("$25.00 and up")) {
+            return 25.00;
+        }
+        if(userChoice.equals("$30.00 and up")) {
+            return 30.00;
+        }
+        return 0.00;
+    }
 
-
-
+    public void assignMinMaxJobLength(String userChoice, int min, int max) {
+        if(userChoice.equals("1 to 3 days")) {
+            min_job_length = 1;
+            max_job_length = 3;
+        }
+        if(userChoice.equals("3 to 5 days")) {
+            min_job_length = 3;
+            max_job_length = 5;
+        }
+        if(userChoice.equals("7 days or more")) {
+            min_job_length = 7;
+            max_job_length = 999999999;
+        }
     }
 }

@@ -5,3 +5,13 @@ l
 <app/src/test/java/com/example/quickcash/UserSignupJUnit.java,8\2\8229997ecd830894655aea9e3241e61f49cea623
 p
 @app/src/main/java/com/example/quickcash/JobPostingValidator.java,4\d\4d8bb7255b0a5e44b220a3b2aaec9ab7ee281745
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+i
+9app/src/main/java/com/example/quickcash/MainActivity.java,9\d\9d00d73dd1c8282e2a62de5582848b1547a42c5a
+n
+>app/src/main/java/com/example/quickcash/util/FirebaseUtil.java,a\f\afe9046a97ff9357d27277a18f923ad60867b378
+o
+?app/src/main/java/com/example/quickcash/JobPostingActivity.java,7\4\7499369b81fca7b57c1c48e695b4ea30aa811cf7
+p
+@app/src/main/java/com/example/quickcash/LandingPageActivity.java,0\c\0c21bda23d00a5e781e9a809b5681d45cfbf4d79

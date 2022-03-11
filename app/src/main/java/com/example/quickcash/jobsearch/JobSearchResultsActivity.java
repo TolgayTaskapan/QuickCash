@@ -1,13 +1,35 @@
 package com.example.quickcash.jobsearch;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
+import android.provider.Settings;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.quickcash.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,10 +45,23 @@ public class JobSearchResultsActivity extends AppCompatActivity {
     private String distance;
     private String job_length;
 
+    FusedLocationProviderClient fusedLocationProviderClient;
+    ListView searchView;
+    int PERMISSION_ID = 44;
+    double user_latitude;
+    double user_longitude;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_search_results);
+
+        searchView = findViewById(R.id.search_view);
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        getLocation();
+
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             job_type = extras.getString("job_type_key");
@@ -76,15 +111,94 @@ public class JobSearchResultsActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("MissingPermission")
+    private void getLocation() {
+        if(permissionsValid()) {
+            if(isLocationServicesEnabled()) {
+                fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                    @RequiresApi(api = Build.VERSION_CODES.S)
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        Location location = task.getResult();
+                        if(location == null) {
+                            updateLocationData();
+                        }
+                        else {
+                            user_longitude = location.getLongitude();
+                            user_latitude = location.getLatitude();
+                        }
+                    }
+                });
+            }
+            else {
+                Toast.makeText(this, "Turn on location services.", Toast.LENGTH_LONG);
+                Intent settings = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(settings);
+            }
+        }
+        else {
+            getPermissions();
+        }
+    }
 
+    @SuppressLint("MissingPermission")
+    @RequiresApi(api = Build.VERSION_CODES.S)
+    private void updateLocationData() {
+        long intervalMillis = 100000;
+        LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setPriority(com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(5);
+        locationRequest.setFastestInterval(0);
+        locationRequest.setNumUpdates(1);
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+    }
 
+    private LocationCallback locationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            Location lastLocation = locationResult.getLastLocation();
+            user_latitude = lastLocation.getLatitude();
+            user_longitude = lastLocation.getLongitude();
+        }
+    };
 
+    private boolean permissionsValid() {
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED;
+    }
 
+    private void getPermissions() {
+        ActivityCompat.requestPermissions(this, new String[] {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ID);
+    }
 
+    private boolean isLocationServicesEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int getCode, @NonNull String[] permissions, @NonNull int[] results) {
+        super.onRequestPermissionsResult(getCode, permissions, results);
 
+        if(getCode == PERMISSION_ID) {
+            if(results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED) {
+                getLocation();
+            }
+        }
+    }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(permissionsValid()) {
+            getLocation();
+        }
+    }
 
 }
