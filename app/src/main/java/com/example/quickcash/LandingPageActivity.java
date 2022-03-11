@@ -45,12 +45,4 @@ public class LandingPageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    protected void jumpToJobPostPage() {
-        Intent intent = new Intent();
-        intent.setClass(LandingPageActivity.this, JobPostingActivity.class);
-        startActivity(intent);
-    }
-
 }
-
-// this is a test to ensure pulling from remote repo works properly

@@ -5,51 +5,93 @@
     android:layout_marginTop="8dp"
     android:layout_marginBottom="8dp"
     android:background="#F6F6F6"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:id="@+id/post_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/item_job_title"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:textColor="#1D1D1C"
-            android:textSize="20sp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/item_job_category"
+            <TextView
+                android:id="@+id/item_job_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:textColor="#1D1D1C"
+                android:textSize="20sp"
+                tools:text="Lawn Mowing"/>
+
+            <TextView
+                android:id="@+id/item_job_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:textColor="#B4B4B9"
+                android:textSize="14sp"
+                tools:text="Labour"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/item_wage_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:textColor="#B4B4B9"
-            android:textSize="14sp" />
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_job_wage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:textColor="#1D1D1C"
+                android:textSize="20sp"
+                tools:text="$15.00"/>
+        </LinearLayout>
+
+
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="15dp"
-        android:layout_weight="1"
-        android:gravity="right"
-        android:orientation="vertical">
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/item_job_wage"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/updateBtn"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:textColor="#1D1D1C"
-            android:textSize="20sp" />
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/background_light"
+            android:text="Update"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/deleteBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/background_light"
+            android:text="Delete"
+            android:textColor="@color/black" />
     </LinearLayout>
 
 </LinearLayout>

@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -33,6 +34,7 @@ import java.util.LinkedList;
 public class JobsFragment extends Fragment {
 
     private FragmentJobsBinding binding;
+    private final String userID = MainActivity.userFirebase.getUsrID();
 
     private LinkedList<JobPost> mJobs;
     private JobAdapter jobAdapter;
@@ -143,7 +145,7 @@ public class JobsFragment extends Fragment {
         DatabaseReference jobRef = FirebaseDatabase.getInstance(FirebaseUtil.FIREBASE_URL).getReference("job");
         mJobs = new LinkedList<JobPost>();
 
-        jobRef.addChildEventListener(new ChildEventListener() {
+        jobRef.orderByChild("userID").equalTo(userID).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
