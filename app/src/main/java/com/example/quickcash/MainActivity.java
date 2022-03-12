@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openPostPage(View view) {
-        Intent postIntent = new Intent(this, JobPostingActivity.class);
+        Intent postIntent = new Intent(this, AddUpdateJobPostActivity.class);
 
         startActivity(postIntent);
     }

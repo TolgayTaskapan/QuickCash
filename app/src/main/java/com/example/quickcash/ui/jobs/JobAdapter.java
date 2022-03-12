@@ -1,52 +1,111 @@
 package com.example.quickcash.ui.jobs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.quickcash.AddUpdateJobPostActivity;
 import com.example.quickcash.JobPost;
 import com.example.quickcash.R;
+import com.example.quickcash.identity.Employee;
+import com.example.quickcash.util.FirebaseUtil;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.LinkedList;
 
-public class JobAdapter extends BaseAdapter {
+public class JobAdapter extends FirebaseRecyclerAdapter<JobPost, JobAdapter.JobViewHolder> {
     private LinkedList<JobPost> mJob;
     private Context mContext;
 
-    public JobAdapter(LinkedList<JobPost> mJob, Context mContext) {
-        this.mJob = mJob;
-        this.mContext = mContext;
+    /**
+     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
+     * {@link FirebaseRecyclerOptions} for configuration options.
+     *
+     * @param options
+     */
+    public JobAdapter(@NonNull FirebaseRecyclerOptions<JobPost> options) {
+        super(options);
     }
 
-    @Override
-    public int getCount() {
-        return mJob.size();
-    }
+//    public JobAdapter(LinkedList<JobPost> mJob, Context mContext) {
+//        this.mJob = mJob;
+//        this.mContext = mContext;
+//    }
 
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
+//    @Override
+//    public int getCount() {
+//        return mJob.size();
+//    }
+//
+//    @Override
+//    public Object getItem(int position) {
+//        return null;
+//    }
 
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item,parent,false);
-        TextView txt_jobTitle = (TextView) convertView.findViewById(R.id.item_job_title);
-        TextView txt_jobCategory = (TextView) convertView.findViewById(R.id.item_job_category);
-        TextView txt_jobWage = (TextView) convertView.findViewById(R.id.item_job_wage);
-
-        txt_jobTitle.setText(mJob.get(position).getJobTitle());
-        txt_jobCategory.setText(mJob.get(position).getJobType());
-        String wage_str =  "$" + mJob.get(position).getHourlyWage();
-        txt_jobWage.setText(wage_str);
-        return convertView;
+    public JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_job_item, parent, false);
+        return new JobViewHolder(view);
     }
+
+    @Override
+    protected void onBindViewHolder(@NonNull JobViewHolder holder, int position, @NonNull JobPost job) {
+        holder.titleTV.setText(job.getJobTitle());
+        holder.typeTV.setText(job.getJobType());
+        holder.wageTV.setText(String.valueOf(job.getHourlyWage()));
+        holder.updateBtn.setOnClickListener(view -> {
+            final Intent intent = new Intent(holder.context, AddUpdateJobPostActivity.class);
+            intent.putExtra(AddUpdateJobPostActivity.TAG, AddUpdateJobPostActivity.UPDATE_JOB);
+            intent.putExtra(AddUpdateJobPostActivity.UPDATE_JOB_KEY, getRef(position).getKey());
+            intent.putExtra(JobPost.TAG, job);
+            holder.context.startActivity(intent);
+        });
+        holder.deleteBtn.setOnClickListener(view -> FirebaseDatabase.getInstance(FirebaseUtil.FIREBASE_URL)
+                .getReference().child(FirebaseUtil.JOB_COLLECTION)
+                .child(getRef(position).getKey())
+                .removeValue()
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(holder.context, "Job deleted successfully", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(holder.context, "Job delete failed", Toast.LENGTH_SHORT).show()));
+    }
+
+    public class JobViewHolder extends RecyclerView.ViewHolder {
+        private final TextView titleTV;
+        private final TextView typeTV;
+        private final TextView wageTV;
+        private final Button updateBtn;
+        private final Button deleteBtn;
+        private final Context context;
+
+        public JobViewHolder(@NonNull View itemView) {
+            super(itemView);
+            titleTV = itemView.findViewById(R.id.item_job_title);
+            typeTV = itemView.findViewById(R.id.item_job_category);
+            wageTV = itemView.findViewById(R.id.item_job_wage);
+            updateBtn = itemView.findViewById(R.id.updateBtn);
+            deleteBtn = itemView.findViewById(R.id.deleteBtn);
+            context = itemView.getContext();
+        }
+    }
+
+
 }

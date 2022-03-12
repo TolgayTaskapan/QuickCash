@@ -5,14 +5,17 @@ import android.location.Location;
 import com.example.quickcash.identity.Employer;
 import com.example.quickcash.identity.User;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
-public class JobPost {
+public class JobPost implements Serializable {
+    public static final String TAG = "JobPost";
 
     private String jobTitle;
     private String jobType;
     private String urgency;
+    private String location;
 
     private double hourlyWage;
     private int duration;
@@ -21,6 +24,10 @@ public class JobPost {
     private double longitude;
 
     private String userID;
+
+    public JobPost(){
+
+    }
 
     public JobPost(String jobTitle, String jobType, double hourlyWage, int duration, double latitude, double longitude) {
         this.jobTitle = jobTitle;
@@ -31,11 +38,12 @@ public class JobPost {
         this.longitude = longitude;
     }
 
-    public JobPost(String jobTitle, String jobType, double hourlyWage, int duration, double latitude, double longitude, String usrID){
+    public JobPost(String jobTitle, String jobType, double hourlyWage, int duration, String location, double latitude, double longitude, String usrID){
         this.jobTitle = jobTitle;
         this.jobType = jobType;
         this.hourlyWage = hourlyWage;
         this.duration = duration;
+        this.location = location;
         this.latitude = latitude;
         this.longitude = longitude;
         this.userID = usrID;
@@ -55,6 +63,14 @@ public class JobPost {
 
     public void setJobType(String jobType) {
         this.jobType = jobType;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getUrgency() {
