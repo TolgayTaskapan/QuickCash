@@ -111,7 +111,7 @@ public class JobSearchActivity extends AppCompatActivity {
         return 0.00;
     }
 
-    public void assignMinMaxJobLength(String userChoice, int min, int max) {
+    public void assignMinMaxJobLength(String userChoice) {
         if(userChoice.equals("1 to 3 days")) {
             min_job_length = 1;
             max_job_length = 3;
