@@ -44,7 +44,7 @@ public class JobSearchResultsActivity extends AppCompatActivity {
 
     private String job_type;
     private Double min_wage;
-    private String distance;
+    private Double user_distancePref;
     private Integer min_job_length;
     private Integer max_job_length;
 
@@ -77,7 +77,7 @@ public class JobSearchResultsActivity extends AppCompatActivity {
         if(extras != null){
             job_type = extras.getString("job_type_key");
             min_wage = extras.getDouble("hourly_wages_key");
-            distance = extras.getString("distance_key");
+            user_distancePref = extras.getDouble("distance_key");
             min_job_length = extras.getInt("min_job_length");
             max_job_length = extras.getInt("max_job_length_key");
         }
@@ -87,6 +87,26 @@ public class JobSearchResultsActivity extends AppCompatActivity {
              //   jobTitle, jobType, jobDistance);
 
        // searchView.setAdapter(customAdapter);
+
+        /** ArrayList<Location> jobLocations = new ArrayList<>();
+
+         for(int i = 0; i < jobTitle.size(); i++) {
+                Location jobLocation = new Location("location");
+                jobLocation.setLongitude(longitude.get(i));
+                jobLocation.setLatitude(latitude.get(i));
+
+                jobLocations.add(jobLocation);
+        }
+
+        Location userLocation = new Location("User");
+        userLocation.setLatitude(user_latitude);
+        userLocation.setLongitude(user_longitude);
+
+        for(int i = 0; i < jobLocations.size(); i++) {
+            if(userLocation.distanceTo(jobLocations.get(i)) > user_distancePref) {
+
+            }
+        } */
 
         ArrayList<HashMap<String, String>> list = new ArrayList<>();
 
