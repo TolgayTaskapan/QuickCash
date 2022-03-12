@@ -53,12 +53,7 @@ public class JobSearchResultsActivity extends AppCompatActivity {
     private Double user_distancePref;
     private Integer min_job_length;
     private Integer max_job_length;
-
-    ArrayList<Integer> duration;
-    ArrayList<Double> hourlyWage;
-    ArrayList<String> jobTitle;
-    ArrayList<String> jobType;
-    ArrayList<Float> jobDistance;
+    private Boolean jobCheck;
 
     Context mContext;
     ListView searchView;
@@ -78,7 +73,7 @@ public class JobSearchResultsActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(JobSearchResultsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         } else {
-            Toast.makeText(mContext,"You need have granted permission",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mContext,"You need have granted permission",Toast.LENGTH_SHORT).show();
             GPSTracker gps = new GPSTracker(mContext, JobSearchResultsActivity.this);
 
             // Check if GPS enabled
@@ -107,31 +102,33 @@ public class JobSearchResultsActivity extends AppCompatActivity {
         }
         getJobs();
 
-        ArrayList<String> test = new ArrayList<>();
-        test.add("test1");
-        test.add("test2");
-        test.add("test3");
-        test.add("test4");
-        test.add("test5");
+        /*if(jobCheck) {
+            ArrayList<String> test = new ArrayList<>();
+            test.add("test1");
+            test.add("test2");
+            test.add("test3");
+            test.add("test4");
+            test.add("test5");
 
-        ArrayList<HashMap<String, String>> list = new ArrayList<>();
+            ArrayList<HashMap<String, String>> list = new ArrayList<>();
 
-        for(int i = 0; i < test.size(); i++) {
-            HashMap<String, String> item = new HashMap<>();
-            item.put("line1", test.get(0));
-            item.put("line2", test.get(1));
-            item.put("line3", test.get(2));
-            item.put("line4", test.get(3));
-            item.put("line5", test.get(4));
-            list.add(item);
+            for (int i = 0; i < test.size(); i++) {
+                HashMap<String, String> item = new HashMap<>();
+                item.put("line1", test.get(0));
+                item.put("line2", test.get(1));
+                item.put("line3", test.get(2));
+                item.put("line4", test.get(3));
+                item.put("line5", test.get(4));
+                list.add(item);
 
-        }
+            }
 
-        SimpleAdapter simpleAdapter = new SimpleAdapter(this, list, R.layout.job_search_listview,
-                new String[] {"line1", "line2", "line3", "line4", "line5"}, new int[] {R.id.job_title, R.id.job_type, R.id.hourly_wage, R.id.job_distance
-                , R.id.job_duration});
+            SimpleAdapter simpleAdapter = new SimpleAdapter(this, list, R.layout.job_search_listview,
+                    new String[]{"line1", "line2", "line3", "line4", "line5"}, new int[]{R.id.job_title, R.id.job_type, R.id.hourly_wage, R.id.job_distance
+                    , R.id.job_duration});
 
-        searchView.setAdapter(simpleAdapter);
+            searchView.setAdapter(simpleAdapter);
+        }*/
     }
 
     public void getJobs(){
@@ -139,11 +136,12 @@ public class JobSearchResultsActivity extends AppCompatActivity {
         jobRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                duration = new ArrayList<Integer>();
-                hourlyWage = new ArrayList<Double>();
-                jobTitle = new ArrayList<String>();
-                jobType = new ArrayList<String>();
-                jobDistance = new ArrayList<>();
+                ArrayList<Integer> duration = new ArrayList<Integer>();
+                ArrayList<Double> hourlyWage = new ArrayList<Double>();
+                ArrayList<String> jobTitle = new ArrayList<String>();
+                ArrayList<String> jobType = new ArrayList<String>();
+                ArrayList<Float> jobDistance = new ArrayList<>();
+
                 Location userLocation = new Location("User");
                 userLocation.setLatitude(user_latitude);
                 userLocation.setLongitude(user_longitude);
@@ -157,7 +155,6 @@ public class JobSearchResultsActivity extends AppCompatActivity {
                                 jobLocation.setLongitude(ds.child("longitude").getValue(Double.class));
                                 jobLocation.setLatitude(ds.child("latitude").getValue(Double.class));
                                 Toast.makeText(getApplicationContext(),"Distance" + String.valueOf(userLocation.distanceTo(jobLocation)),Toast.LENGTH_LONG).show();
-                                Toast.makeText(getApplicationContext(),"User Choice" + String.valueOf(user_distancePref),Toast.LENGTH_LONG).show();
                                 if (userLocation.distanceTo(jobLocation) <= user_distancePref) {
                                     Toast.makeText(getApplicationContext(),String.valueOf(userLocation.distanceTo(jobLocation)),Toast.LENGTH_LONG).show();
                                     Toast.makeText(getApplicationContext(),ds.child("jobTitle").getValue(String.class),Toast.LENGTH_LONG).show();
@@ -172,28 +169,7 @@ public class JobSearchResultsActivity extends AppCompatActivity {
                         }
                     }
                 }
-                ArrayList<HashMap<String, String>> list = new ArrayList<>();
-
-                for(int i = 0; i < jobTitle.size(); i++) {
-                    HashMap<String, String> item = new HashMap<>();
-
-                    item.put("job_title_hash", jobTitle.get(i));
-                    item.put("job_type_hash", jobType.get(i));
-                    String hourlyWageString = hourlyWage.get(i).toString();
-                    item.put("hourly_wage_hash", hourlyWageString);
-                    String jobDistanceString = jobDistance.get(i).toString();
-                    item.put("job_distance_hash", jobDistanceString);
-                    String jobDurationString = duration.get(i).toString();
-                    item.put("job_duration_hash", jobDurationString);
-                    list.add(item);
-                }
-
-                SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), list, R.layout.job_search_listview,
-                        new String[]{"job_title_hash", "job_type_hash", "hourly_wage_hash", "job_distance_hash"
-                                , "job_duration_hash"}, new int[] {R.id.job_title, R.id.job_type, R.id.hourly_wage, R.id.job_distance
-                        , R.id.job_duration});
-
-                searchView.setAdapter(simpleAdapter);
+                createJobPostView(jobType,jobTitle,hourlyWage,jobDistance,duration);
             }
 
             @Override
@@ -235,6 +211,29 @@ public class JobSearchResultsActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void createJobPostView(ArrayList<String> jobTitle,ArrayList<String> jobType,ArrayList<Double> hourlyWage,ArrayList<Float> jobDistance, ArrayList<Integer> duration){
+        ArrayList<HashMap<String, String>> list = new ArrayList<>();
+        for(int i = 0; i < jobTitle.size(); i++) {
+            HashMap<String, String> item = new HashMap<>();
+            item.put("job_title_hash", jobTitle.get(i));
+            item.put("job_type_hash", jobType.get(i));
+            String hourlyWageString = hourlyWage.get(i).toString();
+            item.put("hourly_wage_hash", hourlyWageString);
+            String jobDistanceString = jobDistance.get(i).toString();
+            item.put("job_distance_hash", jobDistanceString);
+            String jobDurationString = duration.get(i).toString();
+            item.put("job_duration_hash", jobDurationString);
+            list.add(item);
+        }
+
+        SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), list, R.layout.job_search_listview,
+                new String[]{"job_title_hash", "job_type_hash", "hourly_wage_hash", "job_distance_hash"
+                        , "job_duration_hash"}, new int[] {R.id.job_title, R.id.job_type, R.id.hourly_wage, R.id.job_distance
+                , R.id.job_duration});
+        searchView.setAdapter(simpleAdapter);
+    }
+
 
 
 }
