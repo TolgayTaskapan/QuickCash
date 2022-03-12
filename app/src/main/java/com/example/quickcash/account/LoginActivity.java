@@ -180,28 +180,31 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void loginAsEmployer(DatabaseReference dbUser){
+        String userType = "employer";
         Map<String, Object> userLoginUpdate = new HashMap<>();
         userLoginUpdate.put("logged", true);
         dbUser.updateChildren(userLoginUpdate);
         System.out.println(dbUser.toString());
 
-        jumpToJobSearchActivity(dbUser);
+        jumpToJobSearchActivity(dbUser, userType);
     }
 
     public void loginAsEmployee(DatabaseReference dbUser){
+        String userType = "employee";
         Map<String, Object> userLoginUpdate = new HashMap<>();
         userLoginUpdate.put("logged", true);
         dbUser.updateChildren(userLoginUpdate);
 
-        jumpToJobSearchActivity(dbUser);
+        jumpToJobSearchActivity(dbUser, userType);
     }
 
-    protected void jumpToJobSearchActivity( DatabaseReference dbUser) {
+    protected void jumpToJobSearchActivity( DatabaseReference dbUser, String userType) {
         Intent intent = new Intent();
         intent.setClass(LoginActivity.this, MainActivity.class);
 
         // Delivery the userID to MainActivity
         intent.putExtra("userID", userID);
+        intent.putExtra("userType", userType);
         intent.putExtra("userRef", dbUser.toString());
 
         startActivity(intent);
