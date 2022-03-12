@@ -15,3 +15,5 @@ o
 ?app/src/main/java/com/example/quickcash/JobPostingActivity.java,7\4\7499369b81fca7b57c1c48e695b4ea30aa811cf7
 p
 @app/src/main/java/com/example/quickcash/LandingPageActivity.java,0\c\0c21bda23d00a5e781e9a809b5681d45cfbf4d79
+t
+Dapp/src/main/java/com/example/quickcash/jobsearch/CustomAdapter.java,9\c\9ced63724181d45d710fd4301a2396dcbe60f631

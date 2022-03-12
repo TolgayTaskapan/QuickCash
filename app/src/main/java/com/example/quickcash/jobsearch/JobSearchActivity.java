@@ -130,16 +130,16 @@ public class JobSearchActivity extends AppCompatActivity {
 
     public double assignPreferredDistance(String userChoice) {
         if(userChoice.equals("1 KM")) {
-            return 1;
+            return 1000;
         }
         if(userChoice.equals("3 KM")) {
-            return 3;
+            return 3000;
         }
-        if(userChoice.equals("5KM")) {
-            return 5;
+        if(userChoice.equals("5 KM")) {
+            return 5000;
         }
-        if(userChoice.equals("10KM")) {
-            return 10;
+        if(userChoice.equals("10 KM")) {
+            return 10000;
         }
         return 0;
     }

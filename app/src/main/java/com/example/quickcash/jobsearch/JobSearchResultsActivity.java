@@ -1,36 +1,41 @@
 package com.example.quickcash.jobsearch;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
-
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
 
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
-import android.provider.Settings;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,9 +60,8 @@ public class JobSearchResultsActivity extends AppCompatActivity {
     ArrayList<String> jobType;
     ArrayList<Float> jobDistance;
 
-    FusedLocationProviderClient fusedLocationProviderClient;
+    Context mContext;
     ListView searchView;
-    int PERMISSION_ID = 44;
     double user_latitude;
     double user_longitude;
 
@@ -68,9 +72,30 @@ public class JobSearchResultsActivity extends AppCompatActivity {
 
         searchView = findViewById(R.id.search_view);
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        mContext = this;
 
-        getLocation();
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(JobSearchResultsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        } else {
+            Toast.makeText(mContext,"You need have granted permission",Toast.LENGTH_SHORT).show();
+            GPSTracker gps = new GPSTracker(mContext, JobSearchResultsActivity.this);
+
+            // Check if GPS enabled
+            if (gps.canGetLocation()) {
+
+                double latitude = gps.getLatitude();
+                double longitude = gps.getLongitude();
+                user_longitude = longitude;
+                user_latitude = latitude;
+                // \n is for new line
+                Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+            } else {
+                // Ask user to enable GPS/network in settings.
+                gps.showSettingsAlert();
+            }
+        }
+
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){
@@ -82,6 +107,31 @@ public class JobSearchResultsActivity extends AppCompatActivity {
         }
         getJobs();
 
+        ArrayList<String> test = new ArrayList<>();
+        test.add("test1");
+        test.add("test2");
+        test.add("test3");
+        test.add("test4");
+        test.add("test5");
+
+        ArrayList<HashMap<String, String>> list = new ArrayList<>();
+
+        for(int i = 0; i < test.size(); i++) {
+            HashMap<String, String> item = new HashMap<>();
+            item.put("line1", test.get(0));
+            item.put("line2", test.get(1));
+            item.put("line3", test.get(2));
+            item.put("line4", test.get(3));
+            item.put("line5", test.get(4));
+            list.add(item);
+
+        }
+
+        SimpleAdapter simpleAdapter = new SimpleAdapter(this, list, R.layout.job_search_listview,
+                new String[] {"line1", "line2", "line3", "line4", "line5"}, new int[] {R.id.job_title, R.id.job_type, R.id.hourly_wage, R.id.job_distance
+                , R.id.job_duration});
+
+        searchView.setAdapter(simpleAdapter);
     }
 
     public void getJobs(){
@@ -106,8 +156,10 @@ public class JobSearchResultsActivity extends AppCompatActivity {
                             if (job_type.equals(ds.child("jobType").getValue(String.class))) {
                                 jobLocation.setLongitude(ds.child("longitude").getValue(Double.class));
                                 jobLocation.setLatitude(ds.child("latitude").getValue(Double.class));
-                                Toast.makeText(getApplicationContext(),String.valueOf(user_latitude) + " " + String.valueOf(user_longitude),Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(),"Distance" + String.valueOf(userLocation.distanceTo(jobLocation)),Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(),"User Choice" + String.valueOf(user_distancePref),Toast.LENGTH_LONG).show();
                                 if (userLocation.distanceTo(jobLocation) <= user_distancePref) {
+                                    Toast.makeText(getApplicationContext(),String.valueOf(userLocation.distanceTo(jobLocation)),Toast.LENGTH_LONG).show();
                                     Toast.makeText(getApplicationContext(),ds.child("jobTitle").getValue(String.class),Toast.LENGTH_LONG).show();
                                     jobDistance.add(userLocation.distanceTo(jobLocation));
                                     jobType.add(ds.child("jobType").getValue(String.class));
@@ -136,7 +188,7 @@ public class JobSearchResultsActivity extends AppCompatActivity {
                     list.add(item);
                 }
 
-                SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), list, R.layout.activity_job_search_results,
+                SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), list, R.layout.job_search_listview,
                         new String[]{"job_title_hash", "job_type_hash", "hourly_wage_hash", "job_distance_hash"
                                 , "job_duration_hash"}, new int[] {R.id.job_title, R.id.job_type, R.id.hourly_wage, R.id.job_distance
                         , R.id.job_duration});
@@ -152,93 +204,37 @@ public class JobSearchResultsActivity extends AppCompatActivity {
         });
     }
 
-    @SuppressLint("MissingPermission")
-    private void getLocation() {
-        if(permissionsValid()) {
-            if(isLocationServicesEnabled()) {
-                fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @RequiresApi(api = Build.VERSION_CODES.S)
-                    @Override
-                    public void onSuccess(Location location) {
-                        if(location == null) {
-                            updateLocationData();
-                        }
-                        else {
-                            user_longitude = location.getLongitude();
-                            user_latitude = location.getLatitude();
-                        }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    GPSTracker gps = new GPSTracker(mContext, JobSearchResultsActivity.this);
+
+                    // Check if GPS enabled
+                    if (gps.canGetLocation()) {
+
+                        double latitude = gps.getLatitude();
+                        double longitude = gps.getLongitude();
+
+                        Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                    } else {
+                        // Ask user to enable GPS/network in settings.
+                        gps.showSettingsAlert();
                     }
-                });
-            }
-            else {
-                Toast.makeText(this, "Turn on location services.", Toast.LENGTH_LONG);
-                Intent settings = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(settings);
-            }
-        }
-        else {
-            getPermissions();
-        }
-    }
 
-    @SuppressLint("MissingPermission")
-    @RequiresApi(api = Build.VERSION_CODES.S)
-    private void updateLocationData() {
-        long intervalMillis = 100000;
-        LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setPriority(com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(5);
-        locationRequest.setFastestInterval(0);
-        locationRequest.setNumUpdates(1);
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
-    }
-
-    private LocationCallback locationCallback = new LocationCallback() {
-        @Override
-        public void onLocationResult(LocationResult locationResult) {
-            Location lastLocation = locationResult.getLastLocation();
-            user_latitude = lastLocation.getLatitude();
-            user_longitude = lastLocation.getLongitude();
-        }
-    };
-
-    private boolean permissionsValid() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void getPermissions() {
-        ActivityCompat.requestPermissions(this, new String[] {
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ID);
-    }
-
-    private boolean isLocationServicesEnabled() {
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int getCode, @NonNull String[] permissions, @NonNull int[] results) {
-        super.onRequestPermissionsResult(getCode, permissions, results);
-
-        if(getCode == PERMISSION_ID) {
-            if(results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED) {
-                getLocation();
+                } else {
+                    //Toast.makeText(mContext, "You need to grant permission", Toast.LENGTH_SHORT).show();
+                }
+                return;
             }
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(permissionsValid()) {
-            getLocation();
-        }
-    }
 
 }
