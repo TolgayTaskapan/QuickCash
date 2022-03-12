@@ -49,12 +49,12 @@ public class JobSearchResultsActivity extends AppCompatActivity {
     private Integer max_job_length;
 
     ArrayList<Integer> duration;
-    ArrayList<Double> jobDistance;
     ArrayList<Double> hourlyWage;
     ArrayList<String> jobTitle;
     ArrayList<String> jobType;
     ArrayList<Double> latitude;
     ArrayList<Double> longitude;
+    ArrayList<Float> jobDistance;
 
     FusedLocationProviderClient fusedLocationProviderClient;
     ListView searchView;
@@ -142,23 +142,31 @@ public class JobSearchResultsActivity extends AppCompatActivity {
                 hourlyWage = new ArrayList<Double>();
                 jobTitle = new ArrayList<String>();
                 jobType = new ArrayList<String>();
-                latitude = new ArrayList<Double>();
-                longitude = new ArrayList<Double>();
+                jobDistance = new ArrayList<>();
+                Location userLocation = new Location("User");
+                userLocation.setLatitude(user_latitude);
+                userLocation.setLongitude(user_longitude);
+                Location jobLocation = new Location("location");
                 ArrayList<String> userID = new ArrayList<String>();
 
                 for(DataSnapshot ds : snapshot.getChildren()) {
                     if(ds.child("duration").getValue(Integer.class) >  min_job_length &  ds.child("duration").getValue(Integer.class) <= max_job_length) {
-                        duration.add(ds.child("duration").getValue(Integer.class));
-                        jobTitle.add(ds.child("jobTitle").getValue(String.class));
-                        latitude.add(ds.child("latitude").getValue(Double.class));
-                        longitude.add(ds.child("longitude").getValue(Double.class));
-                        userID.add(ds.child("userID").getValue(String.class));
-                    }
-                    if(min_wage <= ds.child("hourlyWage").getValue(Double.class)){
-                        hourlyWage.add(ds.child("hourlyWage").getValue(Double.class));
-                    }
-                    if(job_type == ds.child("jobType").getValue(String.class)){
-                        jobType.add(ds.child("jobType").getValue(String.class));
+                        if (min_wage <= ds.child("hourlyWage").getValue(Double.class)) {
+                            if (job_type == ds.child("jobType").getValue(String.class)) {
+                                jobLocation.setLongitude(ds.child("longitude").getValue(Double.class));
+                                jobLocation.setLatitude(ds.child("latitude").getValue(Double.class));
+                                if (!(userLocation.distanceTo(jobLocation) > user_distancePref)) {
+                                    jobDistance.add(userLocation.distanceTo(jobLocation));
+                                    jobType.add(ds.child("jobType").getValue(String.class));
+                                    hourlyWage.add(ds.child("hourlyWage").getValue(Double.class));
+                                    duration.add(ds.child("duration").getValue(Integer.class));
+                                    jobTitle.add(ds.child("jobTitle").getValue(String.class));
+                                    latitude.add(ds.child("latitude").getValue(Double.class));
+                                    longitude.add(ds.child("longitude").getValue(Double.class));
+                                    userID.add(ds.child("userID").getValue(String.class));
+                                }
+                            }
+                        }
                     }
                 }
             }

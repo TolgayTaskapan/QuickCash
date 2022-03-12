@@ -141,5 +141,6 @@ public class JobSearchActivity extends AppCompatActivity {
         if(userChoice.equals("10KM")) {
             return 10;
         }
+        return 0;
     }
 }
