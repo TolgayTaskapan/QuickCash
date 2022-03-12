@@ -43,9 +43,10 @@ import java.util.HashMap;
 public class JobSearchResultsActivity extends AppCompatActivity {
 
     private String job_type;
-    private String hourly_wages;
+    private Double min_wage;
     private String distance;
-    private String job_length;
+    private Integer min_job_length;
+    private Integer max_job_length;
 
     ArrayList<Integer> duration;
     ArrayList<Double> jobDistance;
@@ -75,9 +76,10 @@ public class JobSearchResultsActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             job_type = extras.getString("job_type_key");
-            hourly_wages = extras.getString("hourly_wages_key");
+            min_wage = extras.getDouble("hourly_wages_key");
             distance = extras.getString("distance_key");
-            job_length =extras.getString("job_length_key");
+            min_job_length = extras.getInt("min_job_length");
+            max_job_length = extras.getInt("max_job_length_key");
         }
         getJobs();
 
@@ -112,7 +114,6 @@ public class JobSearchResultsActivity extends AppCompatActivity {
     }
 
     public void getJobs(){
-
         DatabaseReference jobRef = FirebaseDatabase.getInstance().getReference("job");
         jobRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -126,14 +127,14 @@ public class JobSearchResultsActivity extends AppCompatActivity {
                 ArrayList<String> userID = new ArrayList<String>();
 
                 for(DataSnapshot ds : snapshot.getChildren()) {
-                    if(ds.child("duration").getValue(Integer.class) > job_MinLength &  ds.child("duration").getValue(Integer.class) <= job_MaxLength) {
+                    if(ds.child("duration").getValue(Integer.class) >  min_job_length &  ds.child("duration").getValue(Integer.class) <= max_job_length) {
                         duration.add(ds.child("duration").getValue(Integer.class));
                         jobTitle.add(ds.child("jobTitle").getValue(String.class));
                         latitude.add(ds.child("latitude").getValue(Double.class));
                         longitude.add(ds.child("longitude").getValue(Double.class));
                         userID.add(ds.child("userID").getValue(String.class));
                     }
-                    if(hourly_wages <= ds.child("hourlyWage").getValue(Double.class)){
+                    if(min_wage <= ds.child("hourlyWage").getValue(Double.class)){
                         hourlyWage.add(ds.child("hourlyWage").getValue(Double.class));
                     }
                     if(job_type == ds.child("jobType").getValue(String.class)){
