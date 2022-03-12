@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class JobSearchResultsActivity extends AppCompatActivity {
 
@@ -44,6 +46,14 @@ public class JobSearchResultsActivity extends AppCompatActivity {
     private String hourly_wages;
     private String distance;
     private String job_length;
+
+    ArrayList<Integer> duration;
+    ArrayList<Double> jobDistance;
+    ArrayList<Double> hourlyWage;
+    ArrayList<String> jobTitle;
+    ArrayList<String> jobType;
+    ArrayList<Double> latitude;
+    ArrayList<Double> longitude;
 
     FusedLocationProviderClient fusedLocationProviderClient;
     ListView searchView;
@@ -70,6 +80,35 @@ public class JobSearchResultsActivity extends AppCompatActivity {
             job_length =extras.getString("job_length_key");
         }
         getJobs();
+
+       // CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), duration, hourlyWage,
+             //   jobTitle, jobType, jobDistance);
+
+       // searchView.setAdapter(customAdapter);
+
+        ArrayList<HashMap<String, String>> list = new ArrayList<>();
+
+        for(int i = 0; i < jobTitle.size(); i++) {
+            HashMap<String, String> item = new HashMap<>();
+
+            item.put("job_title_hash", jobTitle.get(i));
+            item.put("job_type_hash", jobType.get(i));
+            String hourlyWageString = hourlyWage.get(i).toString();
+            item.put("hourly_wage_hash", hourlyWageString);
+            String jobDistanceString = jobDistance.get(i).toString();
+            item.put("job_distance_hash", jobDistanceString);
+            String jobDurationString = duration.get(i).toString();
+            item.put("job_duration_hash", jobDurationString);
+            list.add(item);
+        }
+
+        SimpleAdapter simpleAdapter = new SimpleAdapter(this, list, R.layout.activity_job_search_results,
+                new String[]{"job_title_hash", "job_type_hash", "hourly_wage_hash", "job_distance_hash"
+        , "job_duration_hash"}, new int[] {R.id.job_title, R.id.job_type, R.id.hourly_wage, R.id.job_distance
+        , R.id.job_duration});
+
+        searchView.setAdapter(simpleAdapter);
+
     }
 
     public void getJobs(){
@@ -78,12 +117,12 @@ public class JobSearchResultsActivity extends AppCompatActivity {
         jobRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Integer> duration = new ArrayList<Integer>();
-                ArrayList<Double> hourlyWage = new ArrayList<Double>();
-                ArrayList<String> jobTitle = new ArrayList<String>();
-                ArrayList<String> jobType = new ArrayList<String>();
-                ArrayList<Double> latitude = new ArrayList<Double>();
-                ArrayList<Double> longitude = new ArrayList<Double>();
+                duration = new ArrayList<Integer>();
+                hourlyWage = new ArrayList<Double>();
+                jobTitle = new ArrayList<String>();
+                jobType = new ArrayList<String>();
+                latitude = new ArrayList<Double>();
+                longitude = new ArrayList<Double>();
                 ArrayList<String> userID = new ArrayList<String>();
 
                 for(DataSnapshot ds : snapshot.getChildren()) {
