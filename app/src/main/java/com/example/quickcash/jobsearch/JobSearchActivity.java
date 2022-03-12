@@ -64,13 +64,15 @@ public class JobSearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String job_type = job_type_spinner.getSelectedItem().toString();
                 String hourly_wages = hourly_wages_spinner.getSelectedItem().toString();
-                String distance = distance_spinner.getSelectedItem().toString();
+                String distanceChoice = distance_spinner.getSelectedItem().toString();
                 String job_length = job_length_spinner.getSelectedItem().toString();
 
                 double min_wage;
+                double distance;
 
 
                 min_wage = assignMinWage(hourly_wages);
+                distance = assignPreferredDistance(distanceChoice);
 
                 assignMinMaxJobLength(job_length);
 
@@ -123,6 +125,21 @@ public class JobSearchActivity extends AppCompatActivity {
         if(userChoice.equals("7 days or more")) {
             min_job_length = 7;
             max_job_length = 999999999;
+        }
+    }
+
+    public double assignPreferredDistance(String userChoice) {
+        if(userChoice.equals("1 KM")) {
+            return 1;
+        }
+        if(userChoice.equals("3 KM")) {
+            return 3;
+        }
+        if(userChoice.equals("5KM")) {
+            return 5;
+        }
+        if(userChoice.equals("10KM")) {
+            return 10;
         }
     }
 }
