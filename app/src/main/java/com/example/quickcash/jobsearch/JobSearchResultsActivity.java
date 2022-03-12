@@ -30,6 +30,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -183,11 +184,10 @@ public class JobSearchResultsActivity extends AppCompatActivity {
     private void getLocation() {
         if(permissionsValid()) {
             if(isLocationServicesEnabled()) {
-                fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @RequiresApi(api = Build.VERSION_CODES.S)
                     @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        Location location = task.getResult();
+                    public void onSuccess(Location location) {
                         if(location == null) {
                             updateLocationData();
                         }
