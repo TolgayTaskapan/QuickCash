@@ -9,7 +9,8 @@
     <string name="EMPTY_STRING"></string>
     <string name="DATABASE_URL">https://quick-cash-ca106-default-rtdb.firebaseio.com</string>
     <string name="JOB_NAME_REPEATED">Name is repeated.</string>
-    <string name="JOB_POST_SUCCESS">Job Post Created Successfully</string>
+    <string name="JOB_ADD_SUCCESS">Job Post Created Successfully</string>
+    <string name="JOB_UPDATE_SUCCESS">Job Post Updated Successfully</string>
     <string name="EMPTY_JOBNAME_OR_DESCRIPTION">Please enter the job name and/or job type</string>
     <string name="EMPTY_WAGE">The wage must be entered</string>
     <string name="EMPTY_LOCATION">The location must be entered</string>

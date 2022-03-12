@@ -14,8 +14,12 @@ import android.widget.Toast;
 
 import com.example.quickcash.account.LoginActivity;
 import com.example.quickcash.identity.Employee;
+import com.example.quickcash.util.FirebaseUtil;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddUpdateJobPostActivity extends AppCompatActivity {
 
@@ -39,6 +43,7 @@ public class AddUpdateJobPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_edit_jobpost);
         initializeDatabase();
         init();
+        attachListeners();
         setActivityView();
 
         context = this.getApplicationContext();
@@ -54,39 +59,6 @@ public class AddUpdateJobPostActivity extends AppCompatActivity {
 
         job_type_spinner.setAdapter(job_type_adapter);
 
-        Button addJobButton = findViewById(R.id.addJobButton);
-        addJobButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String title = getJobTitle();
-                String type = getJobType();
-
-                String strWage = getHourlyWage();
-                double wage = 0.00;
-
-                String urgency = getUrgency();
-                int duration = getDuration();
-
-                String location = getLocation();
-                double latitude = getLatFromLocation(location);
-                double longitude = getLongFromLocation(location);
-
-                boolean validJob = jobPostingValidator.validateJobDetails(title, type, strWage, location, latitude, longitude);
-                String error = jobPostingValidator.getErrorMsg();
-
-                if (!error.equals("")) {
-                    displayToast(error);
-                } else {
-                    displayToast(context.getResources().getString(R.string.JOB_POST_SUCCESS).trim());
-                }
-
-                if (validJob) {
-                    wage = convertWageToDouble(strWage);
-                    saveJob(title, wage, type, duration, urgency, location, latitude, longitude);
-                }
-            }
-
-        });
 
     }
 
@@ -193,6 +165,32 @@ public class AddUpdateJobPostActivity extends AppCompatActivity {
         jumpToJobDashboard();
     }
 
+    public void updateJob(String title,  double hourlyWage, String jobType, int duration,  String urgency, String location, double latitude, double longitude){
+
+        JobPost jobPost = new JobPost(title, jobType, hourlyWage, duration, location,  latitude, longitude, MainActivity.userFirebase.getUsrID());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("jobTitle", jobPost.getJobTitle());
+        map.put("jobType", jobPost.getJobType());
+        map.put("hourlyWage", jobPost.getHourlyWage());
+        map.put("duration", jobPost.getDuration());
+        map.put("latitude", jobPost.getLatitude());
+        map.put("longitude", jobPost.getLongitude());
+        map.put("userID", jobPost.getUserID());
+
+        FirebaseDatabase.getInstance(FirebaseUtil.FIREBASE_URL)
+                .getReference()
+                .child(FirebaseUtil.JOB_COLLECTION)
+                .child(jobKey)
+                .updateChildren(map)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getApplicationContext(), "Job updated successfully", Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(getApplicationContext(), "Job update failed", Toast.LENGTH_SHORT).show());
+    }
+
     public void displayToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
@@ -203,6 +201,78 @@ public class AddUpdateJobPostActivity extends AppCompatActivity {
 
         startActivity(intent);
         finish();
+    }
+
+    private void attachListeners(){
+
+        /* clicking add job button */
+        addBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String title = getJobTitle();
+                String type = getJobType();
+
+                String strWage = getHourlyWage();
+                double wage = 0.00;
+
+                String urgency = getUrgency();
+                int duration = getDuration();
+
+                String location = getLocation();
+                double latitude = getLatFromLocation(location);
+                double longitude = getLongFromLocation(location);
+
+                boolean validJob = jobPostingValidator.validateJobDetails(title, type, strWage, location, latitude, longitude);
+                String error = jobPostingValidator.getErrorMsg();
+
+                if (!error.equals("")) {
+                    displayToast(error);
+                } else {
+                    displayToast(context.getResources().getString(R.string.JOB_ADD_SUCCESS).trim());
+                }
+
+                if (validJob) {
+                    wage = convertWageToDouble(strWage);
+                    saveJob(title, wage, type, duration, urgency, location, latitude, longitude);
+                }
+            }
+
+        });
+
+
+        updateBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String title = getJobTitle();
+                String type = getJobType();
+
+                String strWage = getHourlyWage();
+                double wage = 0.00;
+
+                String urgency = getUrgency();
+                int duration = getDuration();
+
+                String location = getLocation();
+                double latitude = getLatFromLocation(location);
+                double longitude = getLongFromLocation(location);
+
+                boolean validJob = jobPostingValidator.validateJobDetails(title, type, strWage, location, latitude, longitude);
+                String error = jobPostingValidator.getErrorMsg();
+
+                if (!error.equals("")) {
+                    displayToast(error);
+                } else {
+                    displayToast(context.getResources().getString(R.string.JOB_UPDATE_SUCCESS).trim());
+                }
+
+                if (validJob) {
+                    wage = convertWageToDouble(strWage);
+                    updateJob(title, wage, type, duration, urgency, location, latitude, longitude);
+                }
+            }
+
+        });
+
     }
 
 }
