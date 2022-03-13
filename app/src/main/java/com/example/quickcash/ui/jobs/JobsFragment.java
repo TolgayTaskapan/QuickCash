@@ -65,9 +65,9 @@ public class JobsFragment extends Fragment {
         connectToFirebaseRTDB();
         attachListeners();
 
-//        if ( !setupCategorySpinner() ) {
-//            System.out.println("Job Fragment: Fail to set up category spinner");
-//        }
+        if ( !setupCategorySpinner() ) {
+            System.out.println("Job Fragment: Fail to set up category spinner");
+        }
 
        // retrieveJobsFormFirebase();
 
@@ -89,7 +89,7 @@ public class JobsFragment extends Fragment {
         final FirebaseRecyclerOptions<JobPost> options = new FirebaseRecyclerOptions.Builder<JobPost>()
                 .setQuery(FirebaseDatabase.getInstance(FirebaseUtil.FIREBASE_URL)
                         .getReference()
-                        .child(FirebaseUtil.JOB_COLLECTION), JobPost.class)
+                        .child(FirebaseUtil.JOB_COLLECTION).orderByChild("userID").equalTo(MainActivity.userFirebase.getUsrID()), JobPost.class)
                 .build();
 
         jobAdapter = new JobAdapter(options);
@@ -114,82 +114,82 @@ public class JobsFragment extends Fragment {
         binding = null;
     }
 
-//    private boolean setupCategorySpinner() {
-//        boolean setUp = false;
-//
-//        // Create the spinner.
-//        Spinner spinner = binding.categorySpinner;
-//        if (spinner != null) {
-//            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                @Override
-//                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                    selectedCategory = adapterView.getItemAtPosition(i).toString();
-//                    filterTheJobList(selectedCategory);
-//                }
-//
-//                @Override
-//                public void onNothingSelected(AdapterView<?> adapterView) {
-//                    selectedCategory = "Category - All";
-//                    System.out.println(selectedCategory);
-//                }
-//            });
-//        } else {
-//            return setUp;
-//        }
-//
-//        // Create ArrayAdapter using the string array and default spinner layout.
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
-//                R.array.category_names, android.R.layout.simple_spinner_item);
-//
-//        // Specify the layout to use when the list of choices appears.
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//        // Apply the adapter to the spinner.
-//        if (spinner != null) {
-//            spinner.setAdapter(adapter);
-//            setUp = true;
-//        }
-//
-//        return setUp;
-//    }
+    private boolean setupCategorySpinner() {
+        boolean setUp = false;
 
-//    private void filterTheJobList(String category) {
-//        LinkedList<JobPost> filteredList = new LinkedList<JobPost>();
-//
-//        // If null, set to default category, which is all
-//        if (category == null || category.equals("Category - All")) {
-//            category = "Category - All";
-//            //showUpJobList(this.mJobs);
-//            return;
-//        }
-//
-//        // Go through the jobs to filter out the desired category
-//        for (int i = 0; i < mJobs.size(); i++) {
-//            JobPost job = mJobs.get(i);
-//            if (job.getJobType().equals(category)) {
-//                filteredList.add(job);
-//            }
-//        }
-//
-//        if (filteredList.size() == 0) {
-//            showToastMessage("There is no job under this category");
-//        }
-//
-//        //showUpJobList(filteredList);
-//        return;
-//    }
+        // Create the spinner.
+        Spinner spinner = binding.categorySpinner;
+        if (spinner != null) {
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    selectedCategory = adapterView.getItemAtPosition(i).toString();
+                    filterTheJobList(selectedCategory);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    selectedCategory = "Category - All";
+                    System.out.println(selectedCategory);
+                }
+            });
+        } else {
+            return setUp;
+        }
+
+        // Create ArrayAdapter using the string array and default spinner layout.
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
+                R.array.category_names, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears.
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner.
+        if (spinner != null) {
+            spinner.setAdapter(adapter);
+            setUp = true;
+        }
+
+        return setUp;
+    }
+
+    private void filterTheJobList(String category) {
+        LinkedList<JobPost> filteredList = new LinkedList<JobPost>();
+
+        // If null, set to default category, which is all
+        if (category == null || category.equals("Category - All")) {
+            category = "Category - All";
+            //showUpJobList(this.mJobs);
+            return;
+        }
+
+        // Go through the jobs to filter out the desired category
+        for (int i = 0; i < mJobs.size(); i++) {
+            JobPost job = mJobs.get(i);
+            if (job.getJobType().equals(category)) {
+                filteredList.add(job);
+            }
+        }
+
+        if (filteredList.size() == 0) {
+            showToastMessage("There is no job under this category");
+        }
+
+        //showUpJobList(filteredList);
+        return;
+    }
 
     private void showToastMessage(String message) {
         Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
     }
 
-//    private void showUpJobList(LinkedList<JobPost> inCategory) {
-//        Context mContext = this.getContext();
-//        ListView jobListView = (ListView) binding.listJobs;
-//
-//        jobAdapter = new JobAdapter(inCategory, mContext);
-//        jobListView.setAdapter(jobAdapter);
-//    }
+    private void showUpJobList(LinkedList<JobPost> inCategory) {
+        Context mContext = this.getContext();
+        ListView jobListView = (ListView) binding.listJobs;
+
+        jobAdapter = new JobAdapter(inCategory, mContext);
+        jobListView.setAdapter(jobAdapter);
+    }
 
 //    private void retrieveJobsFormFirebase() {
 //        DatabaseReference jobRef = FirebaseDatabase.getInstance(FirebaseUtil.FIREBASE_URL).getReference("job");
