@@ -87,8 +87,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkIfUserExists(String userType){
-
-<<<<<<< HEAD
         Context context = this.getApplicationContext();
 
         LoginValidator loginValidator;
@@ -140,9 +138,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void login(DatabaseReference dbUser){
-=======
-    public void loginAsEmployer(DatabaseReference dbUser){
-        String userType = "employer";
+        String userType = this.userType;
         Map<String, Object> userLoginUpdate = new HashMap<>();
         userLoginUpdate.put("logged", true);
         dbUser.updateChildren(userLoginUpdate);
@@ -151,15 +147,6 @@ public class LoginActivity extends AppCompatActivity {
         jumpToJobSearchActivity(dbUser, userType);
     }
 
-    public void loginAsEmployee(DatabaseReference dbUser){
-        String userType = "employee";
->>>>>>> Iteration2-UserStory1
-        Map<String, Object> userLoginUpdate = new HashMap<>();
-        userLoginUpdate.put("logged", true);
-        dbUser.updateChildren(userLoginUpdate);
-
-        jumpToJobSearchActivity(dbUser, userType);
-    }
 
     protected void jumpToJobSearchActivity( DatabaseReference dbUser, String userType) {
         Intent intent = new Intent();

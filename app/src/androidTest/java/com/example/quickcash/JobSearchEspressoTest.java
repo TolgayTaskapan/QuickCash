@@ -24,12 +24,8 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
-<<<<<<< HEAD:app/src/androidTest/java/com/example/quickcash/JobSearchEspressoTest.java
 public class JobSearchEspressoTest {
     private static DatabaseReference dbRef;
-=======
-public class JobSearchEspresso{
->>>>>>> Iteration2-UserStory1:app/src/androidTest/java/com/example/quickcash/JobSearchEspresso.java
 
     @Rule
     public IntentsTestRule<LandingPageActivity> myIntentRule = new IntentsTestRule<>(LandingPageActivity.class);
