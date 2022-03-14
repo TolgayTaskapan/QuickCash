@@ -1,6 +1,7 @@
 package com.example.quickcash.ui.jobs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +18,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.quickcash.JobPost;
+import com.example.quickcash.JobPostingActivity;
 import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
 import com.example.quickcash.databinding.FragmentJobsBinding;
 import com.example.quickcash.util.FirebaseUtil;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +36,7 @@ import java.util.LinkedList;
 public class JobsFragment extends Fragment {
 
     private FragmentJobsBinding binding;
+    private FloatingActionButton addFAB;
 
     private LinkedList<JobPost> mJobs;
 
@@ -46,6 +50,9 @@ public class JobsFragment extends Fragment {
 
         binding = FragmentJobsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        addFAB = root.findViewById(R.id.addButton);
+        addFAB.setOnClickListener(view ->
+                startActivity(new Intent(this.getContext(), JobPostingActivity.class)));
 
         if ( !setupCategorySpinner() ) {
             showToastMessage("Job Fragment: Fail to set up category spinner");
