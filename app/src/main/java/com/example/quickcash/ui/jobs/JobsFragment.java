@@ -183,13 +183,13 @@ public class JobsFragment extends Fragment {
         Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
     }
 
-    private void showUpJobList(LinkedList<JobPost> inCategory) {
-        Context mContext = this.getContext();
-        ListView jobListView = (ListView) binding.listJobs;
-
-        jobAdapter = new JobAdapter(inCategory, mContext);
-        jobListView.setAdapter(jobAdapter);
-    }
+//    private void showUpJobList(LinkedList<JobPost> inCategory) {
+//        Context mContext = this.getContext();
+//        ListView jobListView = (ListView) binding.listJobs;
+//
+//        jobAdapter = new JobAdapter(inCategory, mContext);
+//        jobListView.setAdapter(jobAdapter);
+//    }
 
 //    private void retrieveJobsFormFirebase() {
 //        DatabaseReference jobRef = FirebaseDatabase.getInstance(FirebaseUtil.FIREBASE_URL).getReference("job");
