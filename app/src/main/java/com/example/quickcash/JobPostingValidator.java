@@ -19,12 +19,12 @@ public class JobPostingValidator {
         return this.errorMsg;
     }
 
-    public static boolean isEmptyJobname(String Jobname){
-        return Jobname.isEmpty();
+    public static boolean isEmptyJobname(String jobName){
+        return jobName.isEmpty();
     }
 
-    public static boolean isEmptyJobtype(String Jobtype){
-        return Jobtype.isEmpty();
+    public static boolean isEmptyJobtype(String jobType){
+        return jobType.isEmpty();
     }
 
     public static boolean isEmptyWage(String wage){
@@ -35,13 +35,13 @@ public class JobPostingValidator {
         return location.isEmpty();
     }
 
-    public static boolean isValidJobname(String Jobname){
-        if(Jobname.length() > 20){
+    public static boolean isValidJobname(String jobName){
+        if(jobName.length() > 20){
             return false;
         }
         // regular expressions
         String symbol = ".*[~!@#$%^&*()_+|<>,.?/:;'\\[\\]{}\"]+.*";
-        return !Jobname.matches(symbol);
+        return !jobName.matches(symbol);
     }
 
     public static boolean isValidWage(double wage){
@@ -54,7 +54,7 @@ public class JobPostingValidator {
 
     public boolean validateJobDetails(String title, String type, String wage, String location, double latitude, double longitude){
 
-        double dWage = 0.00;
+        double dWage;
         errorMsg = context.getResources().getString(R.string.EMPTY_STRING).trim();
         if (isEmptyJobname(title) || isEmptyJobtype(type)) {
             errorMsg = this.context.getResources().getString(R.string.EMPTY_JOBNAME_OR_DESCRIPTION).trim();

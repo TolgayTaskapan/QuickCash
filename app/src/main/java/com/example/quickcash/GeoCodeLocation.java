@@ -22,7 +22,7 @@ class GeoCodeLocation {
                 String result = null;
                 try {
                     List addressList = geocoder.getFromLocationName(locationAddress, 1);
-                    if (addressList != null && addressList.size() > 0) {
+                    if (addressList != null && !addressList.isEmpty()) {
                         Address address = (Address)
                                 addressList.get(0);
                         StringBuilder sb = new StringBuilder();
@@ -61,7 +61,7 @@ class GeoCodeLocation {
         double result = 0;
         try {
             List addressList = geocoder.getFromLocationName(locationAddress, 1);
-            if (addressList != null && addressList.size() > 0) {
+            if (addressList != null && !addressList.isEmpty()) {
                 Address address = (Address) addressList.get(0);
                 if (latOrLong.equals("latitude")){
                    result  = address.getLatitude();

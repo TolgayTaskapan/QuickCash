@@ -7,7 +7,7 @@ import com.example.quickcash.account.SignupValidator;
 
 import org.junit.Test;
 
-public class UserSignupJUnit {
+public class UserSignupJUnitTest {
 
     @Test
     public void checkIfUsernameIsEmpty() {

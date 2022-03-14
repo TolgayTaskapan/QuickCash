@@ -1,13 +1,5 @@
 package com.example.quickcash;
 
-import android.location.Location;
-
-import com.example.quickcash.identity.Employer;
-import com.example.quickcash.identity.User;
-
-import java.sql.Time;
-import java.util.Date;
-
 public class JobPost {
 
     private String jobTitle;

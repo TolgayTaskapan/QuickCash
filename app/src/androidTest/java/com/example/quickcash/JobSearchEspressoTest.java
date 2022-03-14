@@ -44,7 +44,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-public class JobSearchEspresso{
+public class JobSearchEspressoTest {
     private static DatabaseReference dbRef;
 
     @Rule

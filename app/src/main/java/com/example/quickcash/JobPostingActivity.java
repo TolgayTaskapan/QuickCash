@@ -3,9 +3,7 @@ package com.example.quickcash;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,11 +15,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class JobPostingActivity extends AppCompatActivity {
 
-    private JobPostingValidator jobPostingValidator;
     DatabaseReference database;
     Context context;
 
-    private Spinner job_type_spinner;
+    private Spinner jobTypeSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,53 +26,49 @@ public class JobPostingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_job_posting);
         initializeDatabase();
 
-        System.out.println(MainActivity.userFirebase.getUsrID());
 
         context = this.getApplicationContext();
+        JobPostingValidator jobPostingValidator;
         jobPostingValidator = new JobPostingValidator(context, database);
 
         //fill spinners with values
-        job_type_spinner = findViewById(R.id.job_type_list);
+        jobTypeSpinner = findViewById(R.id.job_type_list);
 
-        ArrayAdapter<CharSequence> job_type_adapter = ArrayAdapter.createFromResource(this, R.array.job_type_entries,
+        ArrayAdapter<CharSequence> jobTypeAdapter = ArrayAdapter.createFromResource(this, R.array.job_type_entries,
                 android.R.layout.simple_spinner_item);
 
-        job_type_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        jobTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        job_type_spinner.setAdapter(job_type_adapter);
+        jobTypeSpinner.setAdapter(jobTypeAdapter);
 
-        Button PostBTN = findViewById(R.id.button);
-        PostBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String title = getJobTitle();
-                String type = getJobType();
+        Button postBTN = findViewById(R.id.button);
+        postBTN.setOnClickListener(view -> {
+            String title = getJobTitle();
+            String type = getJobType();
 
-                String strWage = getHourlyWage();
-                double wage = 0.00;
+            String strWage = getHourlyWage();
+            double wage = 0.00;
 
-                String urgency = getUrgency();
-                int duration = getDuration();
+            String urgency = getUrgency();
+            int duration = getDuration();
 
-                String location = getLocation();
-                double latitude = getLatFromLocation(location);
-                double longitude = getLongFromLocation(location);
+            String location = getLocation();
+            double latitude = getLatFromLocation(location);
+            double longitude = getLongFromLocation(location);
 
-                boolean validJob = jobPostingValidator.validateJobDetails(title, type, strWage, location, latitude, longitude);
-                String error = jobPostingValidator.getErrorMsg();
+            boolean validJob = jobPostingValidator.validateJobDetails(title, type, strWage, location, latitude, longitude);
+            String error = jobPostingValidator.getErrorMsg();
 
-                if (!error.equals("")) {
-                    displayToast(error);
-                } else {
-                    displayToast(context.getResources().getString(R.string.JOB_POST_SUCCESS).trim());
-                }
-
-                if (validJob) {
-                    wage = convertWageToDouble(strWage);
-                    saveJob(title, wage, type, duration, urgency, latitude, longitude);
-                }
+            if (!error.equals("")) {
+                displayToast(error);
+            } else {
+                displayToast(context.getResources().getString(R.string.JOB_POST_SUCCESS).trim());
             }
 
+            if (validJob) {
+                wage = convertWageToDouble(strWage);
+                saveJob(title, wage, type, duration, urgency, latitude, longitude);
+            }
         });
 
     }
@@ -87,7 +80,7 @@ public class JobPostingActivity extends AppCompatActivity {
     }
 
     public String getJobType(){
-        return job_type_spinner.getSelectedItem().toString();
+        return jobTypeSpinner.getSelectedItem().toString();
     }
 
     public String getHourlyWage() {

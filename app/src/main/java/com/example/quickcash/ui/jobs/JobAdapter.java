@@ -39,14 +39,14 @@ public class JobAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item,parent,false);
-        TextView txt_jobTitle = (TextView) convertView.findViewById(R.id.item_job_title);
-        TextView txt_jobCategory = (TextView) convertView.findViewById(R.id.item_job_category);
-        TextView txt_jobWage = (TextView) convertView.findViewById(R.id.item_job_wage);
+        TextView txtJobTitle = (TextView) convertView.findViewById(R.id.item_job_title);
+        TextView txtJobCategory = (TextView) convertView.findViewById(R.id.item_job_category);
+        TextView txtJobWage = (TextView) convertView.findViewById(R.id.item_job_wage);
 
-        txt_jobTitle.setText(mJob.get(position).getJobTitle());
-        txt_jobCategory.setText(mJob.get(position).getJobType());
-        String wage_str = mJob.get(position).getHourlyWage() + "$";
-        txt_jobWage.setText(wage_str);
+        txtJobTitle.setText(mJob.get(position).getJobTitle());
+        txtJobCategory.setText(mJob.get(position).getJobType());
+        String wageStr = mJob.get(position).getHourlyWage() + "$";
+        txtJobWage.setText(wageStr);
         return convertView;
     }
 }

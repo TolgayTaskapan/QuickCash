@@ -9,9 +9,9 @@ public abstract class User {
     private String identity;
     private boolean status;
 
-    public User(){}
+    protected User(){}
 
-    public User(String username, String password, boolean status){
+    protected User(String username, String password, boolean status){
         this.username = username;
         this.password = password;
         this.status = status;

@@ -35,8 +35,6 @@ public class SignupActivity extends AppCompatActivity
     DatabaseReference dbEmployer;
     Context context;
 
-    // User info attributes
-    private User user;
     private String username;
     private String password;
     private String userType;
@@ -98,6 +96,8 @@ public class SignupActivity extends AppCompatActivity
      * save user's username and password to the database
      **/
     public void registerUser(String username, String password) {
+        // User info attributes
+        User user;
         if (userType.equals("Employee")) {
             user = new Employee(username, password, false);
             dbEmployee.setValue(user);
@@ -135,7 +135,8 @@ public class SignupActivity extends AppCompatActivity
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    System.out.println("Signup Error: Fail to connect Firebase");
+                    displayToast(context.getResources().getString(R.string.DATABASE_ERROR).trim());
+
                 }
             });
         } else {

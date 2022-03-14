@@ -25,7 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class JobPostingEspresso {
+public class JobPostingEspressoTest {
 
     @Rule
     public IntentsTestRule<LandingPageActivity> myIntentRuleHome = new IntentsTestRule<>(LandingPageActivity.class);

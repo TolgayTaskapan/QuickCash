@@ -3,7 +3,6 @@ package com.example.quickcash.account;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,7 +25,6 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     //variables
-    private LoginValidator loginValidator;
     DatabaseReference database;
     DatabaseReference dbUser;
 
@@ -45,113 +43,23 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userID = intent.getStringExtra("userID");
 
-        // Setup user login validator class.
-        Context context = this.getApplicationContext();
-        loginValidator = new LoginValidator(context, database);
-
         //initialize login status
         SharedPreferenceUtil.setLoginStatus(LoginActivity.this, false);
 
         Button employerLoginBtn = findViewById(R.id.employerLoginButton);
         Button employeeLoginBtn = findViewById(R.id.employeeLoginButton);
 
-        employerLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String username = getUsername();
-                String password = getPassword();
-                userType = "Employer";
+        employerLoginBtn.setOnClickListener(view -> {
+            userType = "Employer";
+            checkIfUserExists(userType);
 
-                boolean validDetails = loginValidator.authenticateUserCredentials(username, password);
-
-                /**
-                 * This code is here due to the nature of asynchronous code. The implementation would not work properly
-                 * if code is put into a function.
-                  **/
-
-                if (validDetails) {
-                    dbUser = database.child(userType);
-                    dbUser.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                for (DataSnapshot user : snapshot.getChildren()) {
-                                    if (password.equals(user.child("password").getValue())) {
-                                        dbUser = user.getRef();
-                                        userID = user.getKey();
-                                        loginAsEmployer(dbUser);
-                                    } else {
-                                        setStatusMessage(context.getResources().getString(R.string.INCORRECT_PASSWORD).trim());
-                                    }
-                                }
-
-                            } else {
-                                setStatusMessage(context.getResources().getString(R.string.USER_DOES_NOT_EXIST).trim());
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            System.out.println("Error is connecting to database");
-                        }
-
-                    });
-                } else {
-                    setStatusMessage(context.getResources().getString(R.string.EMPTY_USERNAME_OR_PASSWORD).trim());
-                }
-            }
         });
 
 
-        employeeLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        employeeLoginBtn.setOnClickListener(view -> {
+            userType = "Employee";
+            checkIfUserExists(userType);
 
-                String username = getUsername();
-                String password = getPassword();
-                userType = "Employee";
-
-                boolean validDetails = loginValidator.authenticateUserCredentials(username, password);
-
-                /**
-                 * This code is here due to the nature of asynchronous code. The implementation would not work properly
-                 * if code is put into a function.
-                 **/
-
-                if (validDetails) {
-                    dbUser = database.child(userType);
-                    dbUser.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                for (DataSnapshot user : snapshot.getChildren()) {
-                                    if (password.equals(user.child("password").getValue())) {
-                                        dbUser = user.getRef();
-                                        userID = user.getKey();
-                                        loginAsEmployee(dbUser);
-                                    } else {
-                                        setStatusMessage(context.getResources().getString(R.string.INCORRECT_PASSWORD).trim());
-                                    }
-                                }
-
-                            } else {
-                                setStatusMessage(context.getResources().getString(R.string.USER_DOES_NOT_EXIST).trim());
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            System.out.println("Error is connecting to database");
-                        }
-
-                    });
-                } else {
-                    setStatusMessage(context.getResources().getString(R.string.EMPTY_USERNAME_OR_PASSWORD).trim());
-                }
-
-            }
         });
     }
 
@@ -178,17 +86,59 @@ public class LoginActivity extends AppCompatActivity {
         statusLabel.setText(message.trim());
     }
 
+    private void checkIfUserExists(String userType){
 
-    public void loginAsEmployer(DatabaseReference dbUser){
-        Map<String, Object> userLoginUpdate = new HashMap<>();
-        userLoginUpdate.put("logged", true);
-        dbUser.updateChildren(userLoginUpdate);
-        System.out.println(dbUser.toString());
+        Context context = this.getApplicationContext();
 
-        jumpToJobSearchActivity(dbUser);
+        LoginValidator loginValidator;
+        loginValidator = new LoginValidator(this.getApplicationContext(), database);
+
+        String username = getUsername();
+        String password = getPassword();
+
+        boolean validDetails = loginValidator.authenticateUserCredentials(username, password);
+
+        /**
+         * This code is here due to the nature of asynchronous code. The implementation would not work properly
+         * if code is put into a function.
+         **/
+
+        if (!validDetails) {
+            setStatusMessage(this.getApplicationContext().getResources().getString(R.string.EMPTY_USERNAME_OR_PASSWORD).trim());
+        } else {
+            dbUser = database.child(userType);
+            dbUser.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        for (DataSnapshot user : snapshot.getChildren()) {
+                            if (password.equals(user.child("password").getValue())) {
+                                dbUser = user.getRef();
+                                userID = user.getKey();
+                                login(dbUser);
+                            } else {
+                                setStatusMessage(context.getResources().getString(R.string.INCORRECT_PASSWORD).trim());
+                            }
+                        }
+
+                    } else {
+                        setStatusMessage(context.getResources().getString(R.string.USER_DOES_NOT_EXIST).trim());
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    setStatusMessage(context.getResources().getString(R.string.DATABASE_ERROR).trim());
+                }
+
+            });
+        }
+
     }
 
-    public void loginAsEmployee(DatabaseReference dbUser){
+
+    public void login(DatabaseReference dbUser){
         Map<String, Object> userLoginUpdate = new HashMap<>();
         userLoginUpdate.put("logged", true);
         dbUser.updateChildren(userLoginUpdate);

@@ -17,20 +17,10 @@ public class LandingPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
         Button signUpButton = findViewById(R.id.signUpButton);
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jumpToRegistrationPage();
-            }
-        });
+        signUpButton.setOnClickListener(view -> jumpToRegistrationPage());
 
         Button loginButton = findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jumpToLoginPage();
-            }
-        });
+        loginButton.setOnClickListener(view -> jumpToLoginPage());
     }
 
     protected void jumpToRegistrationPage() {

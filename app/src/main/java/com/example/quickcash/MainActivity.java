@@ -21,9 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
-    private DatabaseReference dbUserRef;
-    public static FirebaseUtil userFirebase = new FirebaseUtil();
+    public static final FirebaseUtil userFirebase = new FirebaseUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
         userFirebase.setUsrID(intent.getStringExtra("userID"));
         userFirebase.setCurrentUserRef(intent.getStringExtra("userRef"));
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.example.quickcash.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
-    public void logoutAccount(View view) {
+    public void logoutAccount() {
         Intent logoutIntent = new Intent(this, LoginActivity.class);
 
         userFirebase.getCurrentUserRef().child("logged").setValue(false);
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public void openPostPage(View view) {
+    public void openPostPage() {
         Intent postIntent = new Intent(this, JobPostingActivity.class);
 
         startActivity(postIntent);

@@ -8,6 +8,7 @@
     <string name="INCORRECT_PASSWORD">Incorrect password. Please try again.</string>
     <string name="EMPTY_STRING"></string>
     <string name="DATABASE_URL">https://quick-cash-ca106-default-rtdb.firebaseio.com</string>
+    <string name="DATABASE_ERROR">Error in connecting to database</string>
     <string name="JOB_NAME_REPEATED">Name is repeated.</string>
     <string name="JOB_POST_SUCCESS">Job Post Created Successfully</string>
     <string name="EMPTY_JOBNAME_OR_DESCRIPTION">Please enter the job name and/or job type</string>

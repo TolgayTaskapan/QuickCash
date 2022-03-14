@@ -35,20 +35,20 @@ public class JobsFragment extends Fragment {
     private FragmentJobsBinding binding;
 
     private LinkedList<JobPost> mJobs;
-    private JobAdapter jobAdapter;
 
-    private String selectedCategory = "Category - All";
+    private String selectedCategory;
+    private static final String CATEGORY_ALL = "Category - All";
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        JobsViewModel jobsViewModel =
-                new ViewModelProvider(this).get(JobsViewModel.class);
+
 
         binding = FragmentJobsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         if ( !setupCategorySpinner() ) {
-            System.out.println("Job Fragment: Fail to set up category spinner");
+            showToastMessage("Job Fragment: Fail to set up category spinner");
         }
 
         retrieveJobsFormFirebase();
@@ -77,8 +77,7 @@ public class JobsFragment extends Fragment {
 
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
-                    selectedCategory = "Category - All";
-                    System.out.println(selectedCategory);
+                    selectedCategory = CATEGORY_ALL;
                 }
             });
         } else {
@@ -93,10 +92,8 @@ public class JobsFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Apply the adapter to the spinner.
-        if (spinner != null) {
-            spinner.setAdapter(adapter);
-            setUp = true;
-        }
+        spinner.setAdapter(adapter);
+        setUp = true;
 
         return setUp;
     }
@@ -105,8 +102,7 @@ public class JobsFragment extends Fragment {
         LinkedList<JobPost> filteredList = new LinkedList<JobPost>();
 
         // If null, set to default category, which is all
-        if (category == null || category.equals("Category - All")) {
-            category = "Category - All";
+        if (category == null || category.equals(CATEGORY_ALL)) {
             showUpJobList(this.mJobs);
             return;
         }
@@ -119,7 +115,7 @@ public class JobsFragment extends Fragment {
             }
         }
 
-        if (filteredList.size() == 0) {
+        if (filteredList.isEmpty()) {
             showToastMessage("There is no job under this category");
         }
 
@@ -133,9 +129,9 @@ public class JobsFragment extends Fragment {
 
     private void showUpJobList(LinkedList<JobPost> inCategory) {
         Context mContext = this.getContext();
-        ListView jobListView = (ListView) binding.listJobs;
+        ListView jobListView = binding.listJobs;
 
-        jobAdapter = new JobAdapter(inCategory, mContext);
+        JobAdapter jobAdapter = new JobAdapter(inCategory, mContext);
         jobListView.setAdapter(jobAdapter);
     }
 
@@ -168,23 +164,27 @@ public class JobsFragment extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                // not being used
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                // not being used
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                // not being used
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                // not being used
 
             }
+
+
         });
     }
 

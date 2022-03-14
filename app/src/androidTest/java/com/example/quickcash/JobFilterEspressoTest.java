@@ -41,7 +41,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class JobFilterEspresso {
+public class JobFilterEspressoTest {
 
     private static void EmployeeAccountLogin(){
         onView(withId(R.id.loginButton)).perform(click());
