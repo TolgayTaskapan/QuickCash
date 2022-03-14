@@ -113,8 +113,6 @@ t
 Dapp/src/main/java/com/example/quickcash/account/SignupValidator.java,6/d/6d1a85a6c2a9a48ce1920d5f555f46eaed8848de
 `
 0app/src/main/res/layout/activity_signup_page.xml,0/0/007079e6a91788b5e3ae3cb2936c4a188d44be6c
-\
-,app/src/main/res/layout/fragment_profile.xml,b/4/b4466735edf81a3353097aecb75b46205cdee6b6
 a
 1app/src/main/res/layout/activity_landing_page.xml,a/0/a069364cc5d0abd2a9050fa6030f6f6860049359
 `
