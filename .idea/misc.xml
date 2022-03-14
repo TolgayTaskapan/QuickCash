@@ -4,6 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../../../layout/custom_preview.xml" value="0.18541666666666667" />
+        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/activity_development_job_search.xml" value="0.35833333333333334" />
+        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/activity_job_search_results.xml" value="0.35833333333333334" />
+        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/activity_landing_page.xml" value="0.35833333333333334" />
+        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/activity_main.xml" value="0.67" />
+        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/fragment_dashboard.xml" value="0.6354869816779171" />
+        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/fragment_jobs.xml" value="0.6107506950880445" />
+        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/job_search_listview.xml" value="0.33" />
         <entry key="app/src/main/res/drawable-anydpi/ic_action_jobs_24dp.xml" value="0.149" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.149" />
         <entry key="app/src/main/res/drawable/ic_action_jobs_black_24dp.xml" value="0.149" />
@@ -35,6 +42,9 @@
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.18958333333333333" />
       </map>
     </option>
+  </component>
+  <component name="PDMPlugin">
+    <option name="skipTestSources" value="false" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>

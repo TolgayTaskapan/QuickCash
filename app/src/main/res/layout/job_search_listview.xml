@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/job_search_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/job_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="job_title" />
+
+    <TextView
+        android:id="@+id/job_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor= "#DF0000"
+        android:textSize="14sp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/hourly_wage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor= "#DF0000"
+        android:textSize="13sp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/job_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/purple_700"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/job_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/purple_200"
+        android:textSize="12sp"
+        android:text="TextView" />
+
+</LinearLayout>
