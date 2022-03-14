@@ -142,7 +142,6 @@ public class LoginActivity extends AppCompatActivity {
         Map<String, Object> userLoginUpdate = new HashMap<>();
         userLoginUpdate.put("logged", true);
         dbUser.updateChildren(userLoginUpdate);
-        System.out.println(dbUser.toString());
 
         jumpToJobSearchActivity(dbUser, userType);
     }

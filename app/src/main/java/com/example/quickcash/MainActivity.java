@@ -68,13 +68,15 @@ public class MainActivity extends AppCompatActivity {
         final Bundle extras = getIntent().getExtras();
         if (extras != null && extras.getString("userType") != null) {
             final String activityPath = extras.getString("userType");
-            if (activityPath.equals("employer")) {
+            if (activityPath.equals("Employer")) {
                 searchButton.setVisibility(View.GONE);
             } else {
                 searchButton.setVisibility(View.VISIBLE);
                 jobListView.setVisibility(View.GONE);
                 addFAB.setVisibility(View.GONE);
             }
+        } else {
+            System.out.println("nothing found");
         }
     }
 
