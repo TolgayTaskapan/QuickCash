@@ -38,6 +38,7 @@
     </string-array>
     <string-array name="job_type_entries">
         <item></item>
+        <item>Category - All</item>
         <item>Labour</item>
         <item>Babysitting</item>
         <item>Pet Care</item>
@@ -54,6 +55,7 @@
         <item>$30.00 and up</item>
     </string-array>
     <string-array name="distance_entries">
+        <item>Category - All</item>
         <item>1 KM</item>
         <item>3 KM</item>
         <item>5 KM</item>
@@ -61,6 +63,7 @@
     </string-array>
 
     <string-array name="job_duration_entries">
+        <item>Category - All</item>
         <item>1 to 3 days</item>
         <item>3 to 5 days</item>
         <item>7 days or more</item>

@@ -102,33 +102,6 @@ public class JobSearchResultsActivity extends AppCompatActivity {
         }
         getJobs();
 
-        /*if(jobCheck) {
-            ArrayList<String> test = new ArrayList<>();
-            test.add("test1");
-            test.add("test2");
-            test.add("test3");
-            test.add("test4");
-            test.add("test5");
-
-            ArrayList<HashMap<String, String>> list = new ArrayList<>();
-
-            for (int i = 0; i < test.size(); i++) {
-                HashMap<String, String> item = new HashMap<>();
-                item.put("line1", test.get(0));
-                item.put("line2", test.get(1));
-                item.put("line3", test.get(2));
-                item.put("line4", test.get(3));
-                item.put("line5", test.get(4));
-                list.add(item);
-
-            }
-
-            SimpleAdapter simpleAdapter = new SimpleAdapter(this, list, R.layout.job_search_listview,
-                    new String[]{"line1", "line2", "line3", "line4", "line5"}, new int[]{R.id.job_title, R.id.job_type, R.id.hourly_wage, R.id.job_distance
-                    , R.id.job_duration});
-
-            searchView.setAdapter(simpleAdapter);
-        }*/
     }
 
     public void getJobs(){
