@@ -37,7 +37,6 @@
         <item>Tech Help</item>
     </string-array>
     <string-array name="job_type_entries">
-        <item></item>
         <item>Category - All</item>
         <item>Labour</item>
         <item>Babysitting</item>

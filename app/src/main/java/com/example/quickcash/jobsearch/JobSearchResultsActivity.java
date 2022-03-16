@@ -189,14 +189,14 @@ public class JobSearchResultsActivity extends AppCompatActivity {
         ArrayList<HashMap<String, String>> list = new ArrayList<>();
         for(int i = 0; i < jobTitle.size(); i++) {
             HashMap<String, String> item = new HashMap<>();
-            item.put("job_title_hash", jobTitle.get(i));
-            item.put("job_type_hash", jobType.get(i));
+            item.put("job_title_hash", "Job Title: " + jobTitle.get(i));
+            item.put("job_type_hash", "Job Type: " + jobType.get(i));
             String hourlyWageString = hourlyWage.get(i).toString();
-            item.put("hourly_wage_hash", hourlyWageString);
+            item.put("hourly_wage_hash", "Hourly Wage: " + hourlyWageString);
             String jobDistanceString = jobDistance.get(i).toString();
-            item.put("job_distance_hash", jobDistanceString);
+            item.put("job_distance_hash", "Job Distance: " + jobDistanceString);
             String jobDurationString = duration.get(i).toString();
-            item.put("job_duration_hash", jobDurationString);
+            item.put("job_duration_hash", "Job Duration: " + jobDurationString);
             list.add(item);
         }
 
