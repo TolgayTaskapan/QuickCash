@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-//        userFirebase = new UserSession();
-//        userFirebase.setUsrID(intent.getStringExtra("userID"));
-//        userFirebase.setCurrentUserRef(intent.getStringExtra("userRef"));
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
