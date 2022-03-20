@@ -46,6 +46,21 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
+    private void setActivityView() {
+       String userType = UserSession.getInstance().getUser().getIdentity();
+        if (userType != null) {
+            if (userType.equals("Employer")) {
+                searchButton.setVisibility(View.GONE);
+            } else {
+                searchButton.setVisibility(View.VISIBLE);
+                jobListView.setVisibility(View.GONE);
+                addFAB.setVisibility(View.GONE);
+            }
+        } else {
+            System.out.println("nothing found");
+        }
+    }
+
     public void logoutAccount(View view) {
         Intent logoutIntent = new Intent(this, LoginActivity.class);
 
