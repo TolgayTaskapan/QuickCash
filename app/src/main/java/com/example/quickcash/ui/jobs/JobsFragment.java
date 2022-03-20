@@ -70,6 +70,21 @@ public class JobsFragment extends Fragment {
         addFAB = view.findViewById(R.id.addButton);
     }
 
+    private void setActivityView() {
+        String userType = UserSession.getInstance().getUser().getIdentity();
+        if (userType != null) {
+            if (userType.equals("Employer")) {
+                //searchButton.setVisibility(View.GONE);
+            } else {
+                //searchButton.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                addFAB.setVisibility(View.GONE);
+            }
+        } else {
+            System.out.println("nothing found");
+        }
+    }
+
     private void attachListeners() {
         addFAB.setOnClickListener(view ->
                 startActivity(new Intent(this.getContext(), AddUpdateJobPostActivity.class)));
@@ -91,6 +106,12 @@ public class JobsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         jobAdapter.startListening();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setActivityView();
     }
 
     @Override

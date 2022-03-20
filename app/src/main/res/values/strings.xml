@@ -16,7 +16,7 @@
     <string name="EMPTY_LOCATION">The location must be entered</string>
     <string name="INVALID_JOBNAME">The length of Job name must be lower than 20 digits and cannot contain special characters</string>
     <string name="INVALID_DESCRIPTION">The length of description must be lower than 50 digits</string>
-    <string name="INVALID_WAGE">The wage must be greater than $0.00</string>
+    <string name="INVALID_WAGE">The wage must be greater than $12.95</string>
     <string name="INVALID_LOCATION">Location could not be found, please re-enter location</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profile">Profile</string>

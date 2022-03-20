@@ -45,7 +45,7 @@ public class JobPostingValidator {
     }
 
     public static boolean isValidWage(double wage){
-        return wage > 0.00;
+        return wage >= 12.95;
     }
 
     public static boolean isValidCoordinates(double latitude, double longitude){

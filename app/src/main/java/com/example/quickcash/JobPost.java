@@ -89,9 +89,7 @@ public class JobPost implements Serializable {
         this.hourlyWage = hourlyWage;
     }
 
-    public double getDuration() {
-        return duration;
-    }
+    public double getDuration() { return duration; }
 
     public void setDuration(int duration) {
         this.duration = duration;

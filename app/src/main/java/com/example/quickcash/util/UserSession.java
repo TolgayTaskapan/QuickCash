@@ -63,9 +63,6 @@ public class UserSession implements Serializable {
     }
 
     public void setCurrentUserRef(DatabaseReference currentUser) {
-        //currentUser = currentUser.substring(currentUser.indexOf("Account"));
-        //System.out.println(currentUser);
-        //currentUserRef = db.child(currentUser).getRef();
         currentUserRef = currentUser;
     }
 }

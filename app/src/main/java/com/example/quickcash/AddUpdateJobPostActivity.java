@@ -92,7 +92,7 @@ public class AddUpdateJobPostActivity extends AppCompatActivity {
                 }
                 locationET.setText(jobPost.getLocation());
                 wageET.setText(String.valueOf(jobPost.getHourlyWage()));
-                durationET.setText(String.valueOf(jobPost.getDuration()));
+                durationET.setText(String.valueOf((int) jobPost.getDuration()));
                 urgencyET.setText(jobPost.getUrgency());
             } else {
                 updateBTN.setVisibility(View.GONE);
@@ -204,71 +204,61 @@ public class AddUpdateJobPostActivity extends AppCompatActivity {
     private void attachListeners(){
 
         /* clicking add job button */
-        addBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String title = getJobTitle();
-                String type = getJobType();
+        addBTN.setOnClickListener(view -> {
+            String title = getJobTitle();
+            String type = getJobType();
 
-                String strWage = getHourlyWage();
-                double wage = 0.00;
+            String strWage = getHourlyWage();
+            double wage = 0.00;
 
-                String urgency = getUrgency();
-                int duration = getDuration();
+            String urgency = getUrgency();
+            int duration = getDuration();
 
-                String location = getLocation();
-                double latitude = getLatFromLocation(location);
-                double longitude = getLongFromLocation(location);
+            String location = getLocation();
+            double latitude = getLatFromLocation(location);
+            double longitude = getLongFromLocation(location);
 
-                boolean validJob = jobPostingValidator.validateJobDetails(title, type, strWage, location, latitude, longitude);
-                String error = jobPostingValidator.getErrorMsg();
+            boolean validJob = jobPostingValidator.validateJobDetails(title, type, strWage, location, latitude, longitude);
+            String error = jobPostingValidator.getErrorMsg();
 
-                if (!error.equals("")) {
-                    displayToast(error);
-                } else {
-                    displayToast(context.getResources().getString(R.string.JOB_ADD_SUCCESS).trim());
-                }
-
-                if (validJob) {
-                    wage = convertWageToDouble(strWage);
-                    saveJob(title, wage, type, duration, urgency, location, latitude, longitude);
-                }
+            if (!error.equals("")) {
+                displayToast(error);
+            } else {
+                displayToast(context.getResources().getString(R.string.JOB_ADD_SUCCESS).trim());
             }
 
+            if (validJob) {
+                wage = convertWageToDouble(strWage);
+                saveJob(title, wage, type, duration, urgency, location, latitude, longitude);
+            }
         });
 
 
-        updateBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String title = getJobTitle();
-                String type = getJobType();
+        updateBTN.setOnClickListener(view -> {
+            String title = getJobTitle();
+            String type = getJobType();
 
-                String strWage = getHourlyWage();
-                double wage = 0.00;
+            String strWage = getHourlyWage();
+            double wage = 0.00;
 
-                String urgency = getUrgency();
-                int duration = getDuration();
+            String urgency = getUrgency();
+            int duration = getDuration();
 
-                String location = getLocation();
-                double latitude = getLatFromLocation(location);
-                double longitude = getLongFromLocation(location);
+            String location = getLocation();
+            double latitude = getLatFromLocation(location);
+            double longitude = getLongFromLocation(location);
 
-                boolean validJob = jobPostingValidator.validateJobDetails(title, type, strWage, location, latitude, longitude);
-                String error = jobPostingValidator.getErrorMsg();
+            boolean validJob = jobPostingValidator.validateJobDetails(title, type, strWage, location, latitude, longitude);
+            String error = jobPostingValidator.getErrorMsg();
 
-                if (!error.equals("")) {
-                    displayToast(error);
-                } else {
-                    displayToast(context.getResources().getString(R.string.JOB_UPDATE_SUCCESS).trim());
-                }
-
-                if (validJob) {
-                    wage = convertWageToDouble(strWage);
-                    updateJob(title, wage, type, duration, urgency, location, latitude, longitude);
-                }
+            if (!error.equals("")) {
+                displayToast(error);
             }
 
+            if (validJob) {
+                wage = convertWageToDouble(strWage);
+                updateJob(title, wage, type, duration, urgency, location, latitude, longitude);
+            }
         });
 
     }
