@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.quickcash.AddUpdateJobPostActivity;
 import com.example.quickcash.JobPost;
 import com.example.quickcash.R;
-import com.example.quickcash.identity.Employee;
-import com.example.quickcash.util.FirebaseUtil;
+import com.example.quickcash.util.UserSession;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
@@ -77,8 +75,8 @@ public class JobAdapter extends FirebaseRecyclerAdapter<JobPost, JobAdapter.JobV
             intent.putExtra(JobPost.TAG, job);
             holder.context.startActivity(intent);
         });
-        holder.deleteBtn.setOnClickListener(view -> FirebaseDatabase.getInstance(FirebaseUtil.FIREBASE_URL)
-                .getReference().child(FirebaseUtil.JOB_COLLECTION)
+        holder.deleteBtn.setOnClickListener(view -> FirebaseDatabase.getInstance(UserSession.FIREBASE_URL)
+                .getReference().child(UserSession.JOB_COLLECTION)
                 .child(getRef(position).getKey())
                 .removeValue()
                 .addOnSuccessListener(aVoid -> {

@@ -1,6 +1,5 @@
 package com.example.quickcash.ui.jobs;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,12 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,18 +22,11 @@ import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
 import com.example.quickcash.WrapLinearLayoutManager;
 import com.example.quickcash.databinding.FragmentJobsBinding;
-import com.example.quickcash.identity.Employee;
-import com.example.quickcash.util.FirebaseUtil;
+import com.example.quickcash.util.UserSession;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public class JobsFragment extends Fragment {
@@ -46,7 +36,6 @@ public class JobsFragment extends Fragment {
     private FloatingActionButton addFAB;
 
     private FragmentJobsBinding binding;
-    private final String userID = MainActivity.userFirebase.getUsrID();
 
     private LinkedList<JobPost> mJobs;
 
@@ -60,6 +49,7 @@ public class JobsFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_jobs, container, false);
+
 
         init(root);
         connectToFirebaseRTDB();
@@ -86,10 +76,11 @@ public class JobsFragment extends Fragment {
     }
 
     private void connectToFirebaseRTDB() {
+        final String userID = UserSession.getInstance().getUsrID();
         final FirebaseRecyclerOptions<JobPost> options = new FirebaseRecyclerOptions.Builder<JobPost>()
-                .setQuery(FirebaseDatabase.getInstance(FirebaseUtil.FIREBASE_URL)
+                .setQuery(FirebaseDatabase.getInstance(UserSession.FIREBASE_URL)
                         .getReference()
-                        .child(FirebaseUtil.JOB_COLLECTION).orderByChild("userID").equalTo(MainActivity.userFirebase.getUsrID()), JobPost.class)
+                        .child(UserSession.JOB_COLLECTION).orderByChild("userID").equalTo(userID), JobPost.class)
                 .build();
 
         jobAdapter = new JobAdapter(options);
@@ -156,27 +147,29 @@ public class JobsFragment extends Fragment {
     private void filterTheJobList(String category) {
         LinkedList<JobPost> filteredList = new LinkedList<JobPost>();
 
-        // If null, set to default category, which is all
-        if (category == null || category.equals("Category - All")) {
-            category = "Category - All";
-            //showUpJobList(this.mJobs);
-            return;
-        }
 
-        // Go through the jobs to filter out the desired category
-        for (int i = 0; i < mJobs.size(); i++) {
-            JobPost job = mJobs.get(i);
-            if (job.getJobType().equals(category)) {
-                filteredList.add(job);
-            }
-        }
 
-        if (filteredList.size() == 0) {
-            showToastMessage("There is no job under this category");
-        }
-
-        //showUpJobList(filteredList);
-        return;
+//        // If null, set to default category, which is all
+//        if (category == null || category.equals("Category - All")) {
+//            category = "Category - All";
+//            //showUpJobList(this.mJobs);
+//            return;
+//        }
+//
+//        // Go through the jobs to filter out the desired category
+//        for (int i = 0; i < mJobs.size(); i++) {
+//            JobPost job = mJobs.get(i);
+//            if (job.getJobType().equals(category)) {
+//                filteredList.add(job);
+//            }
+//        }
+//
+//        if (filteredList.size() == 0) {
+//            showToastMessage("There is no job under this category");
+//        }
+//
+//        //showUpJobList(filteredList);
+//        return;
     }
 
     private void showToastMessage(String message) {

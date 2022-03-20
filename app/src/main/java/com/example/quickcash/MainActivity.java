@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.quickcash.account.LoginActivity;
-import com.example.quickcash.util.FirebaseUtil;
+import com.example.quickcash.identity.User;
+import com.example.quickcash.util.UserSession;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,15 +24,16 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private DatabaseReference dbUserRef;
-    public static FirebaseUtil userFirebase = new FirebaseUtil();
+    //public static UserSession userFirebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        userFirebase.setUsrID(intent.getStringExtra("userID"));
-        userFirebase.setCurrentUserRef(intent.getStringExtra("userRef"));
+//        userFirebase = new UserSession();
+//        userFirebase.setUsrID(intent.getStringExtra("userID"));
+//        userFirebase.setCurrentUserRef(intent.getStringExtra("userRef"));
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public void logoutAccount(View view) {
         Intent logoutIntent = new Intent(this, LoginActivity.class);
 
-        userFirebase.getCurrentUserRef().child("logged").setValue(false);
+        UserSession.getInstance().logout();
         startActivity(logoutIntent);
         finish();
     }

@@ -12,9 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.quickcash.account.LoginActivity;
-import com.example.quickcash.identity.Employee;
-import com.example.quickcash.util.FirebaseUtil;
+import com.example.quickcash.util.UserSession;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -160,14 +158,14 @@ public class AddUpdateJobPostActivity extends AppCompatActivity {
     public void saveJob(String title,  double hourlyWage, String jobType, int duration,  String urgency, String location, double latitude, double longitude){
         final DatabaseReference job = database.push();
 
-        JobPost jobPost = new JobPost(title, jobType, hourlyWage, duration, location,  latitude, longitude, MainActivity.userFirebase.getUsrID());
+        JobPost jobPost = new JobPost(title, jobType, hourlyWage, duration, location,  latitude, longitude, UserSession.getInstance().getUsrID());
         job.setValue(jobPost);
         jumpToJobDashboard();
     }
 
     public void updateJob(String title,  double hourlyWage, String jobType, int duration,  String urgency, String location, double latitude, double longitude){
 
-        JobPost jobPost = new JobPost(title, jobType, hourlyWage, duration, location,  latitude, longitude, MainActivity.userFirebase.getUsrID());
+        JobPost jobPost = new JobPost(title, jobType, hourlyWage, duration, location,  latitude, longitude, UserSession.getInstance().getUsrID());
 
         Map<String, Object> map = new HashMap<>();
         map.put("jobTitle", jobPost.getJobTitle());
@@ -178,9 +176,9 @@ public class AddUpdateJobPostActivity extends AppCompatActivity {
         map.put("longitude", jobPost.getLongitude());
         map.put("userID", jobPost.getUserID());
 
-        FirebaseDatabase.getInstance(FirebaseUtil.FIREBASE_URL)
+        FirebaseDatabase.getInstance(UserSession.FIREBASE_URL)
                 .getReference()
-                .child(FirebaseUtil.JOB_COLLECTION)
+                .child(UserSession.JOB_COLLECTION)
                 .child(jobKey)
                 .updateChildren(map)
                 .addOnSuccessListener(aVoid -> {

@@ -29,6 +29,14 @@ public abstract class User {
         return identity;
     }
 
+    public boolean isEmployee(){
+        return this.identity.equals("Employee");
+    }
+
+    public boolean isEmployer(){
+        return this.identity.equals("Employer");
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
