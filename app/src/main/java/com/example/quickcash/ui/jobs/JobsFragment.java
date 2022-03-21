@@ -29,6 +29,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -39,9 +40,12 @@ public class JobsFragment extends Fragment {
     private FloatingActionButton addFAB;
 
     private LinkedList<JobPost> mJobs;
-
+    public static DatabaseReference userRef;
+    public MainActivity mainActivity;
     private String selectedCategory;
     private static final String CATEGORY_ALL = "Category - All";
+    private static final String RECOMMEND = "recommended";
+    public String prefer_type;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,6 +54,19 @@ public class JobsFragment extends Fragment {
 
         binding = FragmentJobsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        mainActivity = (MainActivity) getActivity();
+        userRef = mainActivity.userRef;
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                prefer_type = snapshot.child("prefer").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         addFAB = root.findViewById(R.id.addButton);
         addFAB.setOnClickListener(view ->
                 startActivity(new Intent(this.getContext(), JobPostingActivity.class)));
@@ -79,12 +96,16 @@ public class JobsFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     selectedCategory = adapterView.getItemAtPosition(i).toString();
-                    filterTheJobList(selectedCategory);
+                    if (selectedCategory.equals(RECOMMEND)){
+                        filterTheJobList(prefer_type);
+                    } else {
+                        filterTheJobList(selectedCategory);
+                    }
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
-                    selectedCategory = CATEGORY_ALL;
+                    selectedCategory = RECOMMEND;
                 }
             });
         } else {

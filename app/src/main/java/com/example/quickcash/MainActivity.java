@@ -14,7 +14,9 @@ import com.example.quickcash.util.FirebaseUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavArgument;
 import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private Button searchButton;
     private ListView jobListView;
     private FloatingActionButton addFAB;
+    public DatabaseReference userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userFirebase.setUsrID(intent.getStringExtra("userID"));
         userFirebase.setCurrentUserRef(intent.getStringExtra("userRef"));
+        userRef = userFirebase.getCurrentUserRef();
 
         com.example.quickcash.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
