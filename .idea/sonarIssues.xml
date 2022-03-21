@@ -148,6 +148,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/ui/profile/ProfileUpdateActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/util/FirebaseUtil.java">
           <value>
             <set />

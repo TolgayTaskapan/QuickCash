@@ -37,14 +37,13 @@ import java.util.LinkedList;
 public class JobsFragment extends Fragment {
 
     private FragmentJobsBinding binding;
-    private FloatingActionButton addFAB;
 
     private LinkedList<JobPost> mJobs;
     public static DatabaseReference userRef;
     public MainActivity mainActivity;
     private String selectedCategory;
     private static final String CATEGORY_ALL = "Category - All";
-    private static final String RECOMMEND = "recommended";
+    private static final String RECOMMEND = "Recommend";
     public String prefer_type;
 
     @Override
@@ -67,8 +66,8 @@ public class JobsFragment extends Fragment {
 
             }
         });
-        addFAB = root.findViewById(R.id.addButton);
-        addFAB.setOnClickListener(view ->
+
+        binding.addButton.setOnClickListener(view ->
                 startActivity(new Intent(this.getContext(), JobPostingActivity.class)));
 
         if ( !setupCategorySpinner() ) {
@@ -211,8 +210,6 @@ public class JobsFragment extends Fragment {
                 // not being used
 
             }
-
-
         });
     }
 
