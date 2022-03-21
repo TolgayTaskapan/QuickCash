@@ -34,7 +34,7 @@
         <item>Employer</item>
     </string-array>
     <string-array name="category_names">
-        <item>recommended</item>
+        <item>Recommend</item>
         <item>Category - All</item>
         <item>Labour</item>
         <item>Babysitting</item>

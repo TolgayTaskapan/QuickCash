@@ -37,38 +37,25 @@ import java.util.LinkedList;
 public class JobsFragment extends Fragment {
 
     private FragmentJobsBinding binding;
-    private FloatingActionButton addFAB;
 
     private LinkedList<JobPost> mJobs;
     public static DatabaseReference userRef;
     public MainActivity mainActivity;
-    private String selectedCategory;
+
     private static final String CATEGORY_ALL = "Category - All";
-    private static final String RECOMMEND = "recommended";
+    private static final String RECOMMEND = "Recommend";
     public String prefer_type;
+    private String selectedCategory;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-
         binding = FragmentJobsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         mainActivity = (MainActivity) getActivity();
-        userRef = mainActivity.userRef;
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                prefer_type = snapshot.child("prefer").getValue(String.class);
-            }
+        getPreferenceCategory();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        addFAB = root.findViewById(R.id.addButton);
-        addFAB.setOnClickListener(view ->
+        binding.addButton.setOnClickListener(view ->
                 startActivity(new Intent(this.getContext(), JobPostingActivity.class)));
 
         if ( !setupCategorySpinner() ) {
@@ -86,6 +73,21 @@ public class JobsFragment extends Fragment {
         binding = null;
     }
 
+    private void getPreferenceCategory() {
+        userRef = mainActivity.userRef;
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                prefer_type = snapshot.child("prefer").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private boolean setupCategorySpinner() {
         boolean setUp = false;
 
@@ -96,11 +98,7 @@ public class JobsFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     selectedCategory = adapterView.getItemAtPosition(i).toString();
-                    if (selectedCategory.equals(RECOMMEND)){
-                        filterTheJobList(prefer_type);
-                    } else {
-                        filterTheJobList(selectedCategory);
-                    }
+                    filterTheJobList(selectedCategory);
                 }
 
                 @Override
@@ -129,7 +127,14 @@ public class JobsFragment extends Fragment {
     private void filterTheJobList(String category) {
         LinkedList<JobPost> filteredList = new LinkedList<JobPost>();
 
-        // If null, set to default category, which is all
+        if (category.equals(RECOMMEND)) {
+            category = prefer_type;
+        }
+
+        System.out.println("=========" + category + "==========");
+        System.out.println("=========" + mJobs.size() + "==========");
+
+        // The option of showing all jobs
         if (category == null || category.equals(CATEGORY_ALL)) {
             showUpJobList(this.mJobs);
             return;
@@ -143,7 +148,7 @@ public class JobsFragment extends Fragment {
             }
         }
 
-        if (filteredList.isEmpty()) {
+        if (filteredList.size() == 0) {
             showToastMessage("There is no job under this category");
         }
 
@@ -184,10 +189,6 @@ public class JobsFragment extends Fragment {
                     mJobs.add(new JobPost(title,type,wage,duration,latitude,longitude,userID));
                 }
 
-                Spinner spinner = binding.categorySpinner;
-                spinner.setSelection(0);
-
-                showUpJobList(mJobs);
             }
 
             @Override
@@ -211,8 +212,6 @@ public class JobsFragment extends Fragment {
                 // not being used
 
             }
-
-
         });
     }
 

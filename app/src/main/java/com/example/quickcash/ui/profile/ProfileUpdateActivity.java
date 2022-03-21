@@ -55,9 +55,9 @@ public class ProfileUpdateActivity extends AppCompatActivity {
                     Map<String, Object> preferUpdate = new HashMap<>();
                     preferUpdate.put("prefer", preferType);
                     userRef.updateChildren(preferUpdate);
-                    Toast.makeText(getApplicationContext(), "save successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Save successfully!", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "some fields are empty", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Some fields are empty", Toast.LENGTH_LONG).show();
                 }
             }
         });
