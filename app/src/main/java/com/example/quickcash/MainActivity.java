@@ -14,7 +14,9 @@ import com.example.quickcash.util.FirebaseUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavArgument;
 import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private Button searchButton;
     private ListView jobListView;
     private FloatingActionButton addFAB;
+    public DatabaseReference userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userFirebase.setUsrID(intent.getStringExtra("userID"));
         userFirebase.setCurrentUserRef(intent.getStringExtra("userRef"));
+        userRef = userFirebase.getCurrentUserRef();
 
-        com.example.quickcash.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         init();
@@ -51,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_jobs, R.id.navigation_dashboard, R.id.navigation_profile)
-                .build();
+                R.id.navigation_jobs, R.id.navigation_dashboard, R.id.navigation_profile).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
@@ -88,17 +91,17 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public void openPostPage() {
-        Intent postIntent = new Intent(this, JobPostingActivity.class);
-
-        startActivity(postIntent);
-    }
-
     public void openSearchPage(View view) {
         Intent postIntent = new Intent(this, JobSearchActivity.class);
 
         startActivity(postIntent);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
+        // Update the account status when the MainActivity is quited
+        userFirebase.getCurrentUserRef().child("logged").setValue(false);
+    }
 }

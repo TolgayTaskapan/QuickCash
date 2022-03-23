@@ -7,6 +7,7 @@
     <string name="USER_DOES_NOT_EXIST">That user does not exist.</string>
     <string name="INCORRECT_PASSWORD">Incorrect password. Please try again.</string>
     <string name="EMPTY_STRING"></string>
+    <string name="type_of_job"></string>
     <string name="DATABASE_URL">https://quick-cash-ca106-default-rtdb.firebaseio.com</string>
     <string name="DATABASE_ERROR">Error in connecting to database</string>
     <string name="JOB_NAME_REPEATED">Name is repeated.</string>
@@ -24,11 +25,16 @@
     <string name="logout_button">Logout</string>
     <string name="EMPTY_LIST">There is no job under this category</string>
     <string name="landing_page_welcome">Welcome to Quick Cash</string>
+    <string name="update_profile">update_profile</string>
+    <string name="your_favorite_type_of_job">Your Favorite type of job</string>
+    <string name="select_your_favorite_type_of_job">select your favorite type of job</string>
+    <string name="Update" />
     <string-array name="identity_labels">
         <item>Employee</item>
         <item>Employer</item>
     </string-array>
     <string-array name="category_names">
+        <item>Recommend</item>
         <item>Category - All</item>
         <item>Labour</item>
         <item>Babysitting</item>
@@ -38,6 +44,14 @@
     </string-array>
     <string-array name="job_type_entries">
         <item></item>
+        <item>Labour</item>
+        <item>Babysitting</item>
+        <item>Pet Care</item>
+        <item>Delivery</item>
+        <item>Tech Help</item>
+    </string-array>
+    <string-array name="job_prefer_entries">
+        <item>Category - All</item>
         <item>Labour</item>
         <item>Babysitting</item>
         <item>Pet Care</item>

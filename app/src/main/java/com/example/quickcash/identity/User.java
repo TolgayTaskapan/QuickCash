@@ -8,6 +8,7 @@ public abstract class User {
     private String password;
     private String identity;
     private boolean status;
+    public String Prefer;
 
     protected User(){}
 
@@ -29,6 +30,10 @@ public abstract class User {
         return identity;
     }
 
+    public String getPrefer() {
+        return Prefer;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -43,6 +48,10 @@ public abstract class User {
 
     public void setLogged(boolean logged) {
         this.status = logged;
+    }
+
+    public void setPrefer(String selectedPrefer) {
+        Prefer = selectedPrefer;
     }
 
     public boolean isLogged() {

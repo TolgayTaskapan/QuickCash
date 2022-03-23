@@ -3,7 +3,11 @@
   <component name="issues">
     <option name="index">
       <map>
+<<<<<<< HEAD
         <entry key="$PROJECT_DIR$/../../ChatIntegration/csci3130_chat_application/build.gradle">
+=======
+        <entry key="$PROJECT_DIR$/README.md">
+>>>>>>> df9190e3883458b242abc0f0a05a0713089303ea
           <value>
             <set />
           </value>
@@ -144,6 +148,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/ui/profile/ProfileFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/ui/profile/ProfileUpdateActivity.java">
           <value>
             <set />
           </value>

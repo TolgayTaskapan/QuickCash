@@ -29,6 +29,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -36,22 +37,25 @@ import java.util.LinkedList;
 public class JobsFragment extends Fragment {
 
     private FragmentJobsBinding binding;
-    private FloatingActionButton addFAB;
 
     private LinkedList<JobPost> mJobs;
+    public static DatabaseReference userRef;
+    public MainActivity mainActivity;
 
-    private String selectedCategory;
     private static final String CATEGORY_ALL = "Category - All";
+    private static final String RECOMMEND = "Recommend";
+    public String prefer_type;
+    private String selectedCategory;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-
         binding = FragmentJobsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        addFAB = root.findViewById(R.id.addButton);
-        addFAB.setOnClickListener(view ->
+        mainActivity = (MainActivity) getActivity();
+        getPreferenceCategory();
+
+        binding.addButton.setOnClickListener(view ->
                 startActivity(new Intent(this.getContext(), JobPostingActivity.class)));
 
         if ( !setupCategorySpinner() ) {
@@ -69,6 +73,21 @@ public class JobsFragment extends Fragment {
         binding = null;
     }
 
+    private void getPreferenceCategory() {
+        userRef = mainActivity.userRef;
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                prefer_type = snapshot.child("prefer").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private boolean setupCategorySpinner() {
         boolean setUp = false;
 
@@ -84,7 +103,7 @@ public class JobsFragment extends Fragment {
 
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
-                    selectedCategory = CATEGORY_ALL;
+                    selectedCategory = RECOMMEND;
                 }
             });
         } else {
@@ -108,7 +127,14 @@ public class JobsFragment extends Fragment {
     private void filterTheJobList(String category) {
         LinkedList<JobPost> filteredList = new LinkedList<JobPost>();
 
-        // If null, set to default category, which is all
+        if (category.equals(RECOMMEND)) {
+            category = prefer_type;
+        }
+
+        System.out.println("=========" + category + "==========");
+        System.out.println("=========" + mJobs.size() + "==========");
+
+        // The option of showing all jobs
         if (category == null || category.equals(CATEGORY_ALL)) {
             showUpJobList(this.mJobs);
             return;
@@ -122,7 +148,7 @@ public class JobsFragment extends Fragment {
             }
         }
 
-        if (filteredList.isEmpty()) {
+        if (filteredList.size() == 0) {
             showToastMessage("There is no job under this category");
         }
 
@@ -163,10 +189,6 @@ public class JobsFragment extends Fragment {
                     mJobs.add(new JobPost(title,type,wage,duration,latitude,longitude,userID));
                 }
 
-                Spinner spinner = binding.categorySpinner;
-                spinner.setSelection(0);
-
-                showUpJobList(mJobs);
             }
 
             @Override
@@ -190,8 +212,6 @@ public class JobsFragment extends Fragment {
                 // not being used
 
             }
-
-
         });
     }
 

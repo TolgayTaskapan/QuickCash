@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,12 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuickCash">
+        <activity
+            android:name=".ui.profile.ProfileUpdateActivity"
+            android:exported="false" />
 
         <service
             android:name=".jobsearch.GPSTracker"
-            android:foregroundServiceType="location">
-
-        </service>
+            android:foregroundServiceType="location"></service>
 
         <activity
             android:name=".JobPostingActivity"
@@ -44,10 +44,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".account.SignupActivity" />
-
-        <activity android:name=".jobsearch.JobSearchResultsActivity"
+        <activity
+            android:name=".jobsearch.JobSearchResultsActivity"
             android:exported="true" />
-
     </application>
 
 </manifest>

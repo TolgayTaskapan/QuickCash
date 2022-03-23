@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
+import com.example.quickcash.identity.User;
 import com.example.quickcash.util.SharedPreferenceUtil;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -136,7 +137,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
     public void login(DatabaseReference dbUser){
         String userType = this.userType;
         Map<String, Object> userLoginUpdate = new HashMap<>();
@@ -145,7 +145,6 @@ public class LoginActivity extends AppCompatActivity {
 
         jumpToJobSearchActivity(dbUser, userType);
     }
-
 
     protected void jumpToJobSearchActivity( DatabaseReference dbUser, String userType) {
         Intent intent = new Intent();
