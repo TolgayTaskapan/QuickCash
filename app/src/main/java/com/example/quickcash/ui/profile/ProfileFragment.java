@@ -20,6 +20,7 @@ import com.example.quickcash.account.LoginActivity;
 import com.example.quickcash.account.SignupActivity;
 import com.example.quickcash.databinding.FragmentProfileBinding;
 import com.example.quickcash.identity.User;
+import com.example.quickcash.payment.PaymentActivity;
 import com.example.quickcash.util.FirebaseUtil;
 import com.google.firebase.database.DatabaseReference;
 
@@ -27,6 +28,7 @@ public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     private Button updateProfile;
+    private Button testButton;
     public static DatabaseReference userRef;
     public MainActivity mainActivity;
 
@@ -41,7 +43,9 @@ public class ProfileFragment extends Fragment {
         mainActivity = (MainActivity) getActivity();
         userRef = mainActivity.userRef;
         updateProfile = root.findViewById(R.id.UpdateProfile);
+        testButton = root.findViewById(R.id.testButton);
         updateProfile.setOnClickListener(view -> startActivity(new Intent(this.getContext(), ProfileUpdateActivity.class)));
+        testButton.setOnClickListener(view -> startActivity(new Intent(this.getContext(), PaymentActivity.class)));
         return root;
     }
 

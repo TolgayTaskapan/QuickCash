@@ -15,12 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuickCash">
         <activity
+            android:name=".payment.PaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.profile.ProfileUpdateActivity"
             android:exported="false" />
 
         <service
             android:name=".jobsearch.GPSTracker"
-            android:foregroundServiceType="location"></service>
+            android:foregroundServiceType="location" />
 
         <activity
             android:name=".JobPostingActivity"
