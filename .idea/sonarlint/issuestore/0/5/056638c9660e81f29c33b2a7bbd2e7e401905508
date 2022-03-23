@@ -1,0 +1,12 @@
+
+U
+java:S1854'"8Remove this useless assignment to local variable "view".(·þÍÉ8ÌÑ‹©ú/
+f
+java:S1854 "DRemove this useless assignment to local variable "profileViewModel".(ë›ó£ÿÿÿÿÿ8ÍÑ‹©ú/
+\
+java:S1161":Add the "@Override" annotation above this method signature(î•Éðûÿÿÿÿ8ÎÑ‹©ú/
+W
+java:S1481 "5Remove this unused "profileViewModel" local variable.(ë›ó£ÿÿÿÿÿ8ÓÑ‹©ú/
+F
+java:S1481'")Remove this unused "view" local variable.(·þÍÉ8ÕÑ‹©ú/
+]	java:S125-"<This block of commented-out lines of code should be removed.(À£¡Áüÿÿÿÿ8ÖÑ‹©ú/
