@@ -11,13 +11,14 @@
     <string name="DATABASE_URL">https://quick-cash-ca106-default-rtdb.firebaseio.com</string>
     <string name="DATABASE_ERROR">Error in connecting to database</string>
     <string name="JOB_NAME_REPEATED">Name is repeated.</string>
-    <string name="JOB_POST_SUCCESS">Job Post Created Successfully</string>
+    <string name="JOB_ADD_SUCCESS">Job Post Created Successfully</string>
+    <string name="JOB_UPDATE_SUCCESS">Job Post Updated Successfully</string>
     <string name="EMPTY_JOBNAME_OR_DESCRIPTION">Please enter the job name and/or job type</string>
     <string name="EMPTY_WAGE">The wage must be entered</string>
     <string name="EMPTY_LOCATION">The location must be entered</string>
     <string name="INVALID_JOBNAME">The length of Job name must be lower than 20 digits and cannot contain special characters</string>
     <string name="INVALID_DESCRIPTION">The length of description must be lower than 50 digits</string>
-    <string name="INVALID_WAGE">The wage must be greater than $0.00</string>
+    <string name="INVALID_WAGE">The wage must be greater than $12.95</string>
     <string name="INVALID_LOCATION">Location could not be found, please re-enter location</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profile">Profile</string>

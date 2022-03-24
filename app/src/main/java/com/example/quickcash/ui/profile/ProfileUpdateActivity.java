@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
 import com.example.quickcash.identity.User;
-import com.example.quickcash.util.FirebaseUtil;
+import com.example.quickcash.util.UserSession;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;

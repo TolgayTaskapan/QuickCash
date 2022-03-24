@@ -3,61 +3,7 @@
   <component name="issues">
     <option name="index">
       <map>
-<<<<<<< HEAD
-        <entry key="$PROJECT_DIR$/../../ChatIntegration/csci3130_chat_application/build.gradle">
-=======
-        <entry key="$PROJECT_DIR$/README.md">
->>>>>>> df9190e3883458b242abc0f0a05a0713089303ea
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/example/quickcash/JobFilterEspresso.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/example/quickcash/JobFilterEspressoTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/example/quickcash/JobPostingEspresso.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/example/quickcash/JobPostingEspressoTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/example/quickcash/JobSearchEspresso.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/example/quickcash/JobSearchEspressoTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/example/quickcash/LoginEspresso.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/example/quickcash/LoginEspressoTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/example/quickcash/SignupEspresso.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/example/quickcash/SignupEspressoTest.java">
+        <entry key="$PROJECT_DIR$/app/build.gradle">
           <value>
             <set />
           </value>
@@ -67,32 +13,7 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/GeoCodeLocation.java">
-          <value>
-            <set />
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/JobPost.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/JobPostingActivity.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/JobPostingValidator.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/JobSearchActivity.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/LandingPageActivity.java">
           <value>
             <set />
           </value>
@@ -107,37 +28,17 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/account/SignupActivity.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/identity/Employer.java">
-          <value>
-            <set />
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/identity/User.java">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/ui/dashboard/DashboardFragment.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/ui/jobs/CategoryFilterAdapter.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/ui/jobs/Job.java">
-          <value>
-            <set />
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/ui/jobs/JobAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/ui/jobs/JobPostAdapter.java">
           <value>
             <set />
           </value>
@@ -157,107 +58,12 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/util/FirebaseUtil.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_job_dashboard.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_job_posting.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_jobs.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/list_category_item.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/list_group_category.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/list_item_category.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/list_item_job.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/test/java/com/example/quickcash/JobPostingJUnit.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/test/java/com/example/quickcash/JobPostingJUnitTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/test/java/com/example/quickcash/JobSearchJUnit.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/test/java/com/example/quickcash/JobSearchJUnitTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/test/java/com/example/quickcash/SharedPreferenceUtilTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/test/java/com/example/quickcash/UserLoginJUnit.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/test/java/com/example/quickcash/UserLoginJUnitTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/test/java/com/example/quickcash/UserSignupJUnit.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/test/java/com/example/quickcash/UserSignupJUnitTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$USER_HOME$/Downloads/ExpandableListViewDemo/app/build.gradle">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="/a.dummy">
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/list_job_item_employee.xml">
           <value>
             <set />
           </value>

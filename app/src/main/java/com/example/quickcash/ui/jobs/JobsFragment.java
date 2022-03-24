@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -16,18 +17,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.quickcash.AddUpdateJobPostActivity;
 import com.example.quickcash.JobPost;
-import com.example.quickcash.JobPostingActivity;
 import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
+import com.example.quickcash.WrapLinearLayoutManager;
 import com.example.quickcash.databinding.FragmentJobsBinding;
-import com.example.quickcash.util.FirebaseUtil;
+
+import com.example.quickcash.util.UserSession;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -35,6 +42,14 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 public class JobsFragment extends Fragment {
+
+    private RecyclerView recyclerView;
+    private ListView jobListView;
+    private JobAdapter jobAdapter;
+    private JobPostAdapter jobPostAdapter;
+    private FloatingActionButton addFAB;
+    private Button searchButton;
+    private Spinner categorySpinner;
 
     private FragmentJobsBinding binding;
 
@@ -47,24 +62,92 @@ public class JobsFragment extends Fragment {
     public String prefer_type;
     private String selectedCategory;
 
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        JobsViewModel jobsViewModel = new ViewModelProvider(this).get(JobsViewModel.class);
         binding = FragmentJobsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         mainActivity = (MainActivity) getActivity();
-        getPreferenceCategory();
 
-        binding.addButton.setOnClickListener(view ->
-                startActivity(new Intent(this.getContext(), JobPostingActivity.class)));
-
-        if ( !setupCategorySpinner() ) {
-            showToastMessage("Job Fragment: Fail to set up category spinner");
+        if (UserSession.getInstance().getUser().isEmployee()) {
+            getPreferenceCategory();
         }
 
-        retrieveJobsFormFirebase();
+        init(root);
+        connectToFirebaseRTDB();
+        attachListeners();
+
+        if (UserSession.getInstance().getUser().isEmployee()) {
+            if ( !setupCategorySpinner() ) {
+                showToastMessage("Job Fragment: Fail to set up category spinner");
+            }
+            retrieveJobsFormFirebase();
+        }
 
         return root;
+    }
+
+    private void init(View view) {
+        recyclerView = view.findViewById(R.id.jobsRecyclerView);
+        recyclerView.setLayoutManager(new WrapLinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
+        jobListView = view.findViewById(R.id.list_jobs);
+        addFAB = view.findViewById(R.id.addButton);
+        searchButton = view.findViewById(R.id.JobSearchBtn);
+        categorySpinner = view.findViewById(R.id.categorySpinner);
+
+    }
+
+    private void setActivityView() {
+        String userType = UserSession.getInstance().getUser().getIdentity();
+        if (userType != null) {
+            if (userType.equals("Employer")) {
+                searchButton.setVisibility(View.GONE);
+                jobListView.setVisibility(View.GONE);
+                categorySpinner.setVisibility(View.GONE);
+            } else {
+                searchButton.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                addFAB.setVisibility(View.GONE);
+            }
+        } else {
+            System.out.println("nothing found");
+        }
+    }
+
+    private void attachListeners() {
+        addFAB.setOnClickListener(view ->
+                startActivity(new Intent(this.getContext(), AddUpdateJobPostActivity.class)));
+    }
+
+    private void connectToFirebaseRTDB() {
+        final String userID = UserSession.getInstance().getUsrID();
+        final FirebaseRecyclerOptions<JobPost> options = new FirebaseRecyclerOptions.Builder<JobPost>()
+                .setQuery(FirebaseDatabase.getInstance(UserSession.FIREBASE_URL)
+                        .getReference()
+                        .child(UserSession.JOB_COLLECTION).orderByChild("userID").equalTo(userID), JobPost.class)
+                .build();
+
+        jobPostAdapter = new JobPostAdapter(options);
+        recyclerView.setAdapter(jobPostAdapter);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        jobPostAdapter.startListening();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setActivityView();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        jobPostAdapter.stopListening();
     }
 
     @Override
@@ -74,7 +157,7 @@ public class JobsFragment extends Fragment {
     }
 
     private void getPreferenceCategory() {
-        userRef = mainActivity.userRef;
+        userRef = UserSession.getInstance().getCurrentUserRef();
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -140,43 +223,22 @@ public class JobsFragment extends Fragment {
             return;
         }
 
-        // Go through the jobs to filter out the desired category
-        for (int i = 0; i < mJobs.size(); i++) {
-            JobPost job = mJobs.get(i);
-            if (job.getJobType().equals(category)) {
-                filteredList.add(job);
-            }
-        }
-
-        if (filteredList.size() == 0) {
-            showToastMessage("There is no job under this category");
-        }
-
-        showUpJobList(filteredList);
-        return;
     }
 
     private void showToastMessage(String message) {
         Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
     }
 
-    private void showUpJobList(LinkedList<JobPost> inCategory) {
-        Context mContext = this.getContext();
-        ListView jobListView = binding.listJobs;
-
-        JobAdapter jobAdapter = new JobAdapter(inCategory, mContext);
-        jobListView.setAdapter(jobAdapter);
-    }
 
     private void retrieveJobsFormFirebase() {
-        DatabaseReference jobRef = FirebaseDatabase.getInstance(FirebaseUtil.FIREBASE_URL).getReference("job");
+        DatabaseReference jobRef = FirebaseDatabase.getInstance(UserSession.FIREBASE_URL).getReference("job");
         mJobs = new LinkedList<JobPost>();
 
         jobRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
-                String userID = MainActivity.userFirebase.getUsrID();
+                String userID = UserSession.getInstance().getUsrID();
 
                 while (iterator.hasNext()) {
                     Integer duration = iterator.next().getValue(Integer.class);
@@ -184,9 +246,10 @@ public class JobsFragment extends Fragment {
                     String title = iterator.next().getValue(String.class);
                     String type = iterator.next().getValue(String.class);
                     Double latitude = iterator.next().getValue(Double.class);
+                    String location = iterator.next().getValue(String.class);
                     Double longitude = iterator.next().getValue(Double.class);
                     iterator.next();    // Skip the userID in Firebase
-                    mJobs.add(new JobPost(title,type,wage,duration,latitude,longitude,userID));
+                    mJobs.add(new JobPost(title,type,wage,duration, location, latitude,longitude,userID));
                 }
 
             }
@@ -214,6 +277,16 @@ public class JobsFragment extends Fragment {
             }
         });
     }
+
+    private void showUpJobList(LinkedList<JobPost> inCategory) {
+        Context mContext = this.getContext();
+        ListView jobListView = (ListView) binding.listJobs;
+
+        jobAdapter = new JobAdapter(inCategory, mContext);
+        jobListView.setAdapter(jobAdapter);
+    }
+
+
 
 
 }

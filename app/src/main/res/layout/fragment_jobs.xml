@@ -21,6 +21,17 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/jobsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:itemCount="10"
+        tools:listitem="@layout/list_job_item_employer" />
+
     <ListView
         android:id="@+id/list_jobs"
         android:layout_width="match_parent"

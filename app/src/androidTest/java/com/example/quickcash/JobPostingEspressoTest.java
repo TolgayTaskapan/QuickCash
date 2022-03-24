@@ -4,7 +4,6 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -21,7 +20,6 @@ import static org.hamcrest.Matchers.not;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -43,7 +41,7 @@ public class JobPostingEspressoTest {
         loginAsEmployer();
 
         onView(withId(R.id.addButton)).perform(click());
-        intended(hasComponent(JobPostingActivity.class.getName()));
+        intended(hasComponent(AddUpdateJobPostActivity.class.getName()));
 
         //fill in job post fields
         onView(withId(R.id.jobTitle)).perform(typeText("Lawn Mowing"));
@@ -64,7 +62,7 @@ public class JobPostingEspressoTest {
         loginAsEmployer();
 
         onView(withId(R.id.addButton)).perform(click());
-        intended(hasComponent(JobPostingActivity.class.getName()));
+        intended(hasComponent(AddUpdateJobPostActivity.class.getName()));
 
         //fill in job post fields
         onView(withId(R.id.jobTitle)).perform(typeText(""));
@@ -85,7 +83,7 @@ public class JobPostingEspressoTest {
         loginAsEmployer();
 
         onView(withId(R.id.addButton)).perform(click());
-        intended(hasComponent(JobPostingActivity.class.getName()));
+        intended(hasComponent(AddUpdateJobPostActivity.class.getName()));
 
         //fill in job post fields
         onView(withId(R.id.jobTitle)).perform(typeText("Lawn Mowing"));
@@ -104,7 +102,7 @@ public class JobPostingEspressoTest {
         loginAsEmployer();
 
         onView(withId(R.id.addButton)).perform(click());
-        intended(hasComponent(JobPostingActivity.class.getName()));
+        intended(hasComponent(AddUpdateJobPostActivity.class.getName()));
 
         //fill in job post fields
         onView(withId(R.id.jobTitle)).perform(typeText("Lawn Mowing"));
@@ -125,7 +123,7 @@ public class JobPostingEspressoTest {
         loginAsEmployer();
 
         onView(withId(R.id.addButton)).perform(click());
-        intended(hasComponent(JobPostingActivity.class.getName()));
+        intended(hasComponent(AddUpdateJobPostActivity.class.getName()));
 
         //fill in job post fields
         onView(withId(R.id.jobTitle)).perform(typeText("Lawn Mowing"));
@@ -146,7 +144,7 @@ public class JobPostingEspressoTest {
         loginAsEmployer();
 
         onView(withId(R.id.addButton)).perform(click());
-        intended(hasComponent(JobPostingActivity.class.getName()));
+        intended(hasComponent(AddUpdateJobPostActivity.class.getName()));
 
         //fill in job post fields
         onView(withId(R.id.jobTitle)).perform(typeText("uichaiuciuaehcocaohcohcuehcia"));
@@ -167,7 +165,7 @@ public class JobPostingEspressoTest {
         loginAsEmployer();
 
         onView(withId(R.id.addButton)).perform(click());
-        intended(hasComponent(JobPostingActivity.class.getName()));
+        intended(hasComponent(AddUpdateJobPostActivity.class.getName()));
 
         //fill in job post fields
         onView(withId(R.id.jobTitle)).perform(typeText("Lawn Mowing"));
@@ -188,7 +186,7 @@ public class JobPostingEspressoTest {
         loginAsEmployer();
 
         onView(withId(R.id.addButton)).perform(click());
-        intended(hasComponent(JobPostingActivity.class.getName()));
+        intended(hasComponent(AddUpdateJobPostActivity.class.getName()));
 
         //fill in job post fields
         onView(withId(R.id.jobTitle)).perform(typeText("Lawn Mowing"));

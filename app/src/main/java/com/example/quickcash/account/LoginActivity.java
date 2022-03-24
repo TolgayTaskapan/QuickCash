@@ -3,6 +3,7 @@ package com.example.quickcash.account;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,8 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
+import com.example.quickcash.identity.Employee;
+import com.example.quickcash.identity.Employer;
+
 import com.example.quickcash.identity.User;
 import com.example.quickcash.util.SharedPreferenceUtil;
+import com.example.quickcash.util.UserSession;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,14 +58,11 @@ public class LoginActivity extends AppCompatActivity {
         employerLoginBtn.setOnClickListener(view -> {
             userType = "Employer";
             checkIfUserExists(userType);
-
         });
-
 
         employeeLoginBtn.setOnClickListener(view -> {
             userType = "Employee";
             checkIfUserExists(userType);
-
         });
     }
 
@@ -110,16 +112,24 @@ public class LoginActivity extends AppCompatActivity {
             dbUser.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        for (DataSnapshot user : snapshot.getChildren()) {
-                            if (password.equals(user.child("password").getValue())) {
-                                dbUser = user.getRef();
-                                userID = user.getKey();
-                                login(dbUser);
-                            } else {
-                                setStatusMessage(context.getResources().getString(R.string.INCORRECT_PASSWORD).trim());
-                            }
+                    if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
+                        final User user;
+                        if (userType.equals("Employer")) {
+                            user = snapshot.getChildren().iterator().next().getValue(Employer.class);
+                        } else{
+                            user = snapshot.getChildren().iterator().next().getValue(Employee.class);
                         }
+
+                        if (user != null && user.getPassword().equals(password)) {
+                            // Add user to the session (Log the user in).
+                            UserSession.getInstance().setUser(user);
+                            UserSession.getInstance().setUsrID(snapshot.getChildren().iterator().next().getKey());
+                            UserSession.getInstance().setCurrentUserRef(snapshot.getChildren().iterator().next().getRef());
+                            jumpToMainActivity();
+                        } else {
+                            setStatusMessage(context.getResources().getString(R.string.INCORRECT_PASSWORD).trim());
+                        }
+
 
                     } else {
                         setStatusMessage(context.getResources().getString(R.string.USER_DOES_NOT_EXIST).trim());
@@ -137,25 +147,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void login(DatabaseReference dbUser){
-        String userType = this.userType;
-        Map<String, Object> userLoginUpdate = new HashMap<>();
-        userLoginUpdate.put("logged", true);
-        dbUser.updateChildren(userLoginUpdate);
+        protected void jumpToMainActivity() {
+            Intent intent = new Intent();
+            intent.setClass(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
-        jumpToJobSearchActivity(dbUser, userType);
     }
-
-    protected void jumpToJobSearchActivity( DatabaseReference dbUser, String userType) {
-        Intent intent = new Intent();
-        intent.setClass(LoginActivity.this, MainActivity.class);
-
-        // Delivery the userID to MainActivity
-        intent.putExtra("userID", userID);
-        intent.putExtra("userType", userType);
-        intent.putExtra("userRef", dbUser.toString());
-
-        startActivity(intent);
-        finish();
-    }
-}

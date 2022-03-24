@@ -23,7 +23,7 @@
             android:foregroundServiceType="location"></service>
 
         <activity
-            android:name=".JobPostingActivity"
+            android:name=".AddUpdateJobPostActivity"
             android:exported="false" />
         <activity
             android:name=".account.LoginActivity"
