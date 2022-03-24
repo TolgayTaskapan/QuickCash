@@ -45,7 +45,7 @@ public class JobAdapter extends BaseAdapter {
 
         txtJobTitle.setText(mJob.get(position).getJobTitle());
         txtJobCategory.setText(mJob.get(position).getJobType());
-        String wageStr = mJob.get(position).getHourlyWage() + "$";
+        String wageStr = "$" + mJob.get(position).getHourlyWage();
         txtJobWage.setText(wageStr);
         return convertView;
     }

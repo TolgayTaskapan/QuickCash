@@ -27,6 +27,7 @@ import com.example.quickcash.R;
 import com.example.quickcash.WrapLinearLayoutManager;
 import com.example.quickcash.databinding.FragmentJobsBinding;
 
+import com.example.quickcash.jobsearch.JobSearchActivity;
 import com.example.quickcash.util.UserSession;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
@@ -70,20 +71,13 @@ public class JobsFragment extends Fragment {
         View root = binding.getRoot();
         mainActivity = (MainActivity) getActivity();
 
-        if (UserSession.getInstance().getUser().isEmployee()) {
-            getPreferenceCategory();
-        }
-
         init(root);
-        connectToFirebaseRTDB();
-        attachListeners();
+        setActivityView();
 
-        if (UserSession.getInstance().getUser().isEmployee()) {
-            if ( !setupCategorySpinner() ) {
-                showToastMessage("Job Fragment: Fail to set up category spinner");
-            }
-            retrieveJobsFormFirebase();
+        if (UserSession.getInstance().getUser().isEmployer()) {
+            connectToFirebaseRTDB();
         }
+        attachListeners();
 
         return root;
     }
@@ -99,6 +93,12 @@ public class JobsFragment extends Fragment {
     }
 
     private void setActivityView() {
+        if (UserSession.getInstance().getUser().isEmployee()) {
+            getPreferenceCategory();
+            if ( !setupCategorySpinner() ) showToastMessage("Job Fragment: Fail to set up category spinner");
+
+            retrieveJobsFormFirebase();
+        }
         String userType = UserSession.getInstance().getUser().getIdentity();
         if (userType != null) {
             if (userType.equals("Employer")) {
@@ -118,6 +118,20 @@ public class JobsFragment extends Fragment {
     private void attachListeners() {
         addFAB.setOnClickListener(view ->
                 startActivity(new Intent(this.getContext(), AddUpdateJobPostActivity.class)));
+        searchButton.setOnClickListener(view ->
+                startActivity(new Intent(this.getContext(), JobSearchActivity.class)));
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedCategory = adapterView.getItemAtPosition(i).toString();
+                filterTheJobList(selectedCategory);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                selectedCategory = RECOMMEND;
+            }
+        });
     }
 
     private void connectToFirebaseRTDB() {
@@ -135,7 +149,9 @@ public class JobsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        jobPostAdapter.startListening();
+        if (UserSession.getInstance().getUser().isEmployer()) {
+            jobPostAdapter.startListening();
+        }
     }
 
     @Override
@@ -147,7 +163,9 @@ public class JobsFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        jobPostAdapter.stopListening();
+        if (UserSession.getInstance().getUser().isEmployer()) {
+            jobPostAdapter.stopListening();
+        }
     }
 
     @Override
@@ -175,9 +193,10 @@ public class JobsFragment extends Fragment {
         boolean setUp = false;
 
         // Create the spinner.
-        Spinner spinner = binding.categorySpinner;
-        if (spinner != null) {
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //Spinner spinner = binding.categorySpinner;
+        //Spinner spinner = categorySpinner;
+        if (categorySpinner != null) {
+            categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     selectedCategory = adapterView.getItemAtPosition(i).toString();
@@ -201,7 +220,7 @@ public class JobsFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Apply the adapter to the spinner.
-        spinner.setAdapter(adapter);
+        categorySpinner.setAdapter(adapter);
         setUp = true;
 
         return setUp;
@@ -222,6 +241,22 @@ public class JobsFragment extends Fragment {
             showUpJobList(this.mJobs);
             return;
         }
+
+        // Go through the jobs to filter out the desired category
+        for (int i = 0; i < mJobs.size(); i++) {
+            JobPost job = mJobs.get(i);
+            if (job.getJobType().equals(category)) {
+                filteredList.add(job);
+            }
+        }
+
+        if (filteredList.size() == 0) {
+            showToastMessage("There is no job under this category");
+        }
+
+        showUpJobList(filteredList);
+        return;
+
 
     }
 
@@ -280,7 +315,7 @@ public class JobsFragment extends Fragment {
 
     private void showUpJobList(LinkedList<JobPost> inCategory) {
         Context mContext = this.getContext();
-        ListView jobListView = (ListView) binding.listJobs;
+        jobListView = binding.listJobs;
 
         jobAdapter = new JobAdapter(inCategory, mContext);
         jobListView.setAdapter(jobAdapter);
