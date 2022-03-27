@@ -114,21 +114,28 @@ public class JobSearchActivity extends AppCompatActivity {
     }
 
     public void assignMinMaxJobLength(String userChoice) {
-        if(userChoice.equals("1 to 3 days")) {
+        if(userChoice.equals("Category - All")) {
+            min_job_length = 0;
+            max_job_length = 999999999;
+        }
+        if(userChoice.equals("1 to 3 hours")) {
             min_job_length = 1;
             max_job_length = 3;
         }
-        if(userChoice.equals("3 to 5 days")) {
+        if(userChoice.equals("3 to 5 hours")) {
             min_job_length = 3;
             max_job_length = 5;
         }
-        if(userChoice.equals("7 days or more")) {
+        if(userChoice.equals("7 hours or more")) {
             min_job_length = 7;
             max_job_length = 999999999;
         }
     }
 
     public double assignPreferredDistance(String userChoice) {
+        if(userChoice.equals("Category - All")) {
+            return 999999999;
+        }
         if(userChoice.equals("1 KM")) {
             return 1000;
         }

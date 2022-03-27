@@ -14,7 +14,7 @@
         android:text="job_title" />
 
     <TextView
-        android:id="@+id/job_type"
+        android:id="@+id/job_type_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor= "#DF0000"

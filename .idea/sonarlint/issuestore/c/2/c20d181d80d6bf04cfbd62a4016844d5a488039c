@@ -1,0 +1,33 @@
+
+˜
+java:S1186ˆ"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÆÉ€¼
+m
+java:S3776?"RRefactor this method to reduce its Cognitive Complexity from 30 to the 15 allowed.(øˆ÷Ãùÿÿÿÿ
+_
+java:S1854R"JRemove this useless assignment to local variable "requestPermissionsCode".(è€Ö,
+P
+java:S1481R";Remove this unused "requestPermissionsCode" local variable.(è€Ö,
+m
+java:S3252f"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(îºÁ
+˜
+java:S1186˜"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÀÄŞ’
+˜
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(çÅğÙ
+˜
+java:S1186¢"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÁïÕÒ
+a
+java:S1874˜"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ÀÄŞ’
+S
+java:S1128"=Remove this unused import 'android.location.LocationManager'.(î£¤º
+J
+java:S1066e"/Merge this if statement with the enclosing one.(êÿ×¤ùÿÿÿÿ
+D
+java:S1604×"(Make this anonymous inner class a lambda(°éåóøÿÿÿÿ
+?
+java:S1604ß"(Make this anonymous inner class a lambda(’Ã’ó
+a
+java:S2184."FCast one of the operands of this multiplication operation to a "long".(¾Œµûşÿÿÿÿ
+M
+java:S2589o"7Remove this expression which always evaluates to "true"(ñ×‘ 
+M
+java:S2589Y"7Remove this expression which always evaluates to "true"(ñ×‘ 

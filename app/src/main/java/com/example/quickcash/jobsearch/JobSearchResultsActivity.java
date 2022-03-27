@@ -1,18 +1,11 @@
 package com.example.quickcash.jobsearch;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -23,20 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.ResolvableApiException;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,7 +28,7 @@ import java.util.HashMap;
 
 public class JobSearchResultsActivity extends AppCompatActivity {
 
-    private String job_type;
+    private String job_type_holder;
     private Double min_wage;
     private Double user_distancePref;
     private Integer min_job_length;
@@ -84,7 +64,7 @@ public class JobSearchResultsActivity extends AppCompatActivity {
                 user_longitude = longitude;
                 user_latitude = latitude;
                 // \n is for new line
-                Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+             //   Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
             } else {
                 // Ask user to enable GPS/network in settings.
                 gps.showSettingsAlert();
@@ -94,7 +74,7 @@ public class JobSearchResultsActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            job_type = extras.getString("job_type_key");
+            job_type_holder = extras.getString("job_type_key");
             min_wage = extras.getDouble("hourly_wages_key");
             user_distancePref = extras.getDouble("distance_key");
             min_job_length = extras.getInt("min_job_length");
@@ -102,33 +82,6 @@ public class JobSearchResultsActivity extends AppCompatActivity {
         }
         getJobs();
 
-        /*if(jobCheck) {
-            ArrayList<String> test = new ArrayList<>();
-            test.add("test1");
-            test.add("test2");
-            test.add("test3");
-            test.add("test4");
-            test.add("test5");
-
-            ArrayList<HashMap<String, String>> list = new ArrayList<>();
-
-            for (int i = 0; i < test.size(); i++) {
-                HashMap<String, String> item = new HashMap<>();
-                item.put("line1", test.get(0));
-                item.put("line2", test.get(1));
-                item.put("line3", test.get(2));
-                item.put("line4", test.get(3));
-                item.put("line5", test.get(4));
-                list.add(item);
-
-            }
-
-            SimpleAdapter simpleAdapter = new SimpleAdapter(this, list, R.layout.job_search_listview,
-                    new String[]{"line1", "line2", "line3", "line4", "line5"}, new int[]{R.id.job_title, R.id.job_type, R.id.hourly_wage, R.id.job_distance
-                    , R.id.job_duration});
-
-            searchView.setAdapter(simpleAdapter);
-        }*/
     }
 
     public void getJobs(){
@@ -151,13 +104,11 @@ public class JobSearchResultsActivity extends AppCompatActivity {
                 for(DataSnapshot ds : snapshot.getChildren()) {
                     if(ds.child("duration").getValue(Integer.class) >  min_job_length &  ds.child("duration").getValue(Integer.class) <= max_job_length) {
                         if (min_wage <= ds.child("hourlyWage").getValue(Double.class)) {
-                            if (job_type.equals(ds.child("jobType").getValue(String.class))) {
+                            if (job_type_holder.equals("Category - All") || job_type_holder.equals(ds.child("jobType").getValue(String.class))) {
                                 jobLocation.setLongitude(ds.child("longitude").getValue(Double.class));
                                 jobLocation.setLatitude(ds.child("latitude").getValue(Double.class));
-                                Toast.makeText(getApplicationContext(),"Distance" + String.valueOf(userLocation.distanceTo(jobLocation)),Toast.LENGTH_LONG).show();
+    //                            Toast.makeText(getApplicationContext(),"Distance" + String.valueOf(userLocation.distanceTo(jobLocation)),Toast.LENGTH_LONG).show();
                                 if (userLocation.distanceTo(jobLocation) <= user_distancePref) {
-                                    Toast.makeText(getApplicationContext(),String.valueOf(userLocation.distanceTo(jobLocation)),Toast.LENGTH_LONG).show();
-                                    Toast.makeText(getApplicationContext(),ds.child("jobTitle").getValue(String.class),Toast.LENGTH_LONG).show();
                                     jobDistance.add(userLocation.distanceTo(jobLocation));
                                     jobType.add(ds.child("jobType").getValue(String.class));
                                     hourlyWage.add(ds.child("hourlyWage").getValue(Double.class));
@@ -169,7 +120,7 @@ public class JobSearchResultsActivity extends AppCompatActivity {
                         }
                     }
                 }
-                createJobPostView(jobType,jobTitle,hourlyWage,jobDistance,duration);
+                createJobPostView(jobTitle,jobType,hourlyWage,jobDistance,duration);
             }
 
             @Override
@@ -198,7 +149,7 @@ public class JobSearchResultsActivity extends AppCompatActivity {
                         double latitude = gps.getLatitude();
                         double longitude = gps.getLongitude();
 
-                        Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
                     } else {
                         // Ask user to enable GPS/network in settings.
                         gps.showSettingsAlert();
@@ -216,20 +167,20 @@ public class JobSearchResultsActivity extends AppCompatActivity {
         ArrayList<HashMap<String, String>> list = new ArrayList<>();
         for(int i = 0; i < jobTitle.size(); i++) {
             HashMap<String, String> item = new HashMap<>();
-            item.put("job_title_hash", jobTitle.get(i));
-            item.put("job_type_hash", jobType.get(i));
+            item.put("job_title_hash", "Job Title: " + jobTitle.get(i));
+            item.put("job_type_hash", "Job Type: " + jobType.get(i));
             String hourlyWageString = hourlyWage.get(i).toString();
-            item.put("hourly_wage_hash", hourlyWageString);
+            item.put("hourly_wage_hash", "Hourly Wage: " + hourlyWageString);
             String jobDistanceString = jobDistance.get(i).toString();
-            item.put("job_distance_hash", jobDistanceString);
+            item.put("job_distance_hash", "Job Distance: " + jobDistanceString + "metres");
             String jobDurationString = duration.get(i).toString();
-            item.put("job_duration_hash", jobDurationString);
+            item.put("job_duration_hash", "Job Duration: " + jobDurationString + "days");
             list.add(item);
         }
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), list, R.layout.job_search_listview,
                 new String[]{"job_title_hash", "job_type_hash", "hourly_wage_hash", "job_distance_hash"
-                        , "job_duration_hash"}, new int[] {R.id.job_title, R.id.job_type, R.id.hourly_wage, R.id.job_distance
+                        , "job_duration_hash"}, new int[] {R.id.job_title, R.id.job_type_list_view, R.id.hourly_wage, R.id.job_distance
                 , R.id.job_duration});
         searchView.setAdapter(simpleAdapter);
     }
