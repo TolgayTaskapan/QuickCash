@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quickcash.AddUpdateJobPostActivity;
+import com.example.quickcash.JobApplicantView.ViewApplicants;
 import com.example.quickcash.JobPost;
 import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
@@ -41,6 +43,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 public class JobsFragment extends Fragment {
 
@@ -51,6 +54,9 @@ public class JobsFragment extends Fragment {
     private FloatingActionButton addFAB;
     private Button searchButton;
     private Spinner categorySpinner;
+
+    public LinkedList<JobPost> filteredList = new LinkedList<JobPost>();
+    public ListView JobContainer;
 
     private FragmentJobsBinding binding;
 
@@ -89,7 +95,8 @@ public class JobsFragment extends Fragment {
         addFAB = view.findViewById(R.id.addButton);
         searchButton = view.findViewById(R.id.JobSearchBtn);
         categorySpinner = view.findViewById(R.id.categorySpinner);
-
+        JobContainer = (ListView) view.findViewById(R.id.list_jobs);
+        JobContainer.setClickable(true);
     }
 
     private void setActivityView() {
@@ -130,6 +137,28 @@ public class JobsFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 selectedCategory = RECOMMEND;
+            }
+        });
+
+        JobContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView itemJobTitle = view.findViewById(R.id.item_job_title);
+                String jobTitle = itemJobTitle.getText().toString();
+                String userID;
+                if(filteredList.size() == 0) {
+                    userID = mJobs.get(position).getUserID();
+                }
+                else {
+                    userID = filteredList.get(position).getUserID();
+                }
+
+                Intent intent = new Intent(getContext(), ViewApplicants.class);
+                intent.putExtra("user_id_key", userID);
+                intent.putExtra("job_title_view_key", jobTitle);
+
+                startActivity(intent);
+
             }
         });
     }
@@ -227,7 +256,6 @@ public class JobsFragment extends Fragment {
     }
 
     private void filterTheJobList(String category) {
-        LinkedList<JobPost> filteredList = new LinkedList<JobPost>();
 
         if (category.equals(RECOMMEND)) {
             category = prefer_type;
