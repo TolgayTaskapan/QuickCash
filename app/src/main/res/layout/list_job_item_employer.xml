@@ -92,6 +92,7 @@
             android:backgroundTint="@android:color/background_light"
             android:text="Delete"
             android:textColor="@color/black" />
+
     </LinearLayout>
 
 </LinearLayout>

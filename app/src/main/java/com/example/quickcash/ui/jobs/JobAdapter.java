@@ -1,12 +1,16 @@
 package com.example.quickcash.ui.jobs;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.quickcash.JobApplicantView.ViewApplicants;
 import com.example.quickcash.JobPost;
 import com.example.quickcash.R;
 
@@ -47,6 +51,7 @@ public class JobAdapter extends BaseAdapter {
         txtJobCategory.setText(mJob.get(position).getJobType());
         String wageStr = "$" + mJob.get(position).getHourlyWage();
         txtJobWage.setText(wageStr);
+
         return convertView;
     }
 }

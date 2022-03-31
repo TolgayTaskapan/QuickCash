@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quickcash.AddUpdateJobPostActivity;
+import com.example.quickcash.JobApplicantView.ViewApplicants;
 import com.example.quickcash.JobPost;
 import com.example.quickcash.R;
 import com.example.quickcash.util.UserSession;
@@ -44,6 +46,11 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
         holder.titleTV.setText(job.getJobTitle());
         holder.typeTV.setText(job.getJobType());
         holder.wageTV.setText(String.valueOf(job.getHourlyWage()));
+        holder.jobItems.setOnClickListener(view -> {
+            Intent intent = new Intent(holder.context, ViewApplicants.class);
+            intent.putExtra("job_key", job);
+            holder.context.startActivity(intent);
+        });
         holder.updateBtn.setOnClickListener(view -> {
             final Intent intent = new Intent(holder.context, AddUpdateJobPostActivity.class);
             intent.putExtra(AddUpdateJobPostActivity.TAG, AddUpdateJobPostActivity.UPDATE_JOB);
@@ -69,6 +76,7 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
         private final Button updateBtn;
         private final Button deleteBtn;
         private final Context context;
+        private final LinearLayout jobItems;
 
         public JobPostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,6 +86,7 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
             updateBtn = itemView.findViewById(R.id.updateBtn);
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
             context = itemView.getContext();
+            jobItems = itemView.findViewById(R.id.JobItem);
         }
     }
 
