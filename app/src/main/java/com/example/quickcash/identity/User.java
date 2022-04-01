@@ -1,5 +1,7 @@
 package com.example.quickcash.identity;
 
+import com.example.quickcash.JobHistory;
+
 public abstract class User {
     public static final int IDENTITY_EMPLOYEE = 1;
     public static final int IDENTITY_EMPLOYER = 2;
@@ -10,6 +12,7 @@ public abstract class User {
     private boolean status;
     public String prefer;
     public double rating;
+    public JobHistory jobHistory;
 
     protected User(){}
 
@@ -17,6 +20,7 @@ public abstract class User {
         this.username = username;
         this.password = password;
         this.status = status;
+        this.jobHistory = new JobHistory();
     }
 
     public String getUsername() {
@@ -56,7 +60,7 @@ public abstract class User {
         this.identity = identity;
     }
 
-    public void setRating(double rating) { this.rating = rating; }
+    public void calculateRating(double rating) { this.rating = rating; }
 
     public void setLogged(boolean logged) {
         this.status = logged;
