@@ -15,6 +15,7 @@ import com.example.quickcash.LandingPageActivity;
 import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
 import com.example.quickcash.databinding.FragmentProfileBinding;
+import com.example.quickcash.payment.PaymentActivity;
 import com.google.firebase.database.DatabaseReference;
 
 import com.example.quickcash.util.UserSession;
@@ -26,6 +27,7 @@ public class ProfileFragment extends Fragment {
     public static DatabaseReference userRef;
     public MainActivity mainActivity;
     private Button logoutButton;
+    private Button testButton;
 
 
     @Override
@@ -52,6 +54,7 @@ public class ProfileFragment extends Fragment {
     private void init(View view) {
         logoutButton = view.findViewById(R.id.logoutButton);
         updateProfile = view.findViewById(R.id.UpdateProfile);
+        testButton = view.findViewById(R.id.testButton);
     }
 
     private void attachListeners() {
@@ -60,6 +63,9 @@ public class ProfileFragment extends Fragment {
 
         updateProfile.setOnClickListener(view ->
                 startActivity(new Intent(this.getContext(), ProfileUpdateActivity.class)));
+
+        testButton.setOnClickListener(view ->
+                startActivity(new Intent(this.getContext(), PaymentActivity.class)));
     }
 
     public void logoutAccount() {

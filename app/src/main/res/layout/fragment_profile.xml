@@ -43,6 +43,17 @@
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/testButton"
+                android:layout_width="239dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#F66000"
+                android:minWidth="200dp"
+                android:minHeight="60dp"
+                android:text="payment_test"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
         </LinearLayout>
     </ScrollView>
 
