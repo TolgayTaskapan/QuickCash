@@ -9,6 +9,7 @@ public abstract class User {
     private String identity;
     private boolean status;
     public String prefer;
+    public double rating;
 
     protected User(){}
 
@@ -33,6 +34,8 @@ public abstract class User {
     public String getPrefer() {
         return prefer;
     }
+
+    public double getRating() { return rating; }
     public boolean isEmployee(){
         return this.identity.equals("Employee");
     }
@@ -52,6 +55,8 @@ public abstract class User {
     public void setIdentity(String identity) {
         this.identity = identity;
     }
+
+    public void setRating(double rating) { this.rating = rating; }
 
     public void setLogged(boolean logged) {
         this.status = logged;
