@@ -39,7 +39,7 @@ public abstract class User {
         return prefer;
     }
 
-    public double getRating() { return rating; }
+    public double getRating() { return this.rating; }
     public boolean isEmployee(){
         return this.identity.equals("Employee");
     }
@@ -60,7 +60,14 @@ public abstract class User {
         this.identity = identity;
     }
 
-    public void calculateRating(double rating) { this.rating = rating; }
+    public void addRating(int rating) {
+        jobHistory.addRate(rating);
+        setRating();
+    }
+
+    public void setRating(){
+        this.rating = jobHistory.calculateRating();
+    }
 
     public void setLogged(boolean logged) {
         this.status = logged;
