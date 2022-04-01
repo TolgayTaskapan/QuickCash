@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,6 +73,7 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
 
         public JobPostViewHolder(@NonNull View itemView) {
             super(itemView);
+
             titleTV = itemView.findViewById(R.id.item_job_title);
             typeTV = itemView.findViewById(R.id.item_job_category);
             wageTV = itemView.findViewById(R.id.item_job_wage);
