@@ -4,6 +4,7 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -54,7 +55,8 @@ public class JobPostingEspressoTest {
         Espresso.closeSoftKeyboard();
 
         onView(withId(R.id.addJobButton)).perform(click());
-        onView(withText(R.string.JOB_ADD_SUCCESS)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        //onView(withText(R.string.JOB_ADD_SUCCESS)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.JOB_ADD_SUCCESS)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 
     @Test
@@ -75,7 +77,8 @@ public class JobPostingEspressoTest {
         Espresso.closeSoftKeyboard();
 
         onView(withId(R.id.addJobButton)).perform(click());
-        onView(withText(R.string.EMPTY_JOBNAME_OR_DESCRIPTION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        //onView(withText(R.string.EMPTY_JOBNAME_OR_DESCRIPTION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.EMPTY_JOBNAME_OR_DESCRIPTION)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 
     @Test
@@ -94,7 +97,8 @@ public class JobPostingEspressoTest {
         Espresso.closeSoftKeyboard();
 
         onView(withId(R.id.addJobButton)).perform(click());
-        onView(withText(R.string.EMPTY_JOBNAME_OR_DESCRIPTION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        //onView(withText(R.string.EMPTY_JOBNAME_OR_DESCRIPTION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.EMPTY_JOBNAME_OR_DESCRIPTION)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 
     @Test
@@ -115,7 +119,8 @@ public class JobPostingEspressoTest {
         Espresso.closeSoftKeyboard();
 
         onView(withId(R.id.addJobButton)).perform(click());
-        onView(withText(R.string.EMPTY_WAGE)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        //onView(withText(R.string.EMPTY_WAGE)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.EMPTY_WAGE)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 
     @Test
@@ -136,7 +141,8 @@ public class JobPostingEspressoTest {
         Espresso.closeSoftKeyboard();
 
         onView(withId(R.id.addJobButton)).perform(click());
-        onView(withText(R.string.EMPTY_LOCATION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        //onView(withText(R.string.EMPTY_LOCATION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.EMPTY_LOCATION)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 
     @Test
@@ -157,7 +163,8 @@ public class JobPostingEspressoTest {
         Espresso.closeSoftKeyboard();
 
         onView(withId(R.id.addJobButton)).perform(click());
-        onView(withText(R.string.INVALID_JOBNAME)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        //onView(withText(R.string.INVALID_JOBNAME)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.INVALID_JOBNAME)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 
     @Test
@@ -178,7 +185,8 @@ public class JobPostingEspressoTest {
         Espresso.closeSoftKeyboard();
 
         onView(withId(R.id.addJobButton)).perform(click());
-        onView(withText(R.string.INVALID_WAGE)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        //onView(withText(R.string.INVALID_WAGE)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.INVALID_WAGE)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 
     @Test
@@ -199,6 +207,7 @@ public class JobPostingEspressoTest {
         Espresso.closeSoftKeyboard();
 
         onView(withId(R.id.addJobButton)).perform(click());
-        onView(withText(R.string.INVALID_LOCATION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        //onView(withText(R.string.INVALID_LOCATION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.INVALID_LOCATION)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 }
