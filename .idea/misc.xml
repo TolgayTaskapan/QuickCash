@@ -3,51 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../../../../../layout/custom_preview.xml" value="0.18541666666666667" />
-        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/activity_development_job_search.xml" value="0.35833333333333334" />
-        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/activity_job_search_results.xml" value="0.35833333333333334" />
-        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/activity_landing_page.xml" value="0.35833333333333334" />
-        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/activity_main.xml" value="0.67" />
-        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/fragment_dashboard.xml" value="0.6354869816779171" />
-        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/fragment_jobs.xml" value="0.6107506950880445" />
-        <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/job_search_listview.xml" value="0.33" />
-        <entry key="app/src/main/res/drawable-anydpi/ic_action_jobs_24dp.xml" value="0.149" />
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.149" />
-        <entry key="app/src/main/res/drawable/ic_action_jobs_black_24dp.xml" value="0.149" />
-        <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.149" />
-        <entry key="app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.149" />
-        <entry key="app/src/main/res/drawable/ic_jobs_black_24dp.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.149" />
-        <entry key="app/src/main/res/layout/activity_add_edit_jobpost.xml" value="0.18177083333333333" />
-        <entry key="app/src/main/res/layout/activity_development_job_search.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.16145833333333334" />
-        <entry key="app/src/main/res/layout/activity_job_dashboard.xml" value="0.18802083333333333" />
-        <entry key="app/src/main/res/layout/activity_job_posting.xml" value="0.23278985507246377" />
-        <entry key="app/src/main/res/layout/activity_job_search_page.xml" value="0.2056192591570426" />
-        <entry key="app/src/main/res/layout/activity_landing_page.xml" value="0.25259908040364587" />
-        <entry key="app/src/main/res/layout/activity_login_page.xml" value="0.3061594202898551" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25674374044055903" />
-        <entry key="app/src/main/res/layout/activity_registration_page.xml" value="0.3061594202898551" />
-        <entry key="app/src/main/res/layout/activity_signup_page.xml" value="0.3208224504353614" />
-        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.19010416666666666" />
-        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.23278985507246377" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18958333333333333" />
-        <entry key="app/src/main/res/layout/fragment_jobs.xml" value="0.2777777777777778" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.23278985507246377" />
-        <entry key="app/src/main/res/layout/item_jobs.xml" value="0.26072285970052084" />
-        <entry key="app/src/main/res/layout/job_search_listview.xml" value="0.24818840579710144" />
-        <entry key="app/src/main/res/layout/list_category_item.xml" value="0.3542856852213542" />
-        <entry key="app/src/main/res/layout/list_item_category.xml" value="0.30995737711588545" />
-        <entry key="app/src/main/res/layout/list_item_job.xml" value="0.2666147867838542" />
-        <entry key="app/src/main/res/layout/list_job_item.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/list_job_item_employee.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/page_profile_main.xml" value="0.20364583333333333" />
-        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.18958333333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/activity_add_edit_jobpost.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/activity_job_search_results.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/activity_profile_update.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/activity_signup_page.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/fragment_jobs.xml" value="0.25" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/fragment_profile.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/list_dashboard_item_employee.xml" value="0.3451086956521739" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/list_dashboard_item_employer.xml" value="0.3451086956521739" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/list_job_item_employee.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/list_job_item_employer.xml" value="0.18802083333333333" />
       </map>
     </option>
   </component>
-  <component name="PDMPlugin">
-    <option name="skipTestSources" value="false" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
 </project>
