@@ -65,12 +65,7 @@ public class SignupEspressoTest {
 
     @AfterClass
     public static void tearDown() {
-        clearDatabase();
         System.gc();
-    }
-
-    private static void clearDatabase() {
-        dbRef.removeValue();
     }
 
     @Test
@@ -110,8 +105,7 @@ public class SignupEspressoTest {
         onView(withId(R.id.identitySpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
-
+        onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(withDecorView(not(myIntentRule.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 
     @Test
