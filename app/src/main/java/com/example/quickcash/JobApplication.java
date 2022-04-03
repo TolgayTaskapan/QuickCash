@@ -30,6 +30,9 @@ public class JobApplication {
     private Employee employee;
     private Employer employer;
 
+    private int employeeRating;
+    private int employerRating;
+
     public JobApplication(){
         this.jobPostKey = "none";
         this.employerKey = "none";
@@ -44,6 +47,21 @@ public class JobApplication {
 
     }
 
+    public int getEmployeeRating() {
+        return employeeRating;
+    }
+
+    public void setEmployeeRating(int employeeRating) {
+        this.employeeRating = employeeRating;
+    }
+
+    public int getEmployerRating() {
+        return employerRating;
+    }
+
+    public void setEmployerRating(int employerRating) {
+        this.employerRating = employerRating;
+    }
 
     public String getJobPostKey() {
         return jobPostKey;
@@ -104,7 +122,6 @@ public class JobApplication {
         Map<String, Object> jobStateUpdate = new HashMap<>();
         jobStateUpdate.put("jobState", JobPost.JOB_IN_PROGRESS);
         jobPostRef.updateChildren(jobStateUpdate);
-
     }
 
     public void employeeMarkComplete(){

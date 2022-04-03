@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quickcash.AddUpdateJobPostActivity;
 import com.example.quickcash.JobApplication;
+import com.example.quickcash.JobHistory;
 import com.example.quickcash.JobPost;
 import com.example.quickcash.R;
 import com.example.quickcash.identity.Employee;
@@ -77,12 +79,15 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
             holder.updateBtn.setVisibility(View.GONE);
             holder.deleteBtn.setVisibility(View.GONE);
             holder.paymentBtn.setVisibility(View.VISIBLE);
+            //holder.ratingET.setVisibility(View.VISIBLE);
             holder.paymentBtn.setOnClickListener(view -> {
-                final Intent intent = new Intent(holder.context, AddUpdateJobPostActivity.class);
-                intent.putExtra(AddUpdateJobPostActivity.TAG, AddUpdateJobPostActivity.UPDATE_JOB);
-                intent.putExtra(AddUpdateJobPostActivity.UPDATE_JOB_KEY, getRef(position).getKey());
-                intent.putExtra(JobPost.TAG, job);
-                holder.context.startActivity(intent);
+//                int rating = Integer.parseInt(holder.ratingET.getText().toString());
+//                if (rating<1 || rating > 5){
+//                    Toast.makeText(holder.context, "rating must be between 1 and 5", Toast.LENGTH_LONG).show();
+//                } else {
+//                    //send payment to employee
+//
+//                }
             });
         }
         holder.titleTV.setText(job.getJobTitle());
@@ -122,6 +127,7 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
         private final Button approveBtn;
         private final Button declineBtn;
         private final Button paymentBtn;
+        private final EditText ratingET;
         private final Context context;
 
         public JobPostViewHolder(@NonNull View itemView) {
@@ -135,6 +141,7 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
             approveBtn = itemView.findViewById(R.id.approveBtn);
             declineBtn = itemView.findViewById(R.id.declineBtn);
             paymentBtn = itemView.findViewById(R.id.paymentBtn);
+            ratingET = itemView.findViewById(R.id.rateEmployeeET);
             context = itemView.getContext();
         }
     }

@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.quickcash.JobApplication;
 import com.example.quickcash.JobPost;
@@ -79,7 +81,10 @@ public class JobAdapter extends BaseAdapter {
             Button completeBtn = convertView.findViewById(R.id.markCompleteBtn);
             String currentJobID = mJobKey.get(position);
             JobPost currentJob = mJob.get(position);
+            EditText ratingET = (EditText) convertView.findViewById(R.id.rateEmployerET);
 
+
+            //ratingET.setVisibility(View.VISIBLE);
             txtJobTitle.setText(mJob.get(position).getJobTitle());
             txtJobCategory.setText(mJob.get(position).getJobType());
             jobStatus.setVisibility(View.GONE);
@@ -89,9 +94,14 @@ public class JobAdapter extends BaseAdapter {
             completeBtn.setVisibility(View.VISIBLE);
             completeBtn.setOnClickListener(
                     view -> {
+//                        int rating = Integer.parseInt(ratingET.getText().toString());
+//                        if (rating<1 || rating > 5){
+//                            Toast.makeText(mContext, "rating must be between 1 and 5", Toast.LENGTH_LONG).show();
+//                        } else {
+//                            mJob.get(position).getApplication().setEmployeeRating(rating);
+//                        }
                         mJob.get(position).getApplication().employeeMarkComplete();
                         this.activity.recreate();
-
                     }
             );
             return convertView;
