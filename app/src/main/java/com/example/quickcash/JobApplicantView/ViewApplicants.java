@@ -56,7 +56,7 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
 
     }
 
-    public void createApplicantsView(ArrayList<String> applicant_names, ArrayList<Long> applicant_ratings) {
+    public void createApplicantsView(ArrayList<String> applicant_names, ArrayList<Long> applicant_ratings, ArrayList<JobPost> applicant_history, ArrayList<Long> applicant_earned) {
         ArrayList<HashMap<String, String>> list = new ArrayList<>();
 
         for(int i = 0; i < applicant_names.size(); i++) {
@@ -133,9 +133,28 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> applicantNames = new ArrayList<>();
                 ArrayList<Long> applicantRating = new ArrayList<>();
+                ArrayList<Long> applicantEarned = new ArrayList<>();
+                ArrayList<JobPost> applicantJobHistory = new ArrayList<>();
                 applicantNames.add(snapshot.child("Employee").child((String) applicants.get(0)).child("username").getValue(String.class));
                 applicantRating.add(snapshot.child("Employee").child((String) applicants.get(0)).child("rating").getValue(Long.class));
-                createApplicantsView(applicantNames, applicantRating);
+                applicantEarned.add(snapshot.child("Employee").child((String) applicants.get(0)).child("jobHistory").child("totalAmountEarned").getValue(Long.class));
+                int numJobs = snapshot.child("jobHistory").child("numberOfJobs").getValue(Integer.class);
+                int duration;
+                double hourlyWage;
+                String jobTitle;
+                String jobType;
+                double latitude;
+                double longitude;
+                for(int i = 0;i<numJobs;i++){
+                    duration = snapshot.child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("duration").getValue(Integer.class);
+                    hourlyWage = snapshot.child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("hourlyWage").getValue(double.class);
+                    jobTitle = snapshot.child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("jobTitle").getValue(String.class);
+                    jobType = snapshot.child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("jobType").getValue(String.class);
+                    latitude = snapshot.child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("latitude").getValue(double.class);
+                    longitude = snapshot.child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("longitude").getValue(double.class);
+                    applicantJobHistory.add(new JobPost(jobTitle,jobType,hourlyWage,duration,latitude,longitude));
+                }
+                createApplicantsView(applicantNames, applicantRating, applicantJobHistory, applicantEarned);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
