@@ -74,6 +74,8 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
             holder.applicantName.setText("Job is in Progress");
 
         }else  if (job.getJobState().equals(JobPost.JOB_COMPLETE)){
+            holder.approveBtn.setVisibility(View.GONE);
+            holder.declineBtn.setVisibility(View.GONE);
             holder.updateBtn.setVisibility(View.GONE);
             holder.deleteBtn.setVisibility(View.GONE);
             holder.paymentBtn.setVisibility(View.VISIBLE);
