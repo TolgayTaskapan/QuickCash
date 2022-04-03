@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -29,7 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import android.view.ViewGroup.LayoutParams;
 
 public class ViewApplicants extends AppCompatActivity implements Serializable {
 
@@ -58,17 +56,24 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
 
     }
 
-    public void createApplicantsView(ArrayList<String> applicant_names) {
+    public void createApplicantsView(ArrayList<String> applicant_names, ArrayList<Long> applicant_ratings) {
         ArrayList<HashMap<String, String>> list = new ArrayList<>();
 
         for(int i = 0; i < applicant_names.size(); i++) {
             HashMap<String, String> applicant_item = new HashMap<>();
-            applicant_item.put("applicant_name_hash","Applicant Name: " + applicant_names.get(i));
+            applicant_item.put("applicant_name_hash","Applicant Username: " + applicant_names.get(i));
+            applicant_item.put("applicant_rating_hash", "Applicant Rating: " + applicant_ratings.get(i));
+            if(applicant_ratings.get(i) >= 4.0) {
+                applicant_item.put("applicant_recc_hash", "Recommended");
+            }
+            else {
+                applicant_item.put("applicant_recc_hash", "");
+            }
             list.add(applicant_item);
         }
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), list, R.layout.applicants_listview_item,
-                new String[]{"applicant_name_hash"}, new int[]{R.id.applicant_firstname_lastname});
+                new String[]{"applicant_name_hash", "applicant_rating_hash", "applicant_recc_hash"}, new int[]{R.id.applicant_username, R.id.applicant_rating, R.id.applicant_recc});
 
         listView.setAdapter(simpleAdapter);
     }
@@ -126,9 +131,11 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
         appDetailsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<String> applicantNames = new ArrayList<String>();
+                ArrayList<String> applicantNames = new ArrayList<>();
+                ArrayList<Long> applicantRating = new ArrayList<>();
                 applicantNames.add(snapshot.child("Employee").child((String) applicants.get(0)).child("username").getValue(String.class));
-                createApplicantsView(applicantNames);
+                applicantRating.add(snapshot.child("Employee").child((String) applicants.get(0)).child("rating").getValue(Long.class));
+                createApplicantsView(applicantNames, applicantRating);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

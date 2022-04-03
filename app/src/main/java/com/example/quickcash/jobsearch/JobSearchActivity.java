@@ -91,7 +91,7 @@ public class JobSearchActivity extends AppCompatActivity {
 
     }
 
-    public double assignMinWage(String userChoice) {
+    public static double assignMinWage(String userChoice) {
         if(userChoice.equals("$12.95 and up")) {
             return 12.95;
         }
@@ -132,7 +132,7 @@ public class JobSearchActivity extends AppCompatActivity {
         }
     }
 
-    public double assignPreferredDistance(String userChoice) {
+    public static double assignPreferredDistance(String userChoice) {
         if(userChoice.equals("Category - All")) {
             return 999999999;
         }
