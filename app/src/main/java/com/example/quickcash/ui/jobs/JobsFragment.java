@@ -43,6 +43,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import kotlinx.coroutines.Job;
+
 public class JobsFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -77,9 +79,9 @@ public class JobsFragment extends Fragment {
 
         initializeDatabase();
         init(root);
-        setActivityView();
 
         if (UserSession.getInstance().getUser().isEmployer()) {
+            setActivityView();
             connectToFirebaseRTDB();
         }
         attachListeners();
@@ -98,10 +100,10 @@ public class JobsFragment extends Fragment {
     }
 
     public void initializeDatabase(){
-        database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child(UserSession.JOB_REQUEST);
+        database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference();
     }
 
-    private void setActivityView() {
+    public void setActivityView() {
         if (UserSession.getInstance().getUser().isEmployee()) {
             getPreferenceCategory();
             if ( !setupCategorySpinner() ) showToastMessage("Job Fragment: Fail to set up category spinner");
@@ -288,6 +290,7 @@ public class JobsFragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
                 String jobID = snapshot.getKey();
+                DatabaseReference jobRef = snapshot.getRef();
                 String userID = UserSession.getInstance().getUsrID();
 
                 while (iterator.hasNext()) {
@@ -300,7 +303,7 @@ public class JobsFragment extends Fragment {
                     String location = iterator.next().getValue(String.class);
                     Double longitude = iterator.next().getValue(Double.class);
                     String employerID = iterator.next().getValue(String.class);
-                    mJobs.add(new JobPost(title,type,wage,duration, location, latitude,longitude,employerID, jobState));
+                    mJobs.add(new JobPost(title,type,wage,duration, location, latitude,longitude,employerID, jobState, jobRef));
                     mJobKeys.add(jobID);
                 }
 
@@ -334,7 +337,7 @@ public class JobsFragment extends Fragment {
         Context mContext = this.getContext();
         jobListView = binding.listJobs;
 
-        jobAdapter = new JobAdapter(inCategory, filteredKeys, database, mContext);
+        jobAdapter = new JobAdapter(inCategory, filteredKeys, database, mContext, this.getActivity());
         jobListView.setAdapter(jobAdapter);
     }
 

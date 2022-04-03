@@ -41,6 +41,16 @@
                 android:textSize="14sp"
                 tools:text="Labour"/>
 
+            <TextView
+                android:id="@+id/applicant_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:text="Applicant Pending Approval"/>
+
         </LinearLayout>
 
         <LinearLayout

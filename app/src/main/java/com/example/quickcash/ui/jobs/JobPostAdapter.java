@@ -13,12 +13,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quickcash.AddUpdateJobPostActivity;
+import com.example.quickcash.JobApplication;
 import com.example.quickcash.JobPost;
 import com.example.quickcash.R;
+import com.example.quickcash.identity.Employee;
+import com.example.quickcash.identity.Employer;
+import com.example.quickcash.identity.User;
 import com.example.quickcash.util.UserSession;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import kotlinx.coroutines.Job;
 
 public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdapter.JobPostViewHolder> {
 
@@ -41,11 +54,17 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
     }
 
     protected void onBindViewHolder(@NonNull JobPostViewHolder holder, int position, @NonNull JobPost job) {
+        job.setJobRef(FirebaseDatabase.getInstance(UserSession.FIREBASE_URL)
+                .getReference().child(UserSession.JOB_COLLECTION)
+                .child(getRef(position).getKey()));
+
         if (job.getJobState().equals(JobPost.JOB_PENDING)){
             holder.updateBtn.setVisibility(View.GONE);
             holder.deleteBtn.setVisibility(View.GONE);
             holder.approveBtn.setVisibility(View.VISIBLE);
             holder.declineBtn.setVisibility(View.VISIBLE);
+            holder.applicantName.setVisibility(View.VISIBLE);
+            holder.applicantName.setText("Applicant Pending Approval!");
         } else if (job.getJobState().equals(JobPost.JOB_COMPLETE)){
             holder.updateBtn.setVisibility(View.GONE);
             holder.deleteBtn.setVisibility(View.GONE);
@@ -70,12 +89,27 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
                 })
                 .addOnFailureListener(e ->
                         Toast.makeText(holder.context, "Job delete failed", Toast.LENGTH_SHORT).show()));
+        holder.approveBtn.setOnClickListener(view -> {
+
+            //update state to pending
+            Map<String, Object> jobStateUpdate = new HashMap<>();
+            jobStateUpdate.put("jobState", JobPost.JOB_IN_PROGRESS);
+
+
+            FirebaseDatabase.getInstance(UserSession.FIREBASE_URL)
+                .getReference().child(UserSession.JOB_COLLECTION)
+                .child(getRef(position).getKey()).updateChildren(jobStateUpdate);
+
+        });
+
+
     }
 
     public class JobPostViewHolder extends RecyclerView.ViewHolder {
         private final TextView titleTV;
         private final TextView typeTV;
         private final TextView wageTV;
+        private final TextView applicantName;
         private final Button updateBtn;
         private final Button deleteBtn;
         private final Button approveBtn;
@@ -88,6 +122,7 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
             titleTV = itemView.findViewById(R.id.item_job_title);
             typeTV = itemView.findViewById(R.id.item_job_category);
             wageTV = itemView.findViewById(R.id.item_job_wage);
+            applicantName = itemView.findViewById(R.id.applicant_name);
             updateBtn = itemView.findViewById(R.id.updateBtn);
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
             approveBtn = itemView.findViewById(R.id.approveBtn);
@@ -96,6 +131,12 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
             context = itemView.getContext();
         }
     }
+
+    public void approveJobApplication(JobApplication application){
+        application.employerApproveEmployee();
+    }
+
+
 
 
 }

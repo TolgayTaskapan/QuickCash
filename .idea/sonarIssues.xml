@@ -3,6 +3,16 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="$USER_HOME$/.gradle/caches/transforms-3/825dff27a92740588b117adf4865ecfe/transformed/jetified-play-services-tasks-18.0.1/jars/classes.jar!/com/google/android/gms/tasks/zzw.class">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/AddUpdateJobPostActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/quickcash/JobApplication.java">
           <value>
             <set />
