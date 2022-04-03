@@ -138,7 +138,7 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
                 applicantNames.add(snapshot.child("Employee").child((String) applicants.get(0)).child("username").getValue(String.class));
                 applicantRating.add(snapshot.child("Employee").child((String) applicants.get(0)).child("rating").getValue(Long.class));
                 applicantEarned.add(snapshot.child("Employee").child((String) applicants.get(0)).child("jobHistory").child("totalAmountEarned").getValue(Long.class));
-                int numJobs = snapshot.child("jobHistory").child("numberOfJobs").getValue(Integer.class);
+                int numJobs = snapshot.child("Employee").child((String) applicants.get(0)).child("jobHistory").child("numberOfJobs").getValue(Integer.class);
                 int duration;
                 double hourlyWage;
                 String jobTitle;
@@ -146,12 +146,12 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
                 double latitude;
                 double longitude;
                 for(int i = 0;i<numJobs;i++){
-                    duration = snapshot.child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("duration").getValue(Integer.class);
-                    hourlyWage = snapshot.child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("hourlyWage").getValue(double.class);
-                    jobTitle = snapshot.child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("jobTitle").getValue(String.class);
-                    jobType = snapshot.child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("jobType").getValue(String.class);
-                    latitude = snapshot.child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("latitude").getValue(double.class);
-                    longitude = snapshot.child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("longitude").getValue(double.class);
+                    duration = snapshot.child("Employee").child((String) applicants.get(0)).child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("duration").getValue(Integer.class);
+                    hourlyWage = snapshot.child("Employee").child((String) applicants.get(0)).child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("hourlyWage").getValue(double.class);
+                    jobTitle = snapshot.child("Employee").child((String) applicants.get(0)).child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("jobTitle").getValue(String.class);
+                    jobType = snapshot.child("Employee").child((String) applicants.get(0)).child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("jobType").getValue(String.class);
+                    latitude = snapshot.child("Employee").child((String) applicants.get(0)).child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("latitude").getValue(double.class);
+                    longitude = snapshot.child("Employee").child((String) applicants.get(0)).child("jobHistory").child("completedJobs").child(String.valueOf(i)).child("longitude").getValue(double.class);
                     applicantJobHistory.add(new JobPost(jobTitle,jobType,hourlyWage,duration,latitude,longitude));
                 }
                 createApplicantsView(applicantNames, applicantRating, applicantJobHistory, applicantEarned);
