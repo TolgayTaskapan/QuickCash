@@ -50,6 +50,7 @@ public class JobsFragment extends Fragment {
     private JobAdapter jobAdapter;
     private JobPostAdapter jobPostAdapter;
     private FloatingActionButton addFAB;
+    private FloatingActionButton searchFAB;
     private Button searchButton;
     private Spinner categorySpinner;
 
@@ -91,7 +92,7 @@ public class JobsFragment extends Fragment {
         recyclerView.setLayoutManager(new WrapLinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
         jobListView = view.findViewById(R.id.list_jobs);
         addFAB = view.findViewById(R.id.addButton);
-        searchButton = view.findViewById(R.id.JobSearchBtn);
+        searchFAB = view.findViewById(R.id.searchFAB);
         categorySpinner = view.findViewById(R.id.categorySpinner);
 
     }
@@ -110,11 +111,11 @@ public class JobsFragment extends Fragment {
         String userType = UserSession.getInstance().getUser().getIdentity();
         if (userType != null) {
             if (userType.equals("Employer")) {
-                searchButton.setVisibility(View.GONE);
+                searchFAB.setVisibility(View.GONE);
                 jobListView.setVisibility(View.GONE);
                 categorySpinner.setVisibility(View.GONE);
             } else {
-                searchButton.setVisibility(View.VISIBLE);
+                searchFAB.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
                 addFAB.setVisibility(View.GONE);
             }
@@ -126,7 +127,7 @@ public class JobsFragment extends Fragment {
     private void attachListeners() {
         addFAB.setOnClickListener(view ->
                 startActivity(new Intent(this.getContext(), AddUpdateJobPostActivity.class)));
-        searchButton.setOnClickListener(view ->
+        searchFAB.setOnClickListener(view ->
                 startActivity(new Intent(this.getContext(), JobSearchActivity.class)));
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -292,13 +293,14 @@ public class JobsFragment extends Fragment {
                 while (iterator.hasNext()) {
                     Integer duration = iterator.next().getValue(Integer.class);
                     Double wage = iterator.next().getValue(Double.class);
+                    String jobState = iterator.next().getValue(String.class);
                     String title = iterator.next().getValue(String.class);
                     String type = iterator.next().getValue(String.class);
                     Double latitude = iterator.next().getValue(Double.class);
                     String location = iterator.next().getValue(String.class);
                     Double longitude = iterator.next().getValue(Double.class);
                     String employerID = iterator.next().getValue(String.class);
-                    mJobs.add(new JobPost(title,type,wage,duration, location, latitude,longitude,employerID));
+                    mJobs.add(new JobPost(title,type,wage,duration, location, latitude,longitude,employerID, jobState));
                     mJobKeys.add(jobID);
                 }
 

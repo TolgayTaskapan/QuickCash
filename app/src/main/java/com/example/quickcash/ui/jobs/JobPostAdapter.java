@@ -41,9 +41,19 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
     }
 
     protected void onBindViewHolder(@NonNull JobPostViewHolder holder, int position, @NonNull JobPost job) {
+        if (job.getJobState().equals(JobPost.JOB_PENDING)){
+            holder.updateBtn.setVisibility(View.GONE);
+            holder.deleteBtn.setVisibility(View.GONE);
+            holder.approveBtn.setVisibility(View.VISIBLE);
+            holder.declineBtn.setVisibility(View.VISIBLE);
+        } else if (job.getJobState().equals(JobPost.JOB_COMPLETE)){
+            holder.updateBtn.setVisibility(View.GONE);
+            holder.deleteBtn.setVisibility(View.GONE);
+            holder.paymentBtn.setVisibility(View.VISIBLE);
+        }
         holder.titleTV.setText(job.getJobTitle());
         holder.typeTV.setText(job.getJobType());
-        holder.wageTV.setText(String.valueOf(job.getHourlyWage()));
+        holder.wageTV.setText("$" + String.valueOf(job.getHourlyWage()));
         holder.updateBtn.setOnClickListener(view -> {
             final Intent intent = new Intent(holder.context, AddUpdateJobPostActivity.class);
             intent.putExtra(AddUpdateJobPostActivity.TAG, AddUpdateJobPostActivity.UPDATE_JOB);
@@ -68,6 +78,9 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
         private final TextView wageTV;
         private final Button updateBtn;
         private final Button deleteBtn;
+        private final Button approveBtn;
+        private final Button declineBtn;
+        private final Button paymentBtn;
         private final Context context;
 
         public JobPostViewHolder(@NonNull View itemView) {
@@ -77,6 +90,9 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
             wageTV = itemView.findViewById(R.id.item_job_wage);
             updateBtn = itemView.findViewById(R.id.updateBtn);
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
+            approveBtn = itemView.findViewById(R.id.approveBtn);
+            declineBtn = itemView.findViewById(R.id.declineBtn);
+            paymentBtn = itemView.findViewById(R.id.paymentBtn);
             context = itemView.getContext();
         }
     }

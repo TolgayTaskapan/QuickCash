@@ -10,6 +10,10 @@ import java.io.Serializable;
 
 public class JobPost implements Serializable {
     public static final String TAG = "JobPost";
+    public static final String JOB_OPEN = "open";
+    public static final String JOB_PENDING = "pending";
+    public static final String JOB_IN_PROGRESS = "in-progress";
+    public static final String JOB_COMPLETE = "complete";
 
     private String jobTitle;
     private String jobType;
@@ -23,6 +27,7 @@ public class JobPost implements Serializable {
     private double longitude;
 
     private String userID;
+    private String jobState;
 
     public JobPost(){
 
@@ -37,7 +42,7 @@ public class JobPost implements Serializable {
         this.longitude = longitude;
     }
 
-    public JobPost(String jobTitle, String jobType, double hourlyWage, int duration, String location, double latitude, double longitude, String usrID){
+    public JobPost(String jobTitle, String jobType, double hourlyWage, int duration, String location, double latitude, double longitude, String usrID, String jobState){
         this.jobTitle = jobTitle;
         this.jobType = jobType;
         this.hourlyWage = hourlyWage;
@@ -46,6 +51,7 @@ public class JobPost implements Serializable {
         this.latitude = latitude;
         this.longitude = longitude;
         this.userID = usrID;
+        this.jobState = jobState;
     }
 
     public JobPost(String title, String type, Double wage, Integer duration, Double latitude, Double longitude, String userID) {
@@ -56,6 +62,18 @@ public class JobPost implements Serializable {
         this.latitude = latitude;
         this.longitude = longitude;
         this.userID = userID;
+    }
+
+    public JobPost(String title, String jobType, double hourlyWage, int duration, String location, double latitude, double longitude, String usrID) {
+        this.jobTitle = title;
+        this.jobType = jobType;
+        this.hourlyWage = hourlyWage;
+        this.duration = duration;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.userID = usrID;
+        this.jobState = JOB_OPEN;
     }
 
     public String getJobTitle() {
@@ -127,4 +145,8 @@ public class JobPost implements Serializable {
     public void setUserID(String userID) {
         this.userID = userID;
     }
+
+    public String getJobState(){ return jobState;}
+
+    public void setJobState(String state){this.jobState = state;}
 }
