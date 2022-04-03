@@ -35,6 +35,7 @@ public class JobPost implements Serializable {
     private String userID;
     private String jobState;
     private User applicant;
+    private JobApplication application;
 
     public JobPost(){
 

@@ -1,5 +1,7 @@
 package com.example.quickcash.identity;
 
+import com.example.quickcash.JobApplication;
+
 public abstract class User {
     public static final int IDENTITY_EMPLOYEE = 1;
     public static final int IDENTITY_EMPLOYER = 2;
@@ -9,6 +11,7 @@ public abstract class User {
     private String identity;
     private boolean status;
     public String prefer;
+    private JobApplication applications;
 
     protected User(){}
 
