@@ -41,16 +41,6 @@
                 android:textSize="14sp"
                 tools:text="Labour"/>
 
-            <EditText
-                android:id="@+id/rateEmployerET"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:visibility="visible"
-                android:textColor="#B4B4B9"
-                android:textSize="14sp"
-                tools:text="Rate this Employer 1-5"/>
-
         </LinearLayout>
 
         <LinearLayout
@@ -84,33 +74,14 @@
         android:layout_marginBottom="16dp"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/applyBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/background_light"
-            android:text="Apply"
-            android:textColor="@color/black" />
-
-        <Button
-            android:id="@+id/markCompleteBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:visibility="gone"
-            android:backgroundTint="@android:color/holo_blue_light"
-            android:text="Mark Complete"
-            android:textColor="@color/black" />
-
         <TextView
-            android:id="@+id/job_status"
-            android:layout_width="wrap_content"
+            android:id="@+id/item_job_status"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
             android:textColor="#1D1D1C"
             android:textSize="20sp"
-            tools:text=""/>
+            android:gravity="center"
+            tools:text="In Progress" />
 
 
     </LinearLayout>

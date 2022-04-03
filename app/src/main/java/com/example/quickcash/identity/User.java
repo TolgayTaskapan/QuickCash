@@ -1,5 +1,11 @@
 package com.example.quickcash.identity;
 
+import static java.lang.Math.round;
+
+import com.example.quickcash.JobApplication;
+import com.example.quickcash.JobHistory;
+import com.example.quickcash.JobPost;
+
 public abstract class User {
     public static final int IDENTITY_EMPLOYEE = 1;
     public static final int IDENTITY_EMPLOYER = 2;
@@ -9,6 +15,9 @@ public abstract class User {
     private String identity;
     private boolean status;
     public String prefer;
+    private JobApplication applications;
+    public double rating;
+    public JobHistory jobHistory;
 
     protected User(){}
 
@@ -16,6 +25,7 @@ public abstract class User {
         this.username = username;
         this.password = password;
         this.status = status;
+        this.jobHistory = new JobHistory();
     }
 
     public String getUsername() {
@@ -29,6 +39,8 @@ public abstract class User {
     public String getIdentity() {
         return identity;
     }
+
+    public double getRating() { return this.rating; }
 
     public String getPrefer() {
         return prefer;
@@ -63,5 +75,20 @@ public abstract class User {
 
     public boolean isLogged() {
         return status;
+    }
+
+    public void addCompletedJob(JobPost jobPost){
+        jobHistory.addCompletedJob(jobPost);
+        jobHistory.updateDBHistory();
+    }
+
+    public void addRating(int rating) {
+        jobHistory.addRate(rating);
+        setRating();
+        jobHistory.updateDBHistory();
+    }
+
+    public void setRating(){
+        this.rating = (jobHistory.calculateRating());
     }
 }

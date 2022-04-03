@@ -12,6 +12,7 @@ public class UserSession implements Serializable {
     public static final String EMPLOYEE_COLLECTION = "Employee";
     public static final String EMPLOYER_COLLECTION = "Employer";
     public static final String JOB_COLLECTION = "job";
+    public static final String JOB_REQUEST = "jobRequest";
 
     private static UserSession instance;
     private DatabaseReference db;
