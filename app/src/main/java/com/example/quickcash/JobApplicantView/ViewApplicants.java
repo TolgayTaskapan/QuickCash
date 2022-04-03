@@ -14,11 +14,17 @@ import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quickcash.JobPost;
 import com.example.quickcash.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,7 +35,7 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
 
     Context mContext;
     ListView listView;
-    JobPost job;
+    JobPost job ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,20 +46,13 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
 
         mContext = this;
 
-        Button button = (Button) findViewById(R.id.popup_btn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onButtonShowPopupWindowClick(view);
-            }
-        });
-
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
            job = (JobPost) getIntent().getSerializableExtra("job_key");
         }
 
         attachListeners();
+        getApplicants();
 
 
 
@@ -79,27 +78,63 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.applicant_popup, null);
+                int width = LinearLayout.LayoutParams.MATCH_PARENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true;
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        popupWindow.dismiss();
+                        return true;
+                    }
+                });
             }
         });
     }
 
-    public void onButtonShowPopupWindowClick(View view) {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.applicant_popup, null);
-        int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true;
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-        popupView.setOnTouchListener(new View.OnTouchListener() {
+    public void getApplicants(){
+        DatabaseReference appRef = FirebaseDatabase.getInstance().getReference("job");
+        appRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return true;
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<String> applicants = new ArrayList<String>();
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    if(ds.child("jobTitle").getValue(String.class).equals(job.getJobTitle())){
+
+                        if(ds.child("userID").getValue(String.class).equals(job.getUserID())){
+                            applicants.add(ds.child("application").child("employeeKey").getValue(String.class));
+                            getApplicantDetails(applicants);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
 
+    public void getApplicantDetails(ArrayList applicants){
+        DatabaseReference appDetailsRef = FirebaseDatabase.getInstance().getReference("Account");
+        Toast.makeText(getApplicationContext(),(String) applicants.get(0),Toast.LENGTH_LONG).show();
+        appDetailsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<String> applicantNames = new ArrayList<String>();
+                applicantNames.add(snapshot.child("Employee").child((String) applicants.get(0)).child("username").getValue(String.class));
+                createApplicantsView(applicantNames);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 }

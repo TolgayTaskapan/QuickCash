@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/popup_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
     <ListView
         android:id="@+id/applicants_listview"
         android:layout_width="fill_parent"
