@@ -28,6 +28,7 @@ public class JobPost implements Serializable {
 
     private String userID;
     private String jobState;
+    private User applicant;
 
     public JobPost(){
 
@@ -52,6 +53,7 @@ public class JobPost implements Serializable {
         this.longitude = longitude;
         this.userID = usrID;
         this.jobState = jobState;
+        this.applicant = null;
     }
 
     public JobPost(String title, String type, Double wage, Integer duration, Double latitude, Double longitude, String userID) {
@@ -74,6 +76,7 @@ public class JobPost implements Serializable {
         this.longitude = longitude;
         this.userID = usrID;
         this.jobState = JOB_OPEN;
+        this.applicant = null;
     }
 
     public String getJobTitle() {
