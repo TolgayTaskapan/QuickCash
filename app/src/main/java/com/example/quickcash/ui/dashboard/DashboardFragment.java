@@ -40,7 +40,6 @@ public class DashboardFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ListView dashboardListView;
-    private DashBoardEmployeeAdapter dashboardEmployeeAdapter;
     private DashboardEmployerAdapter dashboardEmployerAdapter;
 
     private LinkedList<JobRequest> mJobs;
@@ -67,27 +66,15 @@ public class DashboardFragment extends Fragment {
         init(root);
         setActivityView();
 
-        if (UserSession.getInstance().getUser().isEmployer()) {
-            connectToFirebaseRTDB();
-        }
+        connectToFirebaseRTDB();
+
 
         return root;
     }
 
-    private void showUpJobList(LinkedList<JobRequest> mJobs) {
-        Context mContext = this.getContext();
-        dashboardListView = binding.listJobRequests;
-
-        Log.d("employer_job_request", "connectToFirebaseRTDB: " + "attaching list");
-
-        dashboardEmployeeAdapter = new DashBoardEmployeeAdapter(mJobs, mContext);
-        dashboardListView.setAdapter(dashboardEmployeeAdapter);
-    }
-
     private void init(View view) {
-        recyclerView = view.findViewById(R.id.dashboardRecyclerView);
+        recyclerView = view.findViewById(R.id.appliedJobRecyclerView);
         recyclerView.setLayoutManager(new WrapLinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
-        dashboardListView = view.findViewById(R.id.list_job_requests);
     }
 
     public void initializeDatabase(){
@@ -95,67 +82,16 @@ public class DashboardFragment extends Fragment {
     }
 
     private void setActivityView() {
-        if (UserSession.getInstance().getUser().isEmployee()) {
-            retrieveJobsFromFirebase();
-            showUpJobList(mJobs);
-        }
     }
 
-    private void retrieveJobsFromFirebase() {
-        DatabaseReference jobRef = FirebaseDatabase.getInstance(UserSession.FIREBASE_URL).getReference(UserSession.JOB_REQUEST);
-        mJobs = new LinkedList<JobRequest>();
-
-        jobRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
-                String userID = UserSession.getInstance().getUsrID();
-
-                while (iterator.hasNext()) {
-                    String employeeID = iterator.next().getValue(String.class);
-                    String employerID = iterator.next().getValue(String.class);
-                    Double wage = iterator.next().getValue(Double.class);
-                    String jobId = iterator.next().getValue(String.class);
-                    String title = iterator.next().getValue(String.class);
-                    String type = iterator.next().getValue(String.class);
-                    Integer status = iterator.next().getValue(Integer.class);
-                    mJobs.add(new JobRequest(jobId,employerID,employeeID,title, type, wage,status));
-                }
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // not being used
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                // not being used
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // not being used
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // not being used
-
-            }
-        });
-    }
 
     private void connectToFirebaseRTDB() {
         final String userID = UserSession.getInstance().getUsrID();
-        final FirebaseRecyclerOptions<JobRequest> options = new FirebaseRecyclerOptions.Builder<JobRequest>()
+        final FirebaseRecyclerOptions<JobPost> options = new FirebaseRecyclerOptions.Builder<JobPost>()
                 .setQuery(FirebaseDatabase.getInstance(UserSession.FIREBASE_URL)
                         .getReference()
-                        .child(UserSession.JOB_REQUEST).orderByChild("employerId").equalTo(userID), JobRequest.class)
+                        .child(UserSession.JOB_COLLECTION).orderByChild("duration").equalTo(5), JobPost.class)
                 .build();
-
 
         dashboardEmployerAdapter = new DashboardEmployerAdapter(options);
         recyclerView.setAdapter(dashboardEmployerAdapter);

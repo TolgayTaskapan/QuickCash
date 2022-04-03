@@ -21,7 +21,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class DashboardEmployerAdapter extends FirebaseRecyclerAdapter<JobRequest, DashboardEmployerAdapter.DashBoardViewHolder> {
+public class DashboardEmployerAdapter extends FirebaseRecyclerAdapter<JobPost, DashboardEmployerAdapter.DashBoardViewHolder> {
 
     /**
      * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
@@ -29,42 +29,23 @@ public class DashboardEmployerAdapter extends FirebaseRecyclerAdapter<JobRequest
      *
      * @param options
      */
-    public DashboardEmployerAdapter(@NonNull FirebaseRecyclerOptions<JobRequest> options) {
+    public DashboardEmployerAdapter(@NonNull FirebaseRecyclerOptions<JobPost> options) {
         super(options);
     }
 
     @NonNull
     @Override
     public DashBoardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_dashboard_item_employer, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_job_item_employer, parent, false);
         return new DashBoardViewHolder(view);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull DashBoardViewHolder holder, int position, @NonNull JobRequest jobRequest) {
-        holder.titleTV.setText(jobRequest.getJobTitle());
-        holder.typeTV.setText(jobRequest.getJobType());
-        holder.wageTV.setText(String.valueOf(jobRequest.getHourlyWage()));
+    protected void onBindViewHolder(@NonNull DashBoardViewHolder holder, int position, @NonNull JobPost jobPost) {
+        holder.titleTV.setText(jobPost.getJobTitle());
+        holder.typeTV.setText(jobPost.getJobType());
+        holder.wageTV.setText(String.valueOf(jobPost.getHourlyWage()));
 
-        holder.approveBtn.setOnClickListener(view -> FirebaseDatabase.getInstance(UserSession.FIREBASE_URL).
-                getReference().child(UserSession.JOB_REQUEST).child(getRef(position).getKey()).
-                child("status").setValue(1)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(holder.context, "Job approved successfully", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(holder.context, "Job delete failed", Toast.LENGTH_SHORT).show();
-                }));
-
-        holder.declineBtn.setOnClickListener(view -> FirebaseDatabase.getInstance(UserSession.FIREBASE_URL)
-                .getReference().child(UserSession.JOB_REQUEST)
-                .child(getRef(position).getKey())
-                .removeValue()
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(holder.context, "Job deleted successfully", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e ->
-                        Toast.makeText(holder.context, "Job delete failed", Toast.LENGTH_SHORT).show()));
     }
 
     public class DashBoardViewHolder extends RecyclerView.ViewHolder {

@@ -84,20 +84,9 @@ public class JobPost implements Serializable {
         this.longitude = longitude;
         this.userID = usrID;
         this.jobState = JOB_OPEN;
+        this.application = new JobApplication();
     }
 
-    public JobPost(String title, String jobType, double hourlyWage, int duration, String location, double latitude, double longitude, String usrID, JobApplication application) {
-        this.jobTitle = title;
-        this.jobType = jobType;
-        this.hourlyWage = hourlyWage;
-        this.duration = duration;
-        this.location = location;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.userID = usrID;
-        this.jobState = JOB_OPEN;
-        this.application = application;
-    }
 
     public JobPost(String title, String jobType, double hourlyWage, int duration, String location, double latitude, double longitude, String usrID, String jobState, DatabaseReference jobRef, JobApplication application) {
         this.jobRef = jobRef;
@@ -209,12 +198,12 @@ public class JobPost implements Serializable {
 
     public void setApplication(JobApplication application) {
         this.application = application;
-        updateDB();
+        //updateDB();
     }
 
     public void updateDB(){
         Map<String, Object> updateDB = new HashMap<>();
-        updateDB.put("jobApplication", this.application);
+        updateDB.put("application", this.application);
 
         FirebaseDatabase.getInstance(UserSession.FIREBASE_URL)
                 .getReference().child(UserSession.JOB_COLLECTION)

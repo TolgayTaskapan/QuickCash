@@ -65,10 +65,25 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
             holder.declineBtn.setVisibility(View.VISIBLE);
             holder.applicantName.setVisibility(View.VISIBLE);
             holder.applicantName.setText("Applicant Pending Approval!");
-        } else if (job.getJobState().equals(JobPost.JOB_COMPLETE)){
+        } else if (job.getJobState().equals(JobPost.JOB_IN_PROGRESS)){
+            holder.updateBtn.setVisibility(View.GONE);
+            holder.deleteBtn.setVisibility(View.GONE);
+            holder.approveBtn.setVisibility(View.GONE);
+            holder.declineBtn.setVisibility(View.GONE);
+            holder.applicantName.setVisibility(View.VISIBLE);
+            holder.applicantName.setText("Job is in Progress");
+
+        }else  if (job.getJobState().equals(JobPost.JOB_COMPLETE)){
             holder.updateBtn.setVisibility(View.GONE);
             holder.deleteBtn.setVisibility(View.GONE);
             holder.paymentBtn.setVisibility(View.VISIBLE);
+            holder.paymentBtn.setOnClickListener(view -> {
+                final Intent intent = new Intent(holder.context, AddUpdateJobPostActivity.class);
+                intent.putExtra(AddUpdateJobPostActivity.TAG, AddUpdateJobPostActivity.UPDATE_JOB);
+                intent.putExtra(AddUpdateJobPostActivity.UPDATE_JOB_KEY, getRef(position).getKey());
+                intent.putExtra(JobPost.TAG, job);
+                holder.context.startActivity(intent);
+            });
         }
         holder.titleTV.setText(job.getJobTitle());
         holder.typeTV.setText(job.getJobType());

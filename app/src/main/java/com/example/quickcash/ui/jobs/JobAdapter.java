@@ -52,28 +52,65 @@ public class JobAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if (!mJob.get(position).getJobState().equals(JobPost.JOB_OPEN)) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item_empty, parent, false);
-        } else if (mJob.get(position).getJobState().equals(JobPost.JOB_PENDING)) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item_empty, parent, false);
-        } else {
+        if (mJob.get(position).getJobState().equals(JobPost.JOB_PENDING)) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item_employee, parent, false);
             TextView txtJobTitle = (TextView) convertView.findViewById(R.id.item_job_title);
             TextView txtJobCategory = (TextView) convertView.findViewById(R.id.item_job_category);
             TextView txtJobWage = (TextView) convertView.findViewById(R.id.item_job_wage);
+            TextView jobStatus = (TextView) convertView.findViewById(R.id.job_status);
+            Button applyBtn = convertView.findViewById(R.id.applyBtn);
+            String currentJobID = mJobKey.get(position);
+            JobPost currentJob = mJob.get(position);
+
+            txtJobTitle.setText(mJob.get(position).getJobTitle());
+            txtJobCategory.setText(mJob.get(position).getJobType());
+            jobStatus.setText("Pending Approval from Employer");
+            String wageStr = "$" + mJob.get(position).getHourlyWage();
+            txtJobWage.setText(wageStr);
+            applyBtn.setVisibility(View.GONE);
+            return convertView;
+        } else if (mJob.get(position).getJobState().equals(JobPost.JOB_IN_PROGRESS)) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item_employee, parent, false);
+            TextView txtJobTitle = (TextView) convertView.findViewById(R.id.item_job_title);
+            TextView txtJobCategory = (TextView) convertView.findViewById(R.id.item_job_category);
+            TextView txtJobWage = (TextView) convertView.findViewById(R.id.item_job_wage);
+            TextView jobStatus = (TextView) convertView.findViewById(R.id.job_status);
+            Button applyBtn = convertView.findViewById(R.id.applyBtn);
+            Button completeBtn = convertView.findViewById(R.id.markCompleteBtn);
+            String currentJobID = mJobKey.get(position);
+            JobPost currentJob = mJob.get(position);
+
+            txtJobTitle.setText(mJob.get(position).getJobTitle());
+            txtJobCategory.setText(mJob.get(position).getJobType());
+            jobStatus.setVisibility(View.GONE);
+            String wageStr = "$" + mJob.get(position).getHourlyWage();
+            txtJobWage.setText(wageStr);
+            applyBtn.setVisibility(View.GONE);
+            completeBtn.setVisibility(View.VISIBLE);
+            completeBtn.setOnClickListener(
+                    view -> {
+                        mJob.get(position).getApplication().employeeMarkComplete();
+                        this.activity.recreate();
+
+                    }
+            );
+            return convertView;
+        } else if (mJob.get(position).getJobState().equals(JobPost.JOB_OPEN)) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item_employee, parent, false);
+            TextView txtJobTitle = (TextView) convertView.findViewById(R.id.item_job_title);
+            TextView txtJobCategory = (TextView) convertView.findViewById(R.id.item_job_category);
+            TextView txtJobWage = (TextView) convertView.findViewById(R.id.item_job_wage);
+            TextView jobStatus = (TextView) convertView.findViewById(R.id.job_status);
             String currentJobID = mJobKey.get(position);
             JobPost currentJob = mJob.get(position);
             Button applyBtn = convertView.findViewById(R.id.applyBtn);
 
             applyBtn.setOnClickListener(
                     view -> {
-//                        JobRequest jobRequest = new JobRequest(currentJobID, currentJob.getUserID(), UserSession.getInstance().getUsrID(), txtJobTitle.getText().toString(), txtJobCategory.getText().toString(), Double.parseDouble(txtJobWage.getText().toString().substring(1)), 0);
-//                        saveJobRequest(jobRequest);
                         JobApplication jobApplication = new JobApplication(mJob.get(position).getJobRef().getKey(), mJob.get(position).getUserID(), UserSession.getInstance().getUsrID());
                         mJob.get(position).setApplication(jobApplication);
+                        mJob.get(position).updateDB();
                         jobApplication.applyEmployeeForJob();
-
-
                         this.activity.recreate();
 
                     }
@@ -84,6 +121,8 @@ public class JobAdapter extends BaseAdapter {
             String wageStr = "$" + mJob.get(position).getHourlyWage();
             txtJobWage.setText(wageStr);
             return convertView;
+        } else {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item_empty, parent, false);
         }
         return convertView;
     }

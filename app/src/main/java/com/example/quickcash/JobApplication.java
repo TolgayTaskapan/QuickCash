@@ -106,4 +106,15 @@ public class JobApplication {
         jobPostRef.updateChildren(jobStateUpdate);
 
     }
+
+    public void employeeMarkComplete(){
+        DatabaseReference database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference().child(UserSession.JOB_COLLECTION);
+        DatabaseReference jobPostRef = database.child(jobPostKey);
+
+        //update state to pending
+        Map<String, Object> jobStateUpdate = new HashMap<>();
+        jobStateUpdate.put("jobState", JobPost.JOB_COMPLETE);
+        jobPostRef.updateChildren(jobStateUpdate);
+
+    }
 }

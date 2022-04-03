@@ -158,9 +158,11 @@ public class AddUpdateJobPostActivity extends AppCompatActivity {
     public void saveJob(String title,  double hourlyWage, String jobType, int duration,  String urgency, String location, double latitude, double longitude){
         final DatabaseReference job = database.push();
 
-        JobApplication jobApplication = new JobApplication();
-        JobPost jobPost = new JobPost(title, jobType, hourlyWage, duration, location,  latitude, longitude, UserSession.getInstance().getUsrID(), jobApplication);
+        JobPost jobPost = new JobPost(title, jobType, hourlyWage, duration, location,  latitude, longitude, UserSession.getInstance().getUsrID());
+        jobPost.setApplication(jobPost.getApplication());
         job.setValue(jobPost);
+
+
         jumpToJobDashboard();
     }
 

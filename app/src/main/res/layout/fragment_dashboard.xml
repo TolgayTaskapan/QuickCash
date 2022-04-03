@@ -8,7 +8,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/dashboardRecyclerView"
+        android:id="@+id/appliedJobRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,13 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="10"
-        tools:listitem="@layout/list_dashboard_item_employer" />
-
-    <ListView
-        android:id="@+id/list_job_requests"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        tools:ignore="MissingConstraints" />
+        tools:listitem="@layout/list_job_item_employer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
