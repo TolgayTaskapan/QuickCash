@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quickcash.AddUpdateJobPostActivity;
+import com.example.quickcash.JobApplication;
 import com.example.quickcash.JobPost;
 import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
@@ -294,6 +295,7 @@ public class JobsFragment extends Fragment {
                 String userID = UserSession.getInstance().getUsrID();
 
                 while (iterator.hasNext()) {
+                    JobApplication application = iterator.next().getValue(JobApplication.class);
                     Integer duration = iterator.next().getValue(Integer.class);
                     Double wage = iterator.next().getValue(Double.class);
                     String jobState = iterator.next().getValue(String.class);
@@ -303,7 +305,7 @@ public class JobsFragment extends Fragment {
                     String location = iterator.next().getValue(String.class);
                     Double longitude = iterator.next().getValue(Double.class);
                     String employerID = iterator.next().getValue(String.class);
-                    mJobs.add(new JobPost(title,type,wage,duration, location, latitude,longitude,employerID, jobState, jobRef));
+                    mJobs.add(new JobPost(title,type,wage,duration, location, latitude,longitude,employerID, jobState, jobRef, application));
                     mJobKeys.add(jobID);
                 }
 

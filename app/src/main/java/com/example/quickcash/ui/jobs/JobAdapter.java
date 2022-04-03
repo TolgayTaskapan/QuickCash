@@ -70,8 +70,9 @@ public class JobAdapter extends BaseAdapter {
 //                        JobRequest jobRequest = new JobRequest(currentJobID, currentJob.getUserID(), UserSession.getInstance().getUsrID(), txtJobTitle.getText().toString(), txtJobCategory.getText().toString(), Double.parseDouble(txtJobWage.getText().toString().substring(1)), 0);
 //                        saveJobRequest(jobRequest);
                         JobApplication jobApplication = new JobApplication(mJob.get(position).getJobRef().getKey(), mJob.get(position).getUserID(), UserSession.getInstance().getUsrID());
+                        mJob.get(position).setApplication(jobApplication);
                         jobApplication.applyEmployeeForJob();
-                        saveJobApplication(jobApplication);
+
 
                         this.activity.recreate();
 

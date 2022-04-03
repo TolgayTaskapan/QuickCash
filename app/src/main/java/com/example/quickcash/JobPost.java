@@ -6,6 +6,7 @@ import com.example.quickcash.identity.Employer;
 import com.example.quickcash.identity.User;
 import com.example.quickcash.util.UserSession;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -83,10 +84,22 @@ public class JobPost implements Serializable {
         this.longitude = longitude;
         this.userID = usrID;
         this.jobState = JOB_OPEN;
-        this.applicant = null;
     }
 
-    public JobPost(String title, String jobType, double hourlyWage, int duration, String location, double latitude, double longitude, String usrID, String jobState, DatabaseReference jobRef) {
+    public JobPost(String title, String jobType, double hourlyWage, int duration, String location, double latitude, double longitude, String usrID, JobApplication application) {
+        this.jobTitle = title;
+        this.jobType = jobType;
+        this.hourlyWage = hourlyWage;
+        this.duration = duration;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.userID = usrID;
+        this.jobState = JOB_OPEN;
+        this.application = application;
+    }
+
+    public JobPost(String title, String jobType, double hourlyWage, int duration, String location, double latitude, double longitude, String usrID, String jobState, DatabaseReference jobRef, JobApplication application) {
         this.jobRef = jobRef;
         this.jobTitle = title;
         this.jobType = jobType;
@@ -97,7 +110,7 @@ public class JobPost implements Serializable {
         this.longitude = longitude;
         this.userID = usrID;
         this.jobState = jobState;
-        this.applicant = null;
+        this.application = application;
     }
 
     public String getJobTitle() {
@@ -188,6 +201,24 @@ public class JobPost implements Serializable {
 
     public void setApplicant(User applicant) {
         this.applicant = applicant;
+    }
+
+    public JobApplication getApplication() {
+        return application;
+    }
+
+    public void setApplication(JobApplication application) {
+        this.application = application;
+        updateDB();
+    }
+
+    public void updateDB(){
+        Map<String, Object> updateDB = new HashMap<>();
+        updateDB.put("jobApplication", this.application);
+
+        FirebaseDatabase.getInstance(UserSession.FIREBASE_URL)
+                .getReference().child(UserSession.JOB_COLLECTION)
+                .child(this.application.getJobPostKey()).updateChildren(updateDB);
     }
 
     /*Updates this user's database job history values whenever called */

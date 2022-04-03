@@ -90,15 +90,7 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
                 .addOnFailureListener(e ->
                         Toast.makeText(holder.context, "Job delete failed", Toast.LENGTH_SHORT).show()));
         holder.approveBtn.setOnClickListener(view -> {
-
-            //update state to pending
-            Map<String, Object> jobStateUpdate = new HashMap<>();
-            jobStateUpdate.put("jobState", JobPost.JOB_IN_PROGRESS);
-
-
-            FirebaseDatabase.getInstance(UserSession.FIREBASE_URL)
-                .getReference().child(UserSession.JOB_COLLECTION)
-                .child(getRef(position).getKey()).updateChildren(jobStateUpdate);
+            job.getApplication().employerApproveEmployee();
 
         });
 

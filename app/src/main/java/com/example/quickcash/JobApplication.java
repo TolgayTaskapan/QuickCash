@@ -31,6 +31,9 @@ public class JobApplication {
     private Employer employer;
 
     public JobApplication(){
+        this.jobPostKey = "none";
+        this.employerKey = "none";
+        this.employeeKey = "none";
 
     }
 
