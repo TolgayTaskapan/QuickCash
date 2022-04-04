@@ -1,6 +1,8 @@
 package com.example.quickcash.JobApplicantView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +38,16 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
     ListView listView;
     JobPost job ;
 
+    ArrayList<String> applicant_names = new ArrayList<>();
+    ArrayList<Long> applicant_ratings = new ArrayList<>();
+    ArrayList<JobPost> applicant_history = new ArrayList<>();
+    ArrayList<Long> applicant_earned = new ArrayList<>();
+
+    TextView popup_applicant_username;
+    TextView popup_applicant_rating;
+    TextView popup_applicant_totalEarned;
+    ListView popup_jobHistory;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +62,23 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
            job = (JobPost) getIntent().getSerializableExtra("job_key");
         }
 
-        attachListeners();
-        getApplicants();
+        //popup_init();
 
+
+        getApplicants();
 
 
     }
 
+    /*public void popup_init() {
+        popup_applicant_username = findViewById(R.id.popup_name);
+        popup_applicant_rating = findViewById(R.id.popup_rating);
+        popup_applicant_totalEarned = findViewById(R.id.popup_total_earned);
+        popup_jobHistory = findViewById(R.id.popup_listview);
+    }*/
+
     public void createApplicantsView(ArrayList<String> applicant_names, ArrayList<Long> applicant_ratings, ArrayList<JobPost> applicant_history, ArrayList<Long> applicant_earned) {
+
         ArrayList<HashMap<String, String>> list = new ArrayList<>();
 
         for(int i = 0; i < applicant_names.size(); i++) {
@@ -76,6 +98,8 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
                 new String[]{"applicant_name_hash", "applicant_rating_hash", "applicant_recc_hash"}, new int[]{R.id.applicant_username, R.id.applicant_rating, R.id.applicant_recc});
 
         listView.setAdapter(simpleAdapter);
+
+        attachListeners();
     }
 
     public void attachListeners() {
@@ -84,7 +108,7 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.applicant_popup, null);
+                View popupView = inflater.inflate(R.layout.activity_view_applicant_detail, null);
                 int width = LinearLayout.LayoutParams.MATCH_PARENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 boolean focusable = true;
@@ -97,8 +121,45 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
                         return true;
                     }
                 });
+
+                Intent intent = new Intent(ViewApplicants.this, ViewApplicantDetails.class);
+
+                intent.putExtra("applicant_names_key", applicant_names);
+                intent.putExtra("applicant_ratings_key", applicant_ratings);
+                intent.putExtra("applicant_earned_key", applicant_earned);
+                intent.putExtra("applicant_history_key", applicant_history);
+
+                startActivity(intent);
             }
         });
+    }
+
+    @SuppressLint("NewApi")
+    public void createPopupView() {
+
+        Toast.makeText(this, applicant_names.get(0), Toast.LENGTH_SHORT).show();
+
+        popup_applicant_username.setText(applicant_names.get(0));
+        popup_applicant_rating.setText(Math.toIntExact(applicant_ratings.get(0)));
+        popup_applicant_totalEarned.setText(Math.toIntExact(applicant_earned.get(0)));
+
+
+        ArrayList<HashMap<String, String>> list = new ArrayList<>();
+
+        for(int i = 0; i < applicant_history.size(); i++) {
+            HashMap<String, String> popup_item = new HashMap<>();
+
+            popup_item.put("job_history_title_hash","Job Title: " + applicant_history.get(i).getJobTitle());
+            popup_item.put("job_history_type_hash", "Job Type: " + applicant_history.get(i).getJobType());
+            popup_item.put("job_history_wage_hash", "Hourly Wage: " + applicant_history.get(i).getHourlyWage());
+
+            list.add(popup_item);
+        }
+
+        SimpleAdapter simpleAdapter = new SimpleAdapter(this, list, R.layout.popup_listview_layout,
+                new String[]{"job_history_title_hash", "job_history_type_hash", "job_history_wage_hash"}, new int[]{R.id.job_history_title, R.id.job_history_type, R.id.job_history_wage});
+
+        popup_jobHistory.setAdapter(simpleAdapter);
     }
 
     public void getApplicants(){
