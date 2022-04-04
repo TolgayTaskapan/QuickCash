@@ -61,9 +61,6 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
     }
 
     protected void onBindViewHolder(@NonNull JobPostViewHolder holder, int position, @NonNull JobPost job) {
-        job.setJobRef(FirebaseDatabase.getInstance(UserSession.FIREBASE_URL)
-                .getReference().child(UserSession.JOB_COLLECTION)
-                .child(getRef(position).getKey()));
 
         if (job.getJobState().equals(JobPost.JOB_PENDING)){
             holder.updateBtn.setVisibility(View.GONE);

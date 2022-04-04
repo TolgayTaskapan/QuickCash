@@ -16,19 +16,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class JobApplication {
+public class JobApplication implements Serializable {
     public static final String TAG = "JobApplication";
 
     private String jobPostKey;
     private String employerKey;
     private String employeeKey;
-
-    private Employee employee;
-    private Employer employer;
 
     private int employeeRating;
     private int employerRating;
@@ -44,7 +42,6 @@ public class JobApplication {
         this.jobPostKey = jobPostKey;
         this.employerKey = employerKey;
         this.employeeKey = employeeKey;
-
     }
 
     public int getEmployeeRating() {
@@ -85,22 +82,6 @@ public class JobApplication {
 
     public void setEmployeeKey(String employeeKey) {
         this.employeeKey = employeeKey;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public Employer getEmployer() {
-        return employer;
-    }
-
-    public void setEmployer(Employer employer) {
-        this.employer = employer;
     }
 
     public void applyEmployeeForJob(){

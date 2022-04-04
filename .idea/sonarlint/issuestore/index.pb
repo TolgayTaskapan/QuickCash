@@ -25,8 +25,6 @@ c
 3app/src/main/res/layout/activity_profile_update.xml,0/9/09e20a8768a24d96e6c8ebfdbafe0e0ec1cebe95
 e
 5app/src/main/res/layout/activity_add_edit_jobpost.xml,7/3/730126b396762168721c48b806c17effdbf5394f
-x
-Happ/src/main/java/com/example/quickcash/jobsearch/JobSearchActivity.java,8/f/8f389e2f12d08ddf5980375e02996b56cae14afa
 
 Oapp/src/main/java/com/example/quickcash/jobsearch/JobSearchResultsActivity.java,9/0/90959cb16611c9d126e327c4ba1728a9a4c48cfa
 q

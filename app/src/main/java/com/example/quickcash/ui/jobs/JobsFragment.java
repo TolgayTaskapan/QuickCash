@@ -308,7 +308,7 @@ public class JobsFragment extends Fragment {
                     String location = iterator.next().getValue(String.class);
                     Double longitude = iterator.next().getValue(Double.class);
                     String employerID = iterator.next().getValue(String.class);
-                    mJobs.add(new JobPost(title,type,wage,duration, location, latitude,longitude,employerID, jobState, jobRef, application));
+                    mJobs.add(new JobPost(title,type,wage,duration, location, latitude,longitude,employerID, jobState, application));
                     mJobKeys.add(jobID);
                 }
 

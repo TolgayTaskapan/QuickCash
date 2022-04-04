@@ -73,7 +73,7 @@
         <item>1 KM</item>
         <item>3 KM</item>
         <item>5 KM</item>
-        <item>10 KM and above</item>
+        <item>10 KM</item>
     </string-array>
 
     <string-array name="job_duration_entries">

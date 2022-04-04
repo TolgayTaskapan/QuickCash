@@ -22,7 +22,7 @@ public class JobPost implements Serializable {
     public static final String JOB_IN_PROGRESS = "in-progress";
     public static final String JOB_COMPLETE = "complete";
 
-    private DatabaseReference jobRef;
+    //private DatabaseReference jobRef;
 
     private String jobTitle;
     private String jobType;
@@ -90,22 +90,7 @@ public class JobPost implements Serializable {
         this.application = new JobApplication();
     }
 
-    public JobPost(String title, String jobType, double hourlyWage, int duration, String location, double latitude, double longitude, String usrID, String jobState, DatabaseReference jobRef) {
-        this.jobRef = jobRef;
-        this.jobTitle = title;
-        this.jobType = jobType;
-        this.hourlyWage = hourlyWage;
-        this.duration = duration;
-        this.location = location;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.userID = usrID;
-        this.jobState = jobState;
-        this.applicant = null;
-    }
-
-    public JobPost(String title, String type, Double wage, Integer duration, String location, Double latitude, Double longitude, String employerID, String jobState, DatabaseReference jobRef, JobApplication application) {
-        this.jobRef = jobRef;
+    public JobPost(String title, String type, Double wage, Integer duration, String location, Double latitude, Double longitude, String employerID, String jobState, JobApplication application) {
         this.jobTitle = title;
         this.jobType = type;
         this.hourlyWage = wage;
@@ -192,14 +177,6 @@ public class JobPost implements Serializable {
     public String getJobState(){ return jobState;}
 
     public void setJobState(String state){this.jobState = state;}
-
-    public DatabaseReference getJobRef() {
-        return jobRef;
-    }
-
-    public void setJobRef(DatabaseReference jobRef) {
-        this.jobRef = jobRef;
-    }
 
     public User getApplicant() {
         return applicant;

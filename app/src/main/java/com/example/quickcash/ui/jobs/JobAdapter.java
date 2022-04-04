@@ -126,7 +126,7 @@ public class JobAdapter extends BaseAdapter {
 
             applyBtn.setOnClickListener(
                     view -> {
-                        JobApplication jobApplication = new JobApplication(mJob.get(position).getJobRef().getKey(), mJob.get(position).getUserID(), UserSession.getInstance().getUsrID());
+                        JobApplication jobApplication = new JobApplication(UserSession.getInstance().getUsrID(), mJob.get(position).getUserID(), UserSession.getInstance().getUsrID());
                         mJob.get(position).setApplication(jobApplication);
                         mJob.get(position).updateDB();
                         jobApplication.applyEmployeeForJob();
