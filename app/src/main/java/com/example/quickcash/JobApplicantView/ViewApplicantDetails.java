@@ -46,10 +46,10 @@ public class ViewApplicantDetails extends AppCompatActivity {
             applicant_earned = (ArrayList<Long>) getIntent().getSerializableExtra("applicant_earned_key");
         }
 
-        popup_applicant_username = findViewById(R.id.popup_name);
+        /*popup_applicant_username = findViewById(R.id.popup_name);
         popup_applicant_rating = findViewById(R.id.popup_rating);
         popup_applicant_totalEarned = findViewById(R.id.popup_total_earned);
-        popup_jobHistory = findViewById(R.id.popup_listview);
+        popup_jobHistory = findViewById(R.id.popup_listview); */
 
         //Toast.makeText(this, applicant_names.get(0), Toast.LENGTH_SHORT).show();
 

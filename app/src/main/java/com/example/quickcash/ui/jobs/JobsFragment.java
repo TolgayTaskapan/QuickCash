@@ -96,7 +96,7 @@ public class JobsFragment extends Fragment {
 
     private void setActivityView() {
         if (UserSession.getInstance().getUser().isEmployee()) {
-            getPreferenceCategory();
+            //getPreferenceCategory();
             if ( !setupCategorySpinner() ) showToastMessage("Job Fragment: Fail to set up category spinner");
 
             retrieveJobsFormFirebase();

@@ -64,7 +64,7 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
 
         //popup_init();
 
-
+        attachListeners();
         getApplicants();
 
 
@@ -83,23 +83,48 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
 
         for(int i = 0; i < applicant_names.size(); i++) {
             HashMap<String, String> applicant_item = new HashMap<>();
-            applicant_item.put("applicant_name_hash","Applicant Username: " + applicant_names.get(i));
-            applicant_item.put("applicant_rating_hash", "Applicant Rating: " + applicant_ratings.get(i));
+            applicant_item.put("applicant_name_hash","Applicant Username: " + applicant_names.get(0));
+            applicant_item.put("applicant_rating_hash", "Applicant Rating: " + applicant_ratings.get(0));
             if(applicant_ratings.get(i) >= 4.0) {
                 applicant_item.put("applicant_recc_hash", "Recommended");
             }
             else {
                 applicant_item.put("applicant_recc_hash", "");
             }
+            applicant_item.put("history_title_hash", "Last Job Title: " + applicant_history.get(0).getJobTitle());
+            applicant_item.put("history_type_hash", "Last Job Type: " + applicant_history.get(0).getJobType());
+            applicant_item.put("history_wage_hash", "Last Job Wage: " + applicant_history.get(0).getHourlyWage());
             list.add(applicant_item);
         }
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), list, R.layout.applicants_listview_item,
-                new String[]{"applicant_name_hash", "applicant_rating_hash", "applicant_recc_hash"}, new int[]{R.id.applicant_username, R.id.applicant_rating, R.id.applicant_recc});
+                new String[]{"applicant_name_hash", "applicant_rating_hash", "applicant_recc_hash", "history_title_hash", "history_type_hash", "history_wage_hash"}, new int[]{R.id.applicant_username, R.id.applicant_rating, R.id.applicant_recc, R.id.history_title, R.id.history_type, R.id.history_wage});
+
 
         listView.setAdapter(simpleAdapter);
 
-        attachListeners();
+        //createJobHistoryView();
+    }
+
+    public void createJobHistoryView() {
+
+        ArrayList<HashMap<String, String>> list = new ArrayList<>();
+
+        for(int i = 0; i < applicant_history.size(); i++) {
+            HashMap<String, String> job_history_item = new HashMap<>();
+
+            job_history_item.put("job_title_hash","Job Title: " + applicant_history.get(i).getJobTitle());
+            job_history_item.put("job_type_hash", "Job Type: " + applicant_ratings.get(i));
+            job_history_item.put("job_wage_hash", "Hourly Wage: " + applicant_history.get(i).getHourlyWage());
+
+            list.add(job_history_item);
+        }
+
+        SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), list, R.layout.popup_listview_layout,
+                new String[]{"job_title_hash", "job_type_hash", "job_wage_hash"}, new int[]{R.id.job_history_title, R.id.job_history_type, R.id.job_history_wage});
+
+        listView.setAdapter(simpleAdapter);
+
     }
 
     public void attachListeners() {
@@ -107,7 +132,7 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                /*LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.activity_view_applicant_detail, null);
                 int width = LinearLayout.LayoutParams.MATCH_PARENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -129,7 +154,7 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
                 intent.putExtra("applicant_earned_key", applicant_earned);
                 intent.putExtra("applicant_history_key", applicant_history);
 
-                startActivity(intent);
+                startActivity(intent); */
             }
         });
     }
@@ -154,6 +179,8 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
             popup_item.put("job_history_wage_hash", "Hourly Wage: " + applicant_history.get(i).getHourlyWage());
 
             list.add(popup_item);
+
+
         }
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(this, list, R.layout.popup_listview_layout,
@@ -188,7 +215,7 @@ public class ViewApplicants extends AppCompatActivity implements Serializable {
 
     public void getApplicantDetails(ArrayList applicants){
         DatabaseReference appDetailsRef = FirebaseDatabase.getInstance().getReference("Account");
-        Toast.makeText(getApplicationContext(),(String) applicants.get(0),Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),(String) applicants.get(0),Toast.LENGTH_LONG).show();
         appDetailsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
