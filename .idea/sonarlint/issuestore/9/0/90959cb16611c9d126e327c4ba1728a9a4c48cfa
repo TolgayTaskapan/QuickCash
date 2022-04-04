@@ -1,0 +1,64 @@
+
+o	java:S116"ZRename this field "job_type_holder" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—ÎÛ”
+m	java:S116 "SRename this field "min_wage" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—ĞÑ ûÿÿÿÿ
+q	java:S116!"\Rename this field "user_distancePref" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(»ı‘¯
+n	java:S116""YRename this field "min_job_length" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£°Û
+n	java:S116#"YRename this field "max_job_length" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶¥¶Å
+m	java:S116("XRename this field "user_latitude" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ş¢ä
+s	java:S116)"YRename this field "user_longitude" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•ÜüÙşÿÿÿÿ
+m
+java:S32524"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(‘šæø
+V	java:S1258"<This block of commented-out lines of code should be removed.(ã“ôüÿÿÿÿ
+V	java:S125C"<This block of commented-out lines of code should be removed.(ßâ³÷ıÿÿÿÿ
+h
+java:S3776W"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(€æ’²
+—
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ô°¤¦
+|
+java:S2178i"fCorrect this "&" to "&&" and extract the right operand to a variable if it should always be evaluated.(œÄ˜‡
+V	java:S125n"<This block of commented-out lines of code should be removed.(Š¨Üûüÿÿÿÿ
+f
+java:S1874‡"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(Û›ë´øÿÿÿÿ
+T
+java:S1854–"=Remove this useless assignment to local variable "longitude".(’ˆ¨
+X
+java:S1854•"<Remove this useless assignment to local variable "latitude".(ƒ×®„úÿÿÿÿ
+2
+java:S3626¡"Remove this redundant jump.(ûÁİ…
+=	java:S131Š""Add a default case to this switch.(×ö³–úÿÿÿÿ
+I
+java:S1481•"-Remove this unused "latitude" local variable.(ƒ×®„úÿÿÿÿ
+E
+java:S1481–".Remove this unused "longitude" local variable.(’ˆ¨
+W	java:S125˜"<This block of commented-out lines of code should be removed.(ßâ³÷ıÿÿÿÿ
+Q	java:S125Ÿ"<This block of commented-out lines of code should be removed.(ëô¡6
+G
+java:S1068$",Remove this unused "jobCheck" private field.(şÁ»®ùÿÿÿÿ
+t
+java:S2293\"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ê’Æáøÿÿÿÿ
+n
+java:S2293]"YReplace the type specification in this constructor call with the diamond operator ("<>").(˜ì¡m
+t
+java:S2293^"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ù£É‹ıÿÿÿÿ
+o
+java:S2293_"YReplace the type specification in this constructor call with the diamond operator ("<>").(å¤™Ì
+o
+java:S2293f"YReplace the type specification in this constructor call with the diamond operator ("<>").(£Îšà
+_
+java:S1192i"IDefine a constant instead of duplicating this literal "duration" 3 times.(œÄ˜‡
+E
+java:S1066j"/Merge this if statement with the enclosing one.(õïÀÈ
+J
+java:S1066k"/Merge this if statement with the enclosing one.(´ˆèÚşÿÿÿÿ
+„
+java:S1319¦"hThe type of "jobTitle" should be an interface such as "List" rather than the implementation "ArrayList".(°¿¹üÿÿÿÿÿ
+ƒ
+java:S1319¦"gThe type of "jobType" should be an interface such as "List" rather than the implementation "ArrayList".(°¿¹üÿÿÿÿÿ
+†
+java:S1319¦"jThe type of "hourlyWage" should be an interface such as "List" rather than the implementation "ArrayList".(°¿¹üÿÿÿÿÿ
+‡
+java:S1319¦"kThe type of "jobDistance" should be an interface such as "List" rather than the implementation "ArrayList".(°¿¹üÿÿÿÿÿ
+„
+java:S1319¦"hThe type of "duration" should be an interface such as "List" rather than the implementation "ArrayList".(°¿¹üÿÿÿÿÿ
+g
+java:S1301Š"KReplace this "switch" statement by "if" statements to increase readability.(×ö³–úÿÿÿÿ

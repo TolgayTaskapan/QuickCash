@@ -1,0 +1,36 @@
+
+w	java:S1164"VRename this field "prefer_type" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(τΪ”ώÿÿÿÿ8νων“ÿ/
+
+java:S1186T"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(µ¤οΈ8πων“ÿ/
+‰
+java:S1450+"gRemove the "dashboardEmployerAdapter" field and declare it as a local variable in the relevant methods.(Ϋ©ÿÿÿÿÿ8ρων“ÿ/
+h
+java:S1854;"FRemove this useless assignment to local variable "dashboardViewModel".(η»²αϊÿÿÿÿ8φων“ÿ/
+Y
+java:S1481;"7Remove this unused "dashboardViewModel" local variable.(η»²αϊÿÿÿÿ8χων“ÿ/
+X
+java:S2696?"6Make the enclosing method "static" or remove this set.(¬»‚€ώÿÿÿÿ8ψων“ÿ/
+\
+java:S1854Y":Remove this useless assignment to local variable "userID".(Ύδνηύÿÿÿÿ8ύων“ÿ/
+M
+java:S1481Y"+Remove this unused "userID" local variable.(Ύδνηύÿÿÿÿ8ώων“ÿ/
+W
+java:S1068*"5Remove this unused "dashboardListView" private field.(‘Ποπώÿÿÿÿ8ϊν“ÿ/
+F
+java:S1068-")Remove this unused "mJobs" private field.(ϋΤ®ª8ϊν“ÿ/
+M
+java:S10682"0Remove this unused "CATEGORY_ALL" private field.(β²χ8‚ϊν“ÿ/
+O
+java:S10683"-Remove this unused "RECOMMEND" private field.(«¦ψÿÿÿÿ8‚ϊν“ÿ/
+V
+java:S10685"4Remove this unused "selectedCategory" private field.(π¨ εωÿÿÿÿ8‚ϊν“ÿ/
+u
+java:S1104."SMake userRef a static final constant or non-public and provide accessors if needed.(υΥ΅όÿÿÿÿ8„ϊν“ÿ/
+q
+java:S1104/"TMake database a static final constant or non-public and provide accessors if needed.(΄΅8„ϊν“ÿ/
+z
+java:S11040"XMake mainActivity a static final constant or non-public and provide accessors if needed.(—όπ»ϋÿÿÿÿ8„ϊν“ÿ/
+y
+java:S11044"WMake prefer_type a static final constant or non-public and provide accessors if needed.(τΪ”ώÿÿÿÿ8„ϊν“ÿ/
+O
+java:S1444."-Make this "public static userRef" field final(υΥ΅όÿÿÿÿ8„ϊν“ÿ/

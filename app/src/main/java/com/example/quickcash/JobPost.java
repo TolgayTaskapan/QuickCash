@@ -107,8 +107,8 @@ public class JobPost implements Serializable {
     public JobPost(String title, String type, Double wage, Integer duration, String location, Double latitude, Double longitude, String employerID, String jobState, DatabaseReference jobRef, JobApplication application) {
         this.jobRef = jobRef;
         this.jobTitle = title;
-        this.jobType = jobType;
-        this.hourlyWage = hourlyWage;
+        this.jobType = type;
+        this.hourlyWage = wage;
         this.duration = duration;
         this.location = location;
         this.latitude = latitude;
