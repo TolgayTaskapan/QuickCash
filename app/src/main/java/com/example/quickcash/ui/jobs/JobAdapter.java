@@ -61,7 +61,9 @@ public class JobAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if (mJob.get(position).getJobState().equals(JobPost.JOB_PENDING) && mJob.get(position).getApplication().getEmployeeKey().equals(UserSession.getInstance().getUsrID())) {
+        boolean employeesOwnAppliedJob = mJob.get(position).getJobState().equals(JobPost.JOB_PENDING) && mJob.get(position).getApplication().getEmployeeKey().equals(UserSession.getInstance().getUsrID());
+        boolean employeesOwnInProgressJob = mJob.get(position).getJobState().equals(JobPost.JOB_IN_PROGRESS) && mJob.get(position).getApplication().getEmployeeKey().equals(UserSession.getInstance().getUsrID());
+        if (employeesOwnAppliedJob) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item_employee, parent, false);
             TextView txtJobTitle = (TextView) convertView.findViewById(R.id.item_job_title);
             TextView txtJobCategory = (TextView) convertView.findViewById(R.id.item_job_category);
@@ -78,7 +80,7 @@ public class JobAdapter extends BaseAdapter {
             txtJobWage.setText(wageStr);
             applyBtn.setVisibility(View.GONE);
             return convertView;
-        } else if (mJob.get(position).getJobState().equals(JobPost.JOB_IN_PROGRESS)) {
+        } else if (employeesOwnInProgressJob) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item_employee, parent, false);
             TextView txtJobTitle = (TextView) convertView.findViewById(R.id.item_job_title);
             TextView txtJobCategory = (TextView) convertView.findViewById(R.id.item_job_category);
