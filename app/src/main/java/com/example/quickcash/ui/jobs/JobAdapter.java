@@ -61,7 +61,7 @@ public class JobAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if (mJob.get(position).getJobState().equals(JobPost.JOB_PENDING)) {
+        if (mJob.get(position).getJobState().equals(JobPost.JOB_PENDING) && mJob.get(position).getApplication().getEmployeeKey().equals(UserSession.getInstance().getUsrID())) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item_employee, parent, false);
             TextView txtJobTitle = (TextView) convertView.findViewById(R.id.item_job_title);
             TextView txtJobCategory = (TextView) convertView.findViewById(R.id.item_job_category);

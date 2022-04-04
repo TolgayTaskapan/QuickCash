@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:textColor="#B4B4B9"
                 android:textSize="14sp"
                 tools:text="Rate this Employer 1-5"/>

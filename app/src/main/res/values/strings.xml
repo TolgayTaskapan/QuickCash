@@ -26,7 +26,7 @@
     <string name="logout_button">Logout</string>
     <string name="EMPTY_LIST">There is no job under this category</string>
     <string name="landing_page_welcome">Welcome to Quick Cash</string>
-    <string name="update_profile">update_profile</string>
+    <string name="update_profile">Update Profile</string>
     <string name="your_favorite_type_of_job">Your Favorite type of job</string>
     <string name="select_your_favorite_type_of_job">select your favorite type of job</string>
     <string name="Update" />

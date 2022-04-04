@@ -21,8 +21,6 @@ g
 7app/src/main/res/layout/activity_job_search_results.xml,e/b/ebf122ad1866a5ec9fd298d5a84c8ced887b4b07
 k
 ;app/src/main/res/layout/activity_development_job_search.xml,7/a/7aa6fd1ca6e8b0656039afcc04d003af80e67a3d
-b
-2app/src/main/res/layout/list_job_item_employee.xml,d/6/d6dfc047b3efbefba480f9af6faf572ba82d96bc
 c
 3app/src/main/res/layout/activity_profile_update.xml,0/9/09e20a8768a24d96e6c8ebfdbafe0e0ec1cebe95
 e
@@ -69,8 +67,6 @@ j
 :app/src/main/res/layout/activity_view_applicant_detail.xml,5/3/536570f507d66049adb2e45c9b6d7f0f649bb56b
 a
 1app/src/main/res/layout/popup_listview_layout.xml,c/3/c3a3e92895d72726f490186d451641a5e2827935
-k
-;app/src/main/java/com/example/quickcash/JobApplication.java,2/f/2fd41cda30faf1bf0b0b355dd89d832e61b3764e
 g
 7app/src/main/java/com/example/quickcash/JobRequest.java,d/9/d917f5d5ad6047958fd20e64ae3667f9ef0a27a0
 v
@@ -83,8 +79,6 @@ h
 Uapp/src/main/java/com/example/quickcash/jobnotification/JobNontificationActivity.java,7/d/7d742f472fa05276f6eeeac787ce3847632f007d
 g
 7app/src/main/java/com/example/quickcash/JobHistory.java,d/8/d8d7dd7f06463364672bb9884974fd79c113f131
-h
-8app/src/main/res/layout/list_dashboard_item_employee.xml,f/5/f57624b1a53ff745bbf65f20ba0aeed597e03e4e
 h
 8app/src/main/res/layout/list_dashboard_item_employer.xml,a/7/a737efc0a990d5bd04c3def8d24a6f3aa610c3a2
 _
@@ -107,8 +101,6 @@ h
 8app/src/main/res/drawable-v24/ic_launcher_foreground.xml,0/7/078508c831007ccb3938b355f0d30a8368f99a8d
 X
 (app/src/main/res/values-night/themes.xml,8/c/8c3a6b96d9ffba496992e612d58227c19e6b9e65
-S
-#app/src/main/res/values/strings.xml,d/2/d2281fbb3027de2722081a53408dd77628bf080e
 R
 "app/src/main/res/values/themes.xml,e/b/eb7f0f821bde169dd21862705b2b042d2cea69a3
 R
@@ -169,8 +161,6 @@ t
 Dapp/src/main/java/com/example/quickcash/account/SignupValidator.java,6/d/6d1a85a6c2a9a48ce1920d5f555f46eaed8848de
 `
 0app/src/main/res/layout/activity_signup_page.xml,0/0/007079e6a91788b5e3ae3cb2936c4a188d44be6c
-\
-,app/src/main/res/layout/fragment_profile.xml,b/4/b4466735edf81a3353097aecb75b46205cdee6b6
 a
 1app/src/main/res/layout/activity_landing_page.xml,a/0/a069364cc5d0abd2a9050fa6030f6f6860049359
 `

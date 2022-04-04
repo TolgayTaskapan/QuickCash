@@ -116,6 +116,7 @@ public class JobPost implements Serializable {
         this.userID = employerID;
         this.jobState = jobState;
         this.applicant = null;
+        this.application = application;
     }
 
     public String getJobTitle() {
