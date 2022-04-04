@@ -1,7 +1,0 @@
-
-p
-java:S1450&"URemove the "userID" field and declare it as a local variable in the relevant methods.(³ ûÁÿÿÿÿÿ
-h
-java:S3776\"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(ëÿ¨É
-E
-java:S1068&"*Remove this unused "userID" private field.(³ ûÁÿÿÿÿÿ

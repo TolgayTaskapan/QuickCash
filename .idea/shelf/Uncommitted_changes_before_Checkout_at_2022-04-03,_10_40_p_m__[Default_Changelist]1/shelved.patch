@@ -1,0 +1,252 @@
+Index: app/src/main/java/com/example/quickcash/ui/jobs/JobsFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.quickcash.ui.jobs;\n\nimport android.content.Context;\nimport android.content.Intent;\nimport android.os.Bundle;\nimport android.util.Log;\nimport android.view.LayoutInflater;\nimport android.view.View;\nimport android.view.ViewGroup;\nimport android.widget.AdapterView;\nimport android.widget.ArrayAdapter;\nimport android.widget.Button;\nimport android.widget.ListView;\nimport android.widget.Spinner;\nimport android.widget.Toast;\n\nimport androidx.annotation.NonNull;\nimport androidx.annotation.Nullable;\nimport androidx.fragment.app.Fragment;\nimport androidx.lifecycle.ViewModelProvider;\nimport androidx.recyclerview.widget.LinearLayoutManager;\nimport androidx.recyclerview.widget.RecyclerView;\n\nimport com.example.quickcash.AddUpdateJobPostActivity;\nimport com.example.quickcash.JobApplication;\nimport com.example.quickcash.JobPost;\nimport com.example.quickcash.MainActivity;\nimport com.example.quickcash.R;\nimport com.example.quickcash.WrapLinearLayoutManager;\nimport com.example.quickcash.databinding.FragmentJobsBinding;\n\nimport com.example.quickcash.jobsearch.JobSearchActivity;\nimport com.example.quickcash.util.UserSession;\nimport com.google.android.material.floatingactionbutton.FloatingActionButton;\nimport com.google.firebase.database.ChildEventListener;\nimport com.google.firebase.database.DataSnapshot;\nimport com.google.firebase.database.DatabaseError;\nimport com.google.firebase.database.DatabaseReference;\n\nimport com.firebase.ui.database.FirebaseRecyclerOptions;\nimport com.google.firebase.database.FirebaseDatabase;\nimport com.google.firebase.database.ValueEventListener;\n\nimport java.util.Iterator;\nimport java.util.LinkedList;\n\nimport kotlinx.coroutines.Job;\n\npublic class JobsFragment extends Fragment {\n\n    private RecyclerView recyclerView;\n    private ListView jobListView;\n    private JobAdapter jobAdapter;\n    private JobPostAdapter jobPostAdapter;\n    private FloatingActionButton addFAB;\n    private FloatingActionButton searchFAB;\n    private Button searchButton;\n    private Spinner categorySpinner;\n\n    private FragmentJobsBinding binding;\n\n    private LinkedList<JobPost> mJobs;\n    private LinkedList<String> mJobKeys;\n    public static DatabaseReference userRef;\n    public DatabaseReference database;\n    public MainActivity mainActivity;\n\n    private static final String CATEGORY_ALL = \"Category - All\";\n    private static final String RECOMMEND = \"Recommend\";\n    public String prefer_type;\n    private String selectedCategory;\n\n\n    @Override\n    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {\n        JobsViewModel jobsViewModel = new ViewModelProvider(this).get(JobsViewModel.class);\n        binding = FragmentJobsBinding.inflate(inflater, container, false);\n        View root = binding.getRoot();\n        mainActivity = (MainActivity) getActivity();\n\n        initializeDatabase();\n        init(root);\n\n        if (UserSession.getInstance().getUser().isEmployer()) {\n            setActivityView();\n            connectToFirebaseRTDB();\n        }\n        attachListeners();\n\n        return root;\n    }\n\n    private void init(View view) {\n        recyclerView = view.findViewById(R.id.jobsRecyclerView);\n        recyclerView.setLayoutManager(new WrapLinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));\n        jobListView = view.findViewById(R.id.list_jobs);\n        addFAB = view.findViewById(R.id.addButton);\n        searchFAB = view.findViewById(R.id.searchFAB);\n        categorySpinner = view.findViewById(R.id.categorySpinner);\n\n    }\n\n    public void initializeDatabase(){\n        database = FirebaseDatabase.getInstance(\"https://quick-cash-ca106-default-rtdb.firebaseio.com/\").getReference();\n    }\n\n    public void setActivityView() {\n        if (UserSession.getInstance().getUser().isEmployee()) {\n            getPreferenceCategory();\n            if ( !setupCategorySpinner() ) showToastMessage(\"Job Fragment: Fail to set up category spinner\");\n\n            retrieveJobsFromFirebase();\n        }\n        String userType = UserSession.getInstance().getUser().getIdentity();\n        if (userType != null) {\n            if (userType.equals(\"Employer\")) {\n                searchFAB.setVisibility(View.GONE);\n                jobListView.setVisibility(View.GONE);\n                categorySpinner.setVisibility(View.GONE);\n            } else {\n                searchFAB.setVisibility(View.VISIBLE);\n                recyclerView.setVisibility(View.GONE);\n                addFAB.setVisibility(View.GONE);\n            }\n        } else {\n            System.out.println(\"nothing found\");\n        }\n    }\n\n    private void attachListeners() {\n        addFAB.setOnClickListener(view ->\n                startActivity(new Intent(this.getContext(), AddUpdateJobPostActivity.class)));\n        searchFAB.setOnClickListener(view ->\n                startActivity(new Intent(this.getContext(), JobSearchActivity.class)));\n        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {\n            @Override\n            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {\n                selectedCategory = adapterView.getItemAtPosition(i).toString();\n                filterTheJobList(selectedCategory);\n            }\n\n            @Override\n            public void onNothingSelected(AdapterView<?> adapterView) {\n                selectedCategory = RECOMMEND;\n            }\n        });\n    }\n\n    private void connectToFirebaseRTDB() {\n        final String userID = UserSession.getInstance().getUsrID();\n        final FirebaseRecyclerOptions<JobPost> options = new FirebaseRecyclerOptions.Builder<JobPost>()\n                .setQuery(FirebaseDatabase.getInstance(UserSession.FIREBASE_URL)\n                        .getReference()\n                        .child(UserSession.JOB_COLLECTION).orderByChild(\"userID\").equalTo(userID), JobPost.class)\n                .build();\n\n        Log.d(\"employer_job_request\", \"connectToFirebaseRTDB: \" + userID);\n        jobPostAdapter = new JobPostAdapter(options);\n        recyclerView.setAdapter(jobPostAdapter);\n    }\n\n    @Override\n    public void onStart() {\n        super.onStart();\n        if (UserSession.getInstance().getUser().isEmployer()) {\n            jobPostAdapter.startListening();\n        }\n    }\n\n    @Override\n    public void onResume() {\n        super.onResume();\n        setActivityView();\n    }\n\n    @Override\n    public void onStop() {\n        super.onStop();\n        if (UserSession.getInstance().getUser().isEmployer()) {\n            jobPostAdapter.stopListening();\n        }\n    }\n\n    @Override\n    public void onDestroyView() {\n        super.onDestroyView();\n        binding = null;\n    }\n\n    private void getPreferenceCategory() {\n        userRef = UserSession.getInstance().getCurrentUserRef();\n        userRef.addValueEventListener(new ValueEventListener() {\n            @Override\n            public void onDataChange(@NonNull DataSnapshot snapshot) {\n                prefer_type = snapshot.child(\"prefer\").getValue(String.class);\n            }\n\n            @Override\n            public void onCancelled(@NonNull DatabaseError error) {\n\n            }\n        });\n    }\n\n    private boolean setupCategorySpinner() {\n        boolean setUp = false;\n\n        // Create the spinner.\n        //Spinner spinner = binding.categorySpinner;\n        //Spinner spinner = categorySpinner;\n        if (categorySpinner != null) {\n            categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {\n                @Override\n                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {\n                    selectedCategory = adapterView.getItemAtPosition(i).toString();\n                    filterTheJobList(selectedCategory);\n                }\n\n                @Override\n                public void onNothingSelected(AdapterView<?> adapterView) {\n                    selectedCategory = RECOMMEND;\n                }\n            });\n        } else {\n            return setUp;\n        }\n\n        // Create ArrayAdapter using the string array and default spinner layout.\n        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),\n                R.array.category_names, android.R.layout.simple_spinner_item);\n\n        // Specify the layout to use when the list of choices appears.\n        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);\n\n        // Apply the adapter to the spinner.\n        categorySpinner.setAdapter(adapter);\n        setUp = true;\n\n        return setUp;\n    }\n\n    private void filterTheJobList(String category) {\n        LinkedList<JobPost> filteredList = new LinkedList<JobPost>();\n        LinkedList<String> filteredKeys = new LinkedList<String>();\n\n        if (category.equals(RECOMMEND)) {\n            category = prefer_type;\n        }\n\n        System.out.println(\"=========\" + category + \"==========\");\n        System.out.println(\"=========\" + mJobs.size() + \"==========\");\n\n        // The option of showing all jobs\n        if (category == null || category.equals(CATEGORY_ALL)) {\n            showUpJobList(this.mJobs, this.mJobKeys);\n            return;\n        }\n\n        // Go through the jobs to filter out the desired category\n        for (int i = 0; i < mJobs.size(); i++) {\n            JobPost job = mJobs.get(i);\n            String jobKey = mJobKeys.get(i);\n            if (job.getJobType().equals(category)) {\n                filteredList.add(job);\n                filteredKeys.add(jobKey);\n            }\n        }\n\n        if (filteredList.size() == 0) {\n            showToastMessage(\"There is no job under this category\");\n        }\n\n        showUpJobList(filteredList, filteredKeys);\n        return;\n\n\n    }\n\n    private void showToastMessage(String message) {\n        Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();\n    }\n\n\n    private void retrieveJobsFromFirebase() {\n        DatabaseReference jobRef = FirebaseDatabase.getInstance(UserSession.FIREBASE_URL).getReference(\"job\");\n        mJobs = new LinkedList<JobPost>();\n        mJobKeys = new LinkedList<String>();\n\n        jobRef.addChildEventListener(new ChildEventListener() {\n            @Override\n            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {\n                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();\n                String jobID = snapshot.getKey();\n                DatabaseReference jobRef = snapshot.getRef();\n                String userID = UserSession.getInstance().getUsrID();\n\n                while (iterator.hasNext()) {\n                    JobApplication application = iterator.next().getValue(JobApplication.class);\n                    Integer duration = iterator.next().getValue(Integer.class);\n                    Double wage = iterator.next().getValue(Double.class);\n                    String jobState = iterator.next().getValue(String.class);\n                    String title = iterator.next().getValue(String.class);\n                    String type = iterator.next().getValue(String.class);\n                    Double latitude = iterator.next().getValue(Double.class);\n                    String location = iterator.next().getValue(String.class);\n                    Double longitude = iterator.next().getValue(Double.class);\n                    String employerID = iterator.next().getValue(String.class);\n                    mJobs.add(new JobPost(title,type,wage,duration, location, latitude,longitude,employerID, jobState, jobRef, application));\n                    mJobKeys.add(jobID);\n                }\n\n            }\n\n            @Override\n            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {\n                // not being used\n            }\n\n            @Override\n            public void onChildRemoved(@NonNull DataSnapshot snapshot) {\n                // not being used\n            }\n\n            @Override\n            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {\n                // not being used\n\n            }\n\n            @Override\n            public void onCancelled(@NonNull DatabaseError error) {\n                // not being used\n\n            }\n        });\n    }\n\n    private void showUpJobList(LinkedList<JobPost> inCategory, LinkedList<String> filteredKeys) {\n        Context mContext = this.getContext();\n        jobListView = binding.listJobs;\n\n        jobAdapter = new JobAdapter(inCategory, filteredKeys, database, mContext, this.getActivity());\n        jobListView.setAdapter(jobAdapter);\n    }\n\n\n\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/quickcash/ui/jobs/JobsFragment.java b/app/src/main/java/com/example/quickcash/ui/jobs/JobsFragment.java
+--- a/app/src/main/java/com/example/quickcash/ui/jobs/JobsFragment.java	(revision 7fce3cf5054cd97f923d3344d7742d624240bf34)
++++ b/app/src/main/java/com/example/quickcash/ui/jobs/JobsFragment.java	(date 1649036431749)
+@@ -3,7 +3,6 @@
+ import android.content.Context;
+ import android.content.Intent;
+ import android.os.Bundle;
+-import android.util.Log;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
+@@ -12,6 +11,7 @@
+ import android.widget.Button;
+ import android.widget.ListView;
+ import android.widget.Spinner;
++import android.widget.TextView;
+ import android.widget.Toast;
+ 
+ import androidx.annotation.NonNull;
+@@ -22,7 +22,7 @@
+ import androidx.recyclerview.widget.RecyclerView;
+ 
+ import com.example.quickcash.AddUpdateJobPostActivity;
+-import com.example.quickcash.JobApplication;
++import com.example.quickcash.JobApplicantView.ViewApplicants;
+ import com.example.quickcash.JobPost;
+ import com.example.quickcash.MainActivity;
+ import com.example.quickcash.R;
+@@ -43,8 +43,7 @@
+ 
+ import java.util.Iterator;
+ import java.util.LinkedList;
+-
+-import kotlinx.coroutines.Job;
++import java.util.List;
+ 
+ public class JobsFragment extends Fragment {
+ 
+@@ -53,16 +52,13 @@
+     private JobAdapter jobAdapter;
+     private JobPostAdapter jobPostAdapter;
+     private FloatingActionButton addFAB;
+-    private FloatingActionButton searchFAB;
+     private Button searchButton;
+     private Spinner categorySpinner;
+ 
+     private FragmentJobsBinding binding;
+ 
+     private LinkedList<JobPost> mJobs;
+-    private LinkedList<String> mJobKeys;
+     public static DatabaseReference userRef;
+-    public DatabaseReference database;
+     public MainActivity mainActivity;
+ 
+     private static final String CATEGORY_ALL = "Category - All";
+@@ -78,11 +74,10 @@
+         View root = binding.getRoot();
+         mainActivity = (MainActivity) getActivity();
+ 
+-        initializeDatabase();
+         init(root);
+-
+-        if (UserSession.getInstance().getUser().isEmployer()) {
+-            setActivityView();
++        setActivityView();
++
++        if (UserSession.getInstance().getUser().isEmployer()) {
+             connectToFirebaseRTDB();
+         }
+         attachListeners();
+@@ -95,30 +90,25 @@
+         recyclerView.setLayoutManager(new WrapLinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
+         jobListView = view.findViewById(R.id.list_jobs);
+         addFAB = view.findViewById(R.id.addButton);
+-        searchFAB = view.findViewById(R.id.searchFAB);
++        searchButton = view.findViewById(R.id.JobSearchBtn);
+         categorySpinner = view.findViewById(R.id.categorySpinner);
+-
+     }
+ 
+-    public void initializeDatabase(){
+-        database = FirebaseDatabase.getInstance("https://quick-cash-ca106-default-rtdb.firebaseio.com/").getReference();
+-    }
+-
+-    public void setActivityView() {
++    private void setActivityView() {
+         if (UserSession.getInstance().getUser().isEmployee()) {
+             getPreferenceCategory();
+             if ( !setupCategorySpinner() ) showToastMessage("Job Fragment: Fail to set up category spinner");
+ 
+-            retrieveJobsFromFirebase();
++            retrieveJobsFormFirebase();
+         }
+         String userType = UserSession.getInstance().getUser().getIdentity();
+         if (userType != null) {
+             if (userType.equals("Employer")) {
+-                searchFAB.setVisibility(View.GONE);
++                searchButton.setVisibility(View.GONE);
+                 jobListView.setVisibility(View.GONE);
+                 categorySpinner.setVisibility(View.GONE);
+             } else {
+-                searchFAB.setVisibility(View.VISIBLE);
++                searchButton.setVisibility(View.VISIBLE);
+                 recyclerView.setVisibility(View.GONE);
+                 addFAB.setVisibility(View.GONE);
+             }
+@@ -130,7 +120,7 @@
+     private void attachListeners() {
+         addFAB.setOnClickListener(view ->
+                 startActivity(new Intent(this.getContext(), AddUpdateJobPostActivity.class)));
+-        searchFAB.setOnClickListener(view ->
++        searchButton.setOnClickListener(view ->
+                 startActivity(new Intent(this.getContext(), JobSearchActivity.class)));
+         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+             @Override
+@@ -154,7 +144,6 @@
+                         .child(UserSession.JOB_COLLECTION).orderByChild("userID").equalTo(userID), JobPost.class)
+                 .build();
+ 
+-        Log.d("employer_job_request", "connectToFirebaseRTDB: " + userID);
+         jobPostAdapter = new JobPostAdapter(options);
+         recyclerView.setAdapter(jobPostAdapter);
+     }
+@@ -241,7 +230,6 @@
+ 
+     private void filterTheJobList(String category) {
+         LinkedList<JobPost> filteredList = new LinkedList<JobPost>();
+-        LinkedList<String> filteredKeys = new LinkedList<String>();
+ 
+         if (category.equals(RECOMMEND)) {
+             category = prefer_type;
+@@ -252,17 +240,15 @@
+ 
+         // The option of showing all jobs
+         if (category == null || category.equals(CATEGORY_ALL)) {
+-            showUpJobList(this.mJobs, this.mJobKeys);
++            showUpJobList(this.mJobs);
+             return;
+         }
+ 
+         // Go through the jobs to filter out the desired category
+         for (int i = 0; i < mJobs.size(); i++) {
+             JobPost job = mJobs.get(i);
+-            String jobKey = mJobKeys.get(i);
+             if (job.getJobType().equals(category)) {
+                 filteredList.add(job);
+-                filteredKeys.add(jobKey);
+             }
+         }
+ 
+@@ -270,7 +256,7 @@
+             showToastMessage("There is no job under this category");
+         }
+ 
+-        showUpJobList(filteredList, filteredKeys);
++        showUpJobList(filteredList);
+         return;
+ 
+ 
+@@ -281,32 +267,26 @@
+     }
+ 
+ 
+-    private void retrieveJobsFromFirebase() {
++    private void retrieveJobsFormFirebase() {
+         DatabaseReference jobRef = FirebaseDatabase.getInstance(UserSession.FIREBASE_URL).getReference("job");
+         mJobs = new LinkedList<JobPost>();
+-        mJobKeys = new LinkedList<String>();
+ 
+         jobRef.addChildEventListener(new ChildEventListener() {
+             @Override
+             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                 Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
+-                String jobID = snapshot.getKey();
+-                DatabaseReference jobRef = snapshot.getRef();
+                 String userID = UserSession.getInstance().getUsrID();
+ 
+                 while (iterator.hasNext()) {
+-                    JobApplication application = iterator.next().getValue(JobApplication.class);
+                     Integer duration = iterator.next().getValue(Integer.class);
+                     Double wage = iterator.next().getValue(Double.class);
+-                    String jobState = iterator.next().getValue(String.class);
+                     String title = iterator.next().getValue(String.class);
+                     String type = iterator.next().getValue(String.class);
+                     Double latitude = iterator.next().getValue(Double.class);
+                     String location = iterator.next().getValue(String.class);
+                     Double longitude = iterator.next().getValue(Double.class);
+-                    String employerID = iterator.next().getValue(String.class);
+-                    mJobs.add(new JobPost(title,type,wage,duration, location, latitude,longitude,employerID, jobState, jobRef, application));
+-                    mJobKeys.add(jobID);
++                    iterator.next();    // Skip the userID in Firebase
++                    mJobs.add(new JobPost(title,type,wage,duration, location, latitude,longitude,userID));
+                 }
+ 
+             }
+@@ -335,11 +315,11 @@
+         });
+     }
+ 
+-    private void showUpJobList(LinkedList<JobPost> inCategory, LinkedList<String> filteredKeys) {
++    private void showUpJobList(LinkedList<JobPost> inCategory) {
+         Context mContext = this.getContext();
+         jobListView = binding.listJobs;
+ 
+-        jobAdapter = new JobAdapter(inCategory, filteredKeys, database, mContext, this.getActivity());
++        jobAdapter = new JobAdapter(inCategory, mContext);
+         jobListView.setAdapter(jobAdapter);
+     }
+ 
+Index: .idea/sonarlint/issuestore/index.pb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\ny\nIapp/src/androidTest/java/com/example/quickcash/JobSearchEspressoTest.java\u0012,9/f/9fb429340b2cdee46f59d3ee7c28ef99b5985d7d\ns\nCapp/src/main/java/com/example/quickcash/account/LoginValidator.java\u0012,b/d/bd27416ab038981c892a9ddb3a42c5f63fe568da\nn\n>app/src/main/java/com/example/quickcash/identity/Employee.java\u0012,6/1/619b05b10393dfe28b1647ed0639cb543f25dcf6\np\n@app/src/test/java/com/example/quickcash/UserSignupJUnitTest.java\u0012,a/5/a5b98cf0b43bf357c52489c1503af8464ec5584c\no\n?app/src/test/java/com/example/quickcash/UserLoginJUnitTest.java\u0012,c/f/cf94762d8b4fefc4db97ca32a75d3643ff0458f0\nu\nEapp/src/test/java/com/example/quickcash/SharedPreferenceUtilTest.java\u0012,f/2/f28b89ebe4713c452b9d049a459be81a4d29c72b\no\n?app/src/test/java/com/example/quickcash/JobSearchJUnitTest.java\u0012,9/7/973cc503853cbe93d635f506d185a449af30056c\np\n@app/src/test/java/com/example/quickcash/JobPostingJUnitTest.java\u0012,5/9/59d9b353dcfb3f36ed1bfe669e0147c934e6b4df\np\n@app/src/main/java/com/example/quickcash/JobPostingValidator.java\u0012,4/d/4d8bb7255b0a5e44b220a3b2aaec9ab7ee281745\ns\nCapp/src/main/java/com/example/quickcash/account/SignupActivity.java\u0012,8/4/84e9e7675d1a98f8e4e9764b5cdb6a2617523608
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/sonarlint/issuestore/index.pb b/.idea/sonarlint/issuestore/index.pb
+--- a/.idea/sonarlint/issuestore/index.pb	(revision 7fce3cf5054cd97f923d3344d7742d624240bf34)
++++ b/.idea/sonarlint/issuestore/index.pb	(date 1649036433277)
+@@ -1,21 +1,5 @@
+ 
+-y
+-Iapp/src/androidTest/java/com/example/quickcash/JobSearchEspressoTest.java,9/f/9fb429340b2cdee46f59d3ee7c28ef99b5985d7d
+-s
+-Capp/src/main/java/com/example/quickcash/account/LoginValidator.java,b/d/bd27416ab038981c892a9ddb3a42c5f63fe568da
+-n
+->app/src/main/java/com/example/quickcash/identity/Employee.java,6/1/619b05b10393dfe28b1647ed0639cb543f25dcf6
+ p
+-@app/src/test/java/com/example/quickcash/UserSignupJUnitTest.java,a/5/a5b98cf0b43bf357c52489c1503af8464ec5584c
+-o
+-?app/src/test/java/com/example/quickcash/UserLoginJUnitTest.java,c/f/cf94762d8b4fefc4db97ca32a75d3643ff0458f0
+-u
+-Eapp/src/test/java/com/example/quickcash/SharedPreferenceUtilTest.java,f/2/f28b89ebe4713c452b9d049a459be81a4d29c72b
+-o
+-?app/src/test/java/com/example/quickcash/JobSearchJUnitTest.java,9/7/973cc503853cbe93d635f506d185a449af30056c
++@app/src/main/java/com/example/quickcash/LandingPageActivity.java,0\c\0c21bda23d00a5e781e9a809b5681d45cfbf4d79
+ p
+-@app/src/test/java/com/example/quickcash/JobPostingJUnitTest.java,5/9/59d9b353dcfb3f36ed1bfe669e0147c934e6b4df
+-p
+-@app/src/main/java/com/example/quickcash/JobPostingValidator.java,4/d/4d8bb7255b0a5e44b220a3b2aaec9ab7ee281745
+-s
+-Capp/src/main/java/com/example/quickcash/account/SignupActivity.java,8/4/84e9e7675d1a98f8e4e9764b5cdb6a2617523608
+\ No newline at end of file
++@app/src/main/java/com/example/quickcash/JobPostingValidator.java,4\d\4d8bb7255b0a5e44b220a3b2aaec9ab7ee281745
+\ No newline at end of file

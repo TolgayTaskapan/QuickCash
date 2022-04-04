@@ -46,7 +46,7 @@ public class LoginEspressoTest {
 
     @AfterClass
     public static void tearDown() {
-        clearDatabase();
+        //clearDatabase();
         System.gc();
     }
 

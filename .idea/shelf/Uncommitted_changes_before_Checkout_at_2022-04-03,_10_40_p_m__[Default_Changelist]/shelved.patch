@@ -1,0 +1,45 @@
+Index: .idea/deploymentTargetDropDown.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"deploymentTargetDropDown\">\n    <targetSelectedWithDropDown>\n      <Target>\n        <type value=\"QUICK_BOOT_TARGET\" />\n        <deviceKey>\n          <Key>\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\n            <value value=\"C:\\Users\\Shawn\\.android\\avd\\Pixel_5_API_30.avd\" />\n          </Key>\n        </deviceKey>\n      </Target>\n    </targetSelectedWithDropDown>\n    <timeTargetWasSelectedWithDropDown value=\"2022-04-03T19:10:58.820535500Z\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+--- a/.idea/deploymentTargetDropDown.xml	(revision 8bdc41ea991973f8bd6c522f92b152ae5933a233)
++++ b/.idea/deploymentTargetDropDown.xml	(date 1649035612580)
+@@ -7,11 +7,11 @@
+         <deviceKey>
+           <Key>
+             <type value="VIRTUAL_DEVICE_PATH" />
+-            <value value="C:\Users\Shawn\.android\avd\Pixel_5_API_30.avd" />
++            <value value="$USER_HOME$/.android/avd/Pixel_2_API_29_2.avd" />
+           </Key>
+         </deviceKey>
+       </Target>
+     </targetSelectedWithDropDown>
+-    <timeTargetWasSelectedWithDropDown value="2022-04-03T19:10:58.820535500Z" />
++    <timeTargetWasSelectedWithDropDown value="2022-04-04T01:26:49.760857Z" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/sonarlint/issuestore/index.pb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\np\n@app/src/main/java/com/example/quickcash/LandingPageActivity.java\u0012,0\\c\\0c21bda23d00a5e781e9a809b5681d45cfbf4d79\np\n@app/src/main/java/com/example/quickcash/JobPostingValidator.java\u0012,4\\d\\4d8bb7255b0a5e44b220a3b2aaec9ab7ee281745\nu\nEapp/src/main/java/com/example/quickcash/AddUpdateJobPostActivity.java\u0012,b\\f\\bf8770d53aca719feb7ecbdb7dde1f919bc84a3f
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/sonarlint/issuestore/index.pb b/.idea/sonarlint/issuestore/index.pb
+--- a/.idea/sonarlint/issuestore/index.pb	(revision 8bdc41ea991973f8bd6c522f92b152ae5933a233)
++++ b/.idea/sonarlint/issuestore/index.pb	(date 1649034594373)
+@@ -2,6 +2,4 @@
+ p
+ @app/src/main/java/com/example/quickcash/LandingPageActivity.java,0\c\0c21bda23d00a5e781e9a809b5681d45cfbf4d79
+ p
+-@app/src/main/java/com/example/quickcash/JobPostingValidator.java,4\d\4d8bb7255b0a5e44b220a3b2aaec9ab7ee281745
+-u
+-Eapp/src/main/java/com/example/quickcash/AddUpdateJobPostActivity.java,b\f\bf8770d53aca719feb7ecbdb7dde1f919bc84a3f
+\ No newline at end of file
++@app/src/main/java/com/example/quickcash/JobPostingValidator.java,4\d\4d8bb7255b0a5e44b220a3b2aaec9ab7ee281745
+\ No newline at end of file

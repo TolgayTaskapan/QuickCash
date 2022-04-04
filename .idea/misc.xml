@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="../../../../../../../../layout/custom_preview.xml" value="0.18541666666666667" />
         <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/activity_development_job_search.xml" value="0.35833333333333334" />
         <entry key="..\:/git/csci3130/Iteration_2/team-12-quick-cash/app/src/main/res/layout/activity_job_search_results.xml" value="0.35833333333333334" />
@@ -44,11 +45,34 @@
         <entry key="app/src/main/res/layout/list_job_item_employer.xml" value="0.18385416666666668" />
         <entry key="app/src/main/res/layout/page_profile_main.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.18958333333333333" />
+=======
+        <entry key="../../../../../../../../layout/custom_preview.xml" value="0.19635416666666666" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/activity_add_edit_jobpost.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/activity_job_search_results.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/activity_profile_update.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/activity_signup_page.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/fragment_jobs.xml" value="0.25" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/fragment_profile.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/list_dashboard_item_employee.xml" value="0.3451086956521739" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/list_dashboard_item_employer.xml" value="0.3451086956521739" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/list_job_item_employee.xml" value="0.18802083333333333" />
+        <entry key="..\:/Tuition/team-12-quick-cash/app/src/main/res/layout/list_job_item_employer.xml" value="0.18802083333333333" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.18125" />
+        <entry key="app/src/main/res/layout/fragment_jobs.xml" value="0.18125" />
+        <entry key="app/src/main/res/layout/list_dashboard_item_employer.xml" value="0.32864583333333336" />
+        <entry key="app/src/main/res/layout/list_job_item_employee.xml" value="0.3129528985507246" />
+        <entry key="app/src/main/res/layout/list_job_item_employer.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/list_job_item_empty.xml" value="0.2" />
+>>>>>>> 7ff9502a4c7dded15d0d25f546450a8259f35efc
       </map>
     </option>
   </component>
-  <component name="PDMPlugin">
-    <option name="skipTestSources" value="false" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
 </project>

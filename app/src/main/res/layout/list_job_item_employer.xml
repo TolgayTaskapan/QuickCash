@@ -42,6 +42,26 @@
                 android:textSize="14sp"
                 tools:text="Labour"/>
 
+            <EditText
+                android:id="@+id/rateEmployeeET"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:visibility="gone"
+                android:textColor="#B4B4B9"
+                android:textSize="14sp"
+                tools:text="Rate this Employee 1-5"/>
+
+            <TextView
+                android:id="@+id/applicant_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:text="Applicant Pending Approval"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -80,7 +100,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@android:color/background_light"
+            android:backgroundTint="@android:color/holo_green_dark"
             android:text="Update"
             android:textColor="@color/black" />
 
@@ -90,8 +110,40 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:backgroundTint="@android:color/background_light"
+            android:backgroundTint="@android:color/holo_red_dark"
             android:text="Delete"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/approveBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_green_dark"
+            android:text="Approve"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/declineBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="Decline"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/paymentBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:text="Send Payment"
             android:textColor="@color/black" />
     </LinearLayout>
 

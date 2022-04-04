@@ -6,7 +6,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -16,28 +15,20 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.not;
 
 import android.content.Context;
-import android.os.IBinder;
-import android.view.WindowManager;
+
 
 import androidx.test.espresso.Espresso;
-import androidx.test.espresso.Root;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
 
 import com.example.quickcash.account.SignupActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.hamcrest.Description;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -65,12 +56,7 @@ public class SignupEspressoTest {
 
     @AfterClass
     public static void tearDown() {
-        clearDatabase();
         System.gc();
-    }
-
-    private static void clearDatabase() {
-        dbRef.removeValue();
     }
 
     @Test
@@ -98,7 +84,8 @@ public class SignupEspressoTest {
         onView(withId(R.id.identitySpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        //onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(withDecorView(not(myIntentRule.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 
     @Test
@@ -110,8 +97,7 @@ public class SignupEspressoTest {
         onView(withId(R.id.identitySpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
-
+        onView(withText(R.string.EMPTY_USERNAME_OR_PASSWORD)).inRoot(withDecorView(not(myIntentRule.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 
     @Test
@@ -123,7 +109,8 @@ public class SignupEspressoTest {
         onView(withId(R.id.identitySpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withText(R.string.INVALID_USERNAME)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        //onView(withText(R.string.INVALID_USERNAME)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.INVALID_USERNAME)).inRoot(withDecorView(not(myIntentRule.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 
     @Test
@@ -135,7 +122,8 @@ public class SignupEspressoTest {
         onView(withId(R.id.identitySpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withText(R.string.INVALID_PASSWORD)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        //onView(withText(R.string.INVALID_PASSWORD)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.INVALID_PASSWORD)).inRoot(withDecorView(not(myIntentRule.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 
     @Test
@@ -169,6 +157,7 @@ public class SignupEspressoTest {
         onView(withId(R.id.identitySpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("Employer"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withText(R.string.USER_ALREADY_EXISTS)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        //onView(withText(R.string.USER_ALREADY_EXISTS)).inRoot(withDecorView(not(is(this.myIntentRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withText(R.string.USER_ALREADY_EXISTS)).inRoot(withDecorView(not(myIntentRule.getActivity().getWindow().getDecorView()))).check(doesNotExist());
     }
 }
