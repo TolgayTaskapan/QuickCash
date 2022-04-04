@@ -54,9 +54,14 @@ public class JobPostingEspressoTest {
         onView(withId(R.id.duration)).perform(typeText("1"));
         Espresso.closeSoftKeyboard();
 
+<<<<<<< HEAD
         onView(withId(R.id.addJobButton)).perform(click());
         //onView(withText(R.string.JOB_ADD_SUCCESS)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
         onView(withText(R.string.JOB_ADD_SUCCESS)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
+=======
+        onView(withId(R.id.popup_btn)).perform(click());
+        onView(withText(R.string.JOB_POST_SUCCESS)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+>>>>>>> iteration3_us10_11
     }
 
     @Test
@@ -76,9 +81,14 @@ public class JobPostingEspressoTest {
         onView(withId(R.id.duration)).perform(typeText("1"));
         Espresso.closeSoftKeyboard();
 
+<<<<<<< HEAD
         onView(withId(R.id.addJobButton)).perform(click());
         //onView(withText(R.string.EMPTY_JOBNAME_OR_DESCRIPTION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
         onView(withText(R.string.EMPTY_JOBNAME_OR_DESCRIPTION)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
+=======
+        onView(withId(R.id.popup_btn)).perform(click());
+        onView(withText(R.string.EMPTY_JOBNAME_OR_DESCRIPTION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+>>>>>>> iteration3_us10_11
     }
 
     @Test
@@ -96,9 +106,14 @@ public class JobPostingEspressoTest {
         onView(withId(R.id.duration)).perform(typeText("1"));
         Espresso.closeSoftKeyboard();
 
+<<<<<<< HEAD
         onView(withId(R.id.addJobButton)).perform(click());
         //onView(withText(R.string.EMPTY_JOBNAME_OR_DESCRIPTION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
         onView(withText(R.string.EMPTY_JOBNAME_OR_DESCRIPTION)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
+=======
+        onView(withId(R.id.popup_btn)).perform(click());
+        onView(withText(R.string.EMPTY_JOBNAME_OR_DESCRIPTION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+>>>>>>> iteration3_us10_11
     }
 
     @Test
@@ -118,9 +133,14 @@ public class JobPostingEspressoTest {
         onView(withId(R.id.duration)).perform(typeText("1"));
         Espresso.closeSoftKeyboard();
 
+<<<<<<< HEAD
         onView(withId(R.id.addJobButton)).perform(click());
         //onView(withText(R.string.EMPTY_WAGE)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
         onView(withText(R.string.EMPTY_WAGE)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
+=======
+        onView(withId(R.id.popup_btn)).perform(click());
+        onView(withText(R.string.EMPTY_WAGE)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+>>>>>>> iteration3_us10_11
     }
 
     @Test
@@ -140,9 +160,14 @@ public class JobPostingEspressoTest {
         onView(withId(R.id.duration)).perform(typeText("1"));
         Espresso.closeSoftKeyboard();
 
+<<<<<<< HEAD
         onView(withId(R.id.addJobButton)).perform(click());
         //onView(withText(R.string.EMPTY_LOCATION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
         onView(withText(R.string.EMPTY_LOCATION)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
+=======
+        onView(withId(R.id.popup_btn)).perform(click());
+        onView(withText(R.string.EMPTY_LOCATION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+>>>>>>> iteration3_us10_11
     }
 
     @Test
@@ -162,9 +187,14 @@ public class JobPostingEspressoTest {
         onView(withId(R.id.duration)).perform(typeText("1"));
         Espresso.closeSoftKeyboard();
 
+<<<<<<< HEAD
         onView(withId(R.id.addJobButton)).perform(click());
         //onView(withText(R.string.INVALID_JOBNAME)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
         onView(withText(R.string.INVALID_JOBNAME)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
+=======
+        onView(withId(R.id.popup_btn)).perform(click());
+        onView(withText(R.string.INVALID_JOBNAME)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+>>>>>>> iteration3_us10_11
     }
 
     @Test
@@ -184,9 +214,14 @@ public class JobPostingEspressoTest {
         onView(withId(R.id.duration)).perform(typeText("1"));
         Espresso.closeSoftKeyboard();
 
+<<<<<<< HEAD
         onView(withId(R.id.addJobButton)).perform(click());
         //onView(withText(R.string.INVALID_WAGE)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
         onView(withText(R.string.INVALID_WAGE)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
+=======
+        onView(withId(R.id.popup_btn)).perform(click());
+        onView(withText(R.string.INVALID_WAGE)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+>>>>>>> iteration3_us10_11
     }
 
     @Test
@@ -206,8 +241,13 @@ public class JobPostingEspressoTest {
         onView(withId(R.id.duration)).perform(typeText("1"));
         Espresso.closeSoftKeyboard();
 
+<<<<<<< HEAD
         onView(withId(R.id.addJobButton)).perform(click());
         //onView(withText(R.string.INVALID_LOCATION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
         onView(withText(R.string.INVALID_LOCATION)).inRoot(withDecorView(not(myIntentRuleHome.getActivity().getWindow().getDecorView()))).check(doesNotExist());
+=======
+        onView(withId(R.id.popup_btn)).perform(click());
+        onView(withText(R.string.INVALID_LOCATION)).inRoot(withDecorView(not(is(this.myIntentRuleHome.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+>>>>>>> iteration3_us10_11
     }
 }

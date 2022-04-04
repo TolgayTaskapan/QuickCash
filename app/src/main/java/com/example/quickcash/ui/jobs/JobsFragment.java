@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quickcash.AddUpdateJobPostActivity;
+
 import com.example.quickcash.JobApplication;
+import com.example.quickcash.JobApplicantView.ViewApplicants;
 import com.example.quickcash.JobPost;
 import com.example.quickcash.MainActivity;
 import com.example.quickcash.R;
@@ -43,6 +46,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import kotlinx.coroutines.Job;
 
@@ -97,7 +101,6 @@ public class JobsFragment extends Fragment {
         addFAB = view.findViewById(R.id.addButton);
         searchFAB = view.findViewById(R.id.searchFAB);
         categorySpinner = view.findViewById(R.id.categorySpinner);
-
     }
 
     public void initializeDatabase(){
@@ -106,7 +109,7 @@ public class JobsFragment extends Fragment {
 
     public void setActivityView() {
         if (UserSession.getInstance().getUser().isEmployee()) {
-            getPreferenceCategory();
+            //getPreferenceCategory();
             if ( !setupCategorySpinner() ) showToastMessage("Job Fragment: Fail to set up category spinner");
 
             retrieveJobsFromFirebase();

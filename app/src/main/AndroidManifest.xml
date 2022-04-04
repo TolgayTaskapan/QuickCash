@@ -42,6 +42,15 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".JobApplicantView.ViewApplicants"
+            android:exported="true" />
+
+        <activity
+            android:name=".JobApplicantView.ViewApplicantDetails"
+            android:exported="true" />
+
         <activity
             android:name=".LandingPageActivity"
             android:exported="true">

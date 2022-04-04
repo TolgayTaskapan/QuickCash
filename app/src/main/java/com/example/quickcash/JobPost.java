@@ -6,7 +6,9 @@ import com.example.quickcash.identity.Employer;
 import com.example.quickcash.identity.User;
 import com.example.quickcash.util.UserSession;
 import com.google.firebase.database.DatabaseReference;
+
 import com.google.firebase.database.FirebaseDatabase;
+
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -37,6 +39,7 @@ public class JobPost implements Serializable {
     private String jobState;
     private User applicant;
     private JobApplication application;
+
 
     public JobPost(){
 
@@ -87,8 +90,7 @@ public class JobPost implements Serializable {
         this.application = new JobApplication();
     }
 
-
-    public JobPost(String title, String jobType, double hourlyWage, int duration, String location, double latitude, double longitude, String usrID, String jobState, DatabaseReference jobRef, JobApplication application) {
+    public JobPost(String title, String jobType, double hourlyWage, int duration, String location, double latitude, double longitude, String usrID, String jobState, DatabaseReference jobRef) {
         this.jobRef = jobRef;
         this.jobTitle = title;
         this.jobType = jobType;
@@ -99,7 +101,21 @@ public class JobPost implements Serializable {
         this.longitude = longitude;
         this.userID = usrID;
         this.jobState = jobState;
-        this.application = application;
+        this.applicant = null;
+    }
+
+    public JobPost(String title, String type, Double wage, Integer duration, String location, Double latitude, Double longitude, String employerID, String jobState, DatabaseReference jobRef, JobApplication application) {
+        this.jobRef = jobRef;
+        this.jobTitle = title;
+        this.jobType = jobType;
+        this.hourlyWage = hourlyWage;
+        this.duration = duration;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.userID = employerID;
+        this.jobState = jobState;
+        this.applicant = null;
     }
 
     public String getJobTitle() {

@@ -1,21 +1,24 @@
 package com.example.quickcash.ui.jobs;
 
 import android.app.Activity;
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-<<<<<<< HEAD
+
 import android.widget.LinearLayout;
-=======
 import android.widget.EditText;
->>>>>>> 7ff9502a4c7dded15d0d25f546450a8259f35efc
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quickcash.JobApplication;
+import com.example.quickcash.JobApplicantView.ViewApplicants;
+
 import com.example.quickcash.JobPost;
 import com.example.quickcash.JobRequest;
 import com.example.quickcash.R;
@@ -138,6 +141,16 @@ public class JobAdapter extends BaseAdapter {
         } else {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item_empty, parent, false);
         }
+        convertView = LayoutInflater.from(mContext).inflate(R.layout.list_job_item_employee,parent,false);
+        TextView txtJobTitle = (TextView) convertView.findViewById(R.id.item_job_title);
+        TextView txtJobCategory = (TextView) convertView.findViewById(R.id.item_job_category);
+        TextView txtJobWage = (TextView) convertView.findViewById(R.id.item_job_wage);
+
+        txtJobTitle.setText(mJob.get(position).getJobTitle());
+        txtJobCategory.setText(mJob.get(position).getJobType());
+        String wageStr = "$" + mJob.get(position).getHourlyWage();
+        txtJobWage.setText(wageStr);
+
         return convertView;
     }
 

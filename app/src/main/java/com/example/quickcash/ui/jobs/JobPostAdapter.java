@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,8 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quickcash.AddUpdateJobPostActivity;
+
 import com.example.quickcash.JobApplication;
 import com.example.quickcash.JobHistory;
+import com.example.quickcash.JobApplicantView.ViewApplicants;
 import com.example.quickcash.JobPost;
 import com.example.quickcash.R;
 import com.example.quickcash.identity.Employee;
@@ -96,6 +100,13 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
         holder.titleTV.setText(job.getJobTitle());
         holder.typeTV.setText(job.getJobType());
         holder.wageTV.setText("$" + String.valueOf(job.getHourlyWage()));
+        holder.wageTV.setText(String.valueOf(job.getHourlyWage()));
+        holder.jobItems.setOnClickListener(view -> {
+            Intent intent = new Intent(holder.context, ViewApplicants.class);
+            intent.putExtra("job_key", job);
+            holder.context.startActivity(intent);
+        });
+
         holder.updateBtn.setOnClickListener(view -> {
             final Intent intent = new Intent(holder.context, AddUpdateJobPostActivity.class);
             intent.putExtra(AddUpdateJobPostActivity.TAG, AddUpdateJobPostActivity.UPDATE_JOB);
@@ -132,6 +143,7 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
         private final Button paymentBtn;
         private final EditText ratingET;
         private final Context context;
+        private final LinearLayout jobItems;
 
         public JobPostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -139,14 +151,15 @@ public class JobPostAdapter extends FirebaseRecyclerAdapter<JobPost, JobPostAdap
             titleTV = itemView.findViewById(R.id.item_job_title);
             typeTV = itemView.findViewById(R.id.item_job_category);
             wageTV = itemView.findViewById(R.id.item_job_wage);
-            applicantName = itemView.findViewById(R.id.applicant_name);
             updateBtn = itemView.findViewById(R.id.updateBtn);
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
             approveBtn = itemView.findViewById(R.id.approveBtn);
             declineBtn = itemView.findViewById(R.id.declineBtn);
             paymentBtn = itemView.findViewById(R.id.paymentBtn);
             ratingET = itemView.findViewById(R.id.rateEmployeeET);
+            applicantName = itemView.findViewById(R.id.applicant_name);
             context = itemView.getContext();
+            jobItems = itemView.findViewById(R.id.JobItem);
         }
     }
 

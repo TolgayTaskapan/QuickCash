@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/item_container"
+    android:id="@+id/JobItem"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     android:layout_marginBottom="8dp"
     android:background="#F6F6F6"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/post_container"
@@ -31,7 +31,7 @@
                 android:paddingLeft="8dp"
                 android:textColor="#1D1D1C"
                 android:textSize="20sp"
-                tools:text="Lawn Mowing"/>
+                tools:text="Lawn Mowing" />
 
             <TextView
                 android:id="@+id/item_job_category"
@@ -40,7 +40,7 @@
                 android:paddingLeft="8dp"
                 android:textColor="#B4B4B9"
                 android:textSize="14sp"
-                tools:text="Labour"/>
+                tools:text="Labour" />
 
             <EditText
                 android:id="@+id/rateEmployeeET"
@@ -81,9 +81,8 @@
                 android:paddingLeft="8dp"
                 android:textColor="#1D1D1C"
                 android:textSize="20sp"
-                tools:text="$15.00"/>
+                tools:text="$15.00" />
         </LinearLayout>
-
 
 
     </LinearLayout>
