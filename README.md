@@ -12,7 +12,7 @@
 | Tyler Johnson (Team Leader) | B00905914 | TylerJohnson@dal.ca |
 | Yilong Su                   | B00837331 | yl480546@dal.ca     |
 | Taicheng Zhu                | B00797906 | tc512621@dal.ca     |
-| Tolgay Taskapan             | right baz | tl852782@dal.ca     |
+| Tolgay Taskapan             | B00798594 | tl852782@dal.ca     |
 | Md Asef Jawad               | B00856362 | as706574@dal.ca     |
 | Shawn Matheson              | right baz | sh785058@dal.ca     |
 
