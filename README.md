@@ -1,6 +1,8 @@
 # CSCI3130 - 2021/2022 Winter
 # Project: Quick Cash
 
+An android app where employers/employee can create an account and post jobs or look for jobs in their area with google maps intergration and PayPal.
+
 ## Group Info
 ##### Group Number: Team 12
 ##### Gitlab Repository: https://git.cs.dal.ca/stanleyj/team-12-quick-cash
